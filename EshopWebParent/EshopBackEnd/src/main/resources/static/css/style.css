@@ -1,0 +1,60 @@
+.icon-white{
+	color:white;
+}
+.icon-red{
+	color: red;
+}
+.icon-sil{
+	color: silver;
+}
+
+.icon-red:hover{
+	color: red;
+	opacity: 0.5;
+}
+
+.icon-blue{
+	color: #5f5dd5;
+}
+.icon-blue:hover{
+	color: #5f5dd5;
+	opacity: 0.5;;
+}
+
+.icon-dark{
+	color: gray;
+}
+
+.logo{
+  width: 100%;
+  height: 100%;
+  object-fit: fill;
+	
+}
+
+.richText richText-btn { 
+   color: black;
+}
+
+.nav-link.active,
+  .nav-item.show .nav-link {	  
+	  color:rgb(0, 0, 255) !important;
+  }
+  
+  .richText .richText-editor {
+    height: 200px !important; 
+}
+  
+
+
+@media screen and (max-width: 768px) {
+	div.full-details {display:none}
+	div.less-details {display:block}
+}
+@media screen and (min-width: 768px) and (max-width: 1024px) {
+	div.full-details {display:block}
+	div.less-details {display:none}
+}
+@media screen and (min-width: 1024px) {
+		div.less-details {display:none}
+}

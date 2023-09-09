@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" >
+<body>
+	<div class="mb-2" th:fragment="header_menu">
+		<nav class="navbar navbar-expand-lg bg-dark navbar-dark">
+			<a class="navbar-brand" th:href="@{/}"> <img
+				style="width: 100px; height: 75px;"
+				th:src="@{/images/EshopLogo.png}" />
+			</a>
+			<button class="navbar-toggler" type="button" data-toggle="collapse"
+				data-target="#navbarNavDropdown">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			<div class="collapse navbar-collapse justify-content-end" id="navbarNavDropdown">
+				<ul class="navbar-nav mr-2">
+					<li class="nav-item">
+						<a class="nav-link" href="">Careers</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="">Payments</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="">Shipping & Delivery</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="">Login</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="">Register</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="">Contact</a>
+					</li>
+					
+				</ul>
+			</div>
+
+		</nav>
+	</div>
+	
+	<div th:fragment="search_nav">
+		
+		<div class="bg-white">
+			
+			<form class="form-inline" th:action="@{/search}" method="get">
+				<input type="search" name="keyword" class="form-control" style="width: auto" placeholder="Search" th:value="${keyword}" required />
+				 &nbsp;
+				<button type="submit" class="btn btn-outline-primary d-inline" ><i class="fa-solid fa-magnifying-glass"></i></button>
+			</form>
+		</div>
+		
+	</div>
+	
+	
+	<div class="mb-2" th:fragment="footer_menu">
+		<div>
+			<nav class="navbar navbar-expand-lg bg-dark navbar-dark">			
+				<button class="navbar-toggler" type="button" data-toggle="collapse"
+					data-target="bottomNavbar">
+					<span class="navbar-toggler-icon"></span>
+				</button>
+				<div class="collapse navbar-collapse justify-content-center" id="bottomNavbar">
+					<ul class="navbar-nav mr-2">
+						<li class="nav-item">
+							<a class="nav-link" href="">About us</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="">Privacy notice</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="">Return &amp; Refunds</a>
+						</li>								
+					</ul>
+				</div>
+			</nav>
+		</div>
+		<div th:fragment="footer" class="text-center">
+			<p>Eshop - Copyright &copy; Eshop</p>
+		</div>	
+	</div>
+</body>
+</html>

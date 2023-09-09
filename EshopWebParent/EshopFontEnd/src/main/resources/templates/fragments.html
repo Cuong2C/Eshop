@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:fragment="page_head(tittle, remove)" th:remove="${remove}">
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta name="viewport" content="width=divice-width, initial-scale=1.0, minimum-scale=1.0">
+
+	<title>[[${tittle}]]</title>
+
+	<link rel="stylesheet" type="text/css" th:href="@{/css/style.css}" />
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
+	<link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" />
+	<script type="text/javascript" th:src="@{/webjars/jquery/jquery.min.js}"></script>
+	<script type="text/javascript" th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+</head>
+
+<body>
+
+	<th th:fragment="column_Link(moduleURL,fieldName, columnLabel)">
+		<a class="text-white"
+			th:href="@{${moduleURL}+'/page/'+${currentPage}+'?sortField=' + ${fieldName} + '&sortDir='+${sortField != fieldName ? sortDir : reverseSortDir } + ${keyword != null ? '&keyword=' + keyword: ''}}">[[${columnLabel}]]</a>
+		<span th:if="${sortField == fieldName}"
+			th:class="${sortDir == 'asc' ? 'fas fa-sort-up' : 'fas fa-sort-down'}"></span>
+	</th>
+
+	<div th:fragment="pagination(moduleURL, entityName)" th:remove="tag">
+		<div class="text-center" th:if="${totalTtems} > 0">
+			<span>Showing [[${entityName}]] # [[${startCount}]] to [[${endCount}]] of [[${totalTtems}]]</span>
+		</div>
+
+		<div class="text-center text-danger font-weight-bold" th:unless="${totalTtems} > 0">
+			<span>No [[${entityName}]] found</span>
+		</div>
+
+		<div th:if="${totalTtems} > 0">
+			<nav aria-label="Page navigation example">
+				<ul class="pagination justify-content-center flex-wrap">
+					<li th:class="${currentPage > 1 ? 'page-item' : 'page-item disabled'}">
+						<a class="page-link"
+							th:href="@{${moduleURL}+'/page/1?sortField='+${sortField} + '&sortDir='+ ${sortDir}}"
+							title="First">
+							<span aria-hidden="true">&laquo;</span>
+						</a>
+					</li>
+					<li th:class="${currentPage > 1 ? 'page-item' : 'page-item disabled'}"><a class="page-link"
+							th:href="@{${moduleURL}+'/page/'+${currentPage -1}+'?sortField='+${sortField} + '&sortDir='+ ${sortDir}}">Previous</a>
+					</li>
+
+					<li th:class="${currentPage != i ? 'page-item' : 'page-item active'}"
+						th:each="i:${#numbers.sequence(1,totalPages)}">
+						<a class="page-link"
+							th:href="@{${moduleURL}+'/page/'+${i}+'?sortField='+${sortField} + '&sortDir='+ ${sortDir}}">[[${i}]]</a>
+					</li>
+
+
+					<li th:class="${currentPage < totalPages ? 'page-item' : 'page-item disabled'}"><a class="page-link"
+							th:href="@{${moduleURL}+'/page/'+${currentPage +1}+'?sortField='+${sortField} + '&sortDir='+ ${sortDir}}">Next</a>
+					</li>
+					<li th:class="${currentPage < totalPages ? 'page-item' : 'page-item disabled'}">
+						<a class="page-link"
+							th:href="@{${moduleURL}+'/page/'+${totalPages} + '?sortField='+${sortField} + '&sortDir='+ ${sortDir}}"
+							title="Last">
+							<span aria-hidden="true">&raquo;</span>
+						</a>
+					</li>
+				</ul>
+			</nav>
+		</div>
+	</div>
+
+	
+	<div th:fragment="product_content" class="col-sm-4 col-lg-3">
+		<div class="p-2" style="max-width: 300px;">
+			<a th:href="@{'/p/'+${product.alias}}">
+				<img class="m-2" th:src="@{${product.mainImagePath}}" height="175"  />
+				<div >
+				<b>[[${product.shortName}]]</b>
+				</div>
+			</a>
+			<div th:if="${product.discountPercent <= 0}">
+				<span style="font-size: larger; color: #fe9765;">$[[${product.price}]]</span>
+			</div>
+			<div th:if="${product.discountPercent > 0}">
+				<span style="font-size: larger; color: #fe9765;">$[[${product.discountPrice}]]</span>
+				<del><span>$[[${product.price}]]</span></del>
+			</div>
+			
+		</div>
+	</div>
+	
+
+	<div th:fragment="footer" class="text-center">
+		<p>Eshop Control Panel - Copyright &copy; Eshop</p>
+	</div>
+
+
+</body>
+
+</html>

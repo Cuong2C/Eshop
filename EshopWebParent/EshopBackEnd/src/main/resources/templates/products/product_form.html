@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<head th:replace="fragments :: page_head(${pageTitle}, 'tag')"/>
+	<link rel="stylesheet" th:href = "@{/richtext/richtext.min.css}"/>
+	<script th:src="@{/richtext/jquery.richtext.min.js}"></script>
+
+</head>
+<body>
+
+	<div class="container-fluid">
+		<div th:replace="navigation :: menu" ></div>
+		<div class="text-center m-3">
+			<h2>Manage Products | [[${pageTitle}]]</h2>
+		</div>
+
+		
+		<form class = "container border rounded" th:action="@{/products/save}" method="post" th:object="${product}" onsubmit="return checkUnique(this)" enctype="multipart/form-data">
+			<input type="hidden" th:field="*{id}"/>
+			<input th:if="${product.category != null}" type="hidden" id="categoryId" th:value="${product.category.id}"/>
+			<div class="m-2">
+				<ul class="nav nav-tabs" id="myTab" role="tablist">
+				  <li class="nav-item" role="presentation">
+				    <button class="nav-link active" data-toggle="tab" href="#overview" type="button" role="tab" >Overview</button>
+				  </li>
+				  <li class="nav-item" role="presentation">
+				    <button class="nav-link" data-toggle="tab" href="#description" type="button" role="tab" >Description</button>
+				  </li>
+				  <li class="nav-item" role="presentation">
+				    <button class="nav-link" data-toggle="tab" href="#images" type="button" role="tab" >Images</button>
+				  </li>
+				  <li class="nav-item" role="presentation">
+				    <button class="nav-link" data-toggle="tab" href="#details" type="button" role="tab" >Details</button>
+				  </li>
+				  <li class="nav-item" role="presentation">
+				    <button class="nav-link" data-toggle="tab" href="#shipping" type="button" role="tab" >Shiping</button>
+				  </li>
+				</ul>
+				
+				<div class="tab-content">
+				  <div class="tab-pane active p-3" id="overview" role="tabpanel" >
+					  <div th:replace="~{products/product_overview :: content}"></div>
+				  </div>
+				  <div class="tab-pane" id="description" role="tabpanel" >
+					   <div th:replace="~{products/product_description :: content}" sec:authorize="hasAnyAuthority('Admin', 'Editor')"></div>
+					   <div th:replace="~{products/product_description_readonly :: content}" sec:authorize="hasAuthority('Salesperson')"></div>
+				  </div>
+				  <div class="tab-pane" id="images" role="tabpanel" >
+					   <div th:replace="~{products/product_images :: content}" sec:authorize="hasAnyAuthority('Admin', 'Editor')"></div>
+					   <div th:replace="~{products/product_images_readonly :: content}" sec:authorize="hasAuthority('Salesperson')"></div>
+					   
+				  </div>
+				  <div class="tab-pane p-3 " id="details" role="tabpanel" >
+					   <div th:replace="~{products/product_details :: content}" sec:authorize="hasAnyAuthority('Admin', 'Editor')"></div>
+					   <div th:replace="~{products/product_details_readonly :: content}" sec:authorize="hasAuthority('Salesperson')"></div>
+					  <div >
+						  <button type="button" class="btn btn-info mx-3 mt-2 " onclick="addNextDetailSection()" sec:authorize="hasAnyAuthority('Admin', 'Editor')">Add More Details</button>
+					  </div>
+				  </div>
+				  <div class="tab-pane" id="shipping" role="tabpanel" >
+					   <div th:replace="~{products/product_shipping :: content}" sec:authorize="hasAnyAuthority('Admin', 'Editor')"></div>
+					   <div th:replace="~{products/product_shipping_readonly :: content}" sec:authorize="hasAuthority('Salesperson')"></div>
+				  </div>
+				</div>				
+			</div>
+			<div class="text-center m-3">
+				<button type="submit" class="btn btn-primary mx-3 " value="Save">Submit</button>
+				<button type="button" class="btn btn-secondary mx-3 " id="cancelbtn" value="Cancel">Cancel</button>
+			</div>
+		</form>
+
+		<div th:replace="~{fragments :: modal_dialog}" ></div>
+
+		<div th:replace="~{fragments :: footer}" ></div>
+	</div>
+
+
+<script type="text/javascript">
+	moduleURL="[[@{/products}]]";
+	brandModuleURL="[[@{/brands}]]";
+	checkUniqueUrl="[[@{/products/check_unique}]]";
+	
+	
+	
+</script> 
+
+<script th:src="@{/js/common_form.js}"></script>
+<script th:src="@{/js/product_form.js}"></script>
+
+<script th:src="@{/js/product_description_validation.js}"></script>
+</body>
+</html>

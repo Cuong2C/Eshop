@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments :: page_head('Eshop - List of Users', 'none')}"/>
+<body>
+
+	<div class="container-fluid">
+		<div th:replace="navigation :: menu" ></div>
+		<div>
+			<h2>Manage Users</h2>
+			<a th:href="@{/users/new}" class="fa-solid fa-user-plus fa-2x" title="Add a new User"></a>
+			&nbsp;|&nbsp;
+			<a th:href="@{/users/export/csv}" class="fa-solid fa-file-csv fa-2x" title="Export to CSV"></a>
+			&nbsp;|&nbsp;
+			<a th:href="@{/users/export/excel}" class="fa-solid fa-file-excel fa-2x" title="Export to Excel"></a>
+			&nbsp;|&nbsp;
+			<a th:href="@{/users/export/pdf}" class="fa-solid fa-file-pdf fa-2x" title="Export to PDF"></a> 
+			
+		</div>
+		<div th:if="${message!=null}" class="alert alert-success text-center">
+			[[${message}]]
+		</div>
+		<div class="m-2" >
+			<div th:replace="~{fragments :: search_form('/users')}" ></div>
+		</div>
+		<div class="full-details">
+			<table class="table table-reponsive-xl table-bordered table-striped table-hover">
+				<thead class="thead-dark">
+					<tr>
+		
+					<th th:replace="fragments :: column_Link('/users','id', 'User ID')" />
+					<th>Photo</th>
+					<th th:replace="fragments :: column_Link('/users','email', 'Email')" />
+					<th th:replace="fragments :: column_Link('/users','firstName', 'Fisrt Name')" />
+					<th th:replace="fragments :: column_Link('/users','lastName', 'Last Name')" />
+					
+					<th>Roles</th>
+					<th>Enabled</th>
+					<th></th>
+					</tr>
+				</thead>
+				<tbody>
+				<tr th:each="user:${listUsers}">
+				<td>[[${user.id}]]</td>
+				<td>
+					<i th:if="${user.photos==null}" class="fa-solid fa-image-portrait fa-3x icon-dark"></i>
+					<img th:if="${user.photos != null}" alt="" th:src="@{${user.getPhotosImagesPath}}" style="width: 75px; height: 100px;"/>
+				</td>
+				<td>[[${user.email}]]</td>
+				<td>[[${user.firstName}]]</td>
+				<td>[[${user.lastName}]]</td>
+				<td>[[${user.roles}]]</td>
+				
+				<td>
+					<a th:if="${user.enabled==true}" class="fa-solid fa-check fa-2x icon-blue" th:href="@{'/users/'+${user.id}+'/enabled/false'}" title="Disable this User"></a>
+					<a th:if="${user.enabled==false}" class="fa-solid fa-xmark fa-2x icon-red" th:href="@{'/users/'+${user.id}+'/enabled/true'}" title="Enable this User"></a>
+				
+				</td>
+				
+				<td> <a class="fa-solid fa-pen-to-square fa-2x icon-blue" th:href="@{'/users/edit/'+${user.id}}" title="Edit this User"></a>
+					 &nbsp; 
+				 	 <a class="fa-solid fa-user-xmark fa-2x icon-red link-delete"  th:href="@{'/users/delete/'+${user.id}}" title="Delete this User" th:entityId="${user.id}"></a>
+				 </td>
+				</tr>
+				</tbody>
+			</table>
+		</div>
+		
+		<div class="less-details">
+			<div  th:each="user:${listUsers}" class="row">
+				<div class="col-2 text-center">[[${user.id}]]</div>
+				<div class="col-4">
+					<i th:if="${user.photos==null}" class="fa-solid fa-image-portrait fa-3x icon-dark my-2"></i>
+					<img th:if="${user.photos != null}" class="my-2" alt="" th:src="@{${user.getPhotosImagesPath}}" style="width: 75px; height: 100px;"/>
+				</div>
+				<div class="col-6">
+					<div>[[${user.getFullName}]]</div>
+					<div>[[${user.roles}]]</div>
+					<div>
+						<a th:if="${user.enabled==true}" class="fa-solid fa-check fa-2x icon-blue" th:href="@{'/users/'+${user.id}+'/enabled/false'}" title="Disable this User"></a>
+						<a th:if="${user.enabled==false}" class="fa-solid fa-xmark fa-2x icon-red" th:href="@{'/users/'+${user.id}+'/enabled/true'}" title="Enable this User"></a>
+						&nbsp; 
+						<a class="fa-solid fa-pen-to-square fa-2x icon-blue" th:href="@{'/users/edit/'+${user.id}}" title="Edit this User"></a>
+						&nbsp; 
+				 	 	<a class="fa-solid fa-user-xmark fa-2x icon-red link-delete"  th:href="@{'/users/delete/'+${user.id}}" title="Delete this User" th:entityId="${user.id}"></a>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		
+		<div th:replace="~{fragments :: pagination('/users','users')}" ></div>
+		
+		<div th:replace="fragments :: confirm_modal" ></div>
+		
+		<div th:replace="fragments :: footer" ></div>
+	</div>
+<script th:src="@{/js/common_list.js}"></script>
+<script type="text/javascript">
+	moduleURL="[[@{/users}]]";
+	
+	$(document).ready(function(){
+		$(".link-delete").on("click", function(e){
+			e.preventDefault();
+			showDeleteConfirmModal($(this), 'user');
+		});
+	});
+
+</script>
+
+</body>
+</html>
