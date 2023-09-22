@@ -4,15 +4,15 @@
 
 </head>
 <body>
-	<div class="container-fluid bg-light">
+	<div class="container-fluid bg-light p-0">
 		<div th:replace="~{navigation :: header_menu}" ></div>
 		<div th:replace="~{navigation :: search_nav}" ></div>
 	
 		<div class="m-2 text-center">
-			<h1 style="color: #fe9765;">Shopping by Categories</h1>
+			<h1 class="title">Shopping by Categories</h1>
 		</div>
 		
-		<div class="row bg-white">
+		<div class="row bg-white p-4">
 			<div class="col-6 col-sm-4 col-md-2 my-2" th:each="cat:${listCategories}">
 				<div><img th:src="@{${cat.imgPath}}" height="75"  /></div>
 				<div>

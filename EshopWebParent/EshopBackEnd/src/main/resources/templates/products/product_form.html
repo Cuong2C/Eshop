@@ -1,21 +1,21 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-	<head th:replace="fragments :: page_head(${pageTitle}, 'tag')"/>
+	<head th:replace="~{fragments :: page_head(${pageTitle}, 'tag')}"/>
 	<link rel="stylesheet" th:href = "@{/richtext/richtext.min.css}"/>
 	<script th:src="@{/richtext/jquery.richtext.min.js}"></script>
 
 </head>
 <body>
 
-	<div class="container-fluid">
+	<div class="container-fluid bg-light p-0">
 		<div th:replace="navigation :: menu" ></div>
 		<div class="text-center m-3">
 			<h2>Manage Products | [[${pageTitle}]]</h2>
 		</div>
 
 		
-		<form class = "container border rounded" th:action="@{/products/save}" method="post" th:object="${product}" onsubmit="return checkUnique(this)" enctype="multipart/form-data">
+		<form class = "container border rounded bg-white" th:action="@{/products/save}" method="post" th:object="${product}" onsubmit="return checkUnique(this)" enctype="multipart/form-data">
 			<input type="hidden" th:field="*{id}"/>
 			<input th:if="${product.category != null}" type="hidden" id="categoryId" th:value="${product.category.id}"/>
 			<div class="m-2">
@@ -42,24 +42,44 @@
 					  <div th:replace="~{products/product_overview :: content}"></div>
 				  </div>
 				  <div class="tab-pane" id="description" role="tabpanel" >
-					   <div th:replace="~{products/product_description :: content}" sec:authorize="hasAnyAuthority('Admin', 'Editor')"></div>
-					   <div th:replace="~{products/product_description_readonly :: content}" sec:authorize="hasAuthority('Salesperson')"></div>
+					  <th:block th:unless="${isForSalesperson}">
+						   <div th:replace="~{products/product_description :: content}" ></div>
+					  </th:block>
+					   
+					    <th:block th:if="${isForSalesperson}">
+					   		<div th:replace="~{products/product_description_readonly :: content}" ></div>
+					   </th:block>
 				  </div>
 				  <div class="tab-pane" id="images" role="tabpanel" >
-					   <div th:replace="~{products/product_images :: content}" sec:authorize="hasAnyAuthority('Admin', 'Editor')"></div>
-					   <div th:replace="~{products/product_images_readonly :: content}" sec:authorize="hasAuthority('Salesperson')"></div>
+					   <th:block th:unless="${isForSalesperson}">
+					   		<div th:replace="~{products/product_images :: content}" ></div>
+					   </th:block>
+					    <th:block th:if="${isForSalesperson}">
+					   		<div th:replace="~{products/product_images_readonly :: content}" ></div>
+					   </th:block>
 					   
 				  </div>
 				  <div class="tab-pane p-3 " id="details" role="tabpanel" >
-					   <div th:replace="~{products/product_details :: content}" sec:authorize="hasAnyAuthority('Admin', 'Editor')"></div>
-					   <div th:replace="~{products/product_details_readonly :: content}" sec:authorize="hasAuthority('Salesperson')"></div>
-					  <div >
-						  <button type="button" class="btn btn-info mx-3 mt-2 " onclick="addNextDetailSection()" sec:authorize="hasAnyAuthority('Admin', 'Editor')">Add More Details</button>
-					  </div>
+					   <th:block th:unless="${isForSalesperson}">
+					   		<div th:replace="~{products/product_details :: content}" ></div>
+					   		<div >
+							  <button type="button" class="btn btn-info mx-3 mt-2 " onclick="addNextDetailSection()" >Add More Details</button>
+						  </div>
+					   </th:block>
+					   
+					    <th:block th:if="${isForSalesperson}">
+					   		<div th:replace="~{products/product_details_readonly :: content}" ></div>
+					   </th:block>
+					  
 				  </div>
 				  <div class="tab-pane" id="shipping" role="tabpanel" >
-					   <div th:replace="~{products/product_shipping :: content}" sec:authorize="hasAnyAuthority('Admin', 'Editor')"></div>
-					   <div th:replace="~{products/product_shipping_readonly :: content}" sec:authorize="hasAuthority('Salesperson')"></div>
+					   <th:block th:unless="${isForSalesperson}">
+					   		<div th:replace="~{products/product_shipping :: content}" ></div>
+					   </th:block>
+					   
+					    <th:block th:if="${isForSalesperson}">
+					   		<div th:replace="~{products/product_shipping_readonly :: content}" ></div>
+					   </th:block>
 				  </div>
 				</div>				
 			</div>
@@ -83,7 +103,7 @@
 	
 	
 </script> 
-
+<script th:src="@{/js/common.js}"></script>
 <script th:src="@{/js/common_form.js}"></script>
 <script th:src="@{/js/product_form.js}"></script>
 

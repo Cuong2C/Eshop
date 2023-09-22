@@ -3,9 +3,9 @@
 <head th:replace="~{fragments :: page_head('Eshop - List of Users', 'none')}"/>
 <body>
 
-	<div class="container-fluid">
+	<div class="container-fluid p-0">
 		<div th:replace="navigation :: menu" ></div>
-		<div>
+		<div class="m-2">
 			<h2>Manage Users</h2>
 			<a th:href="@{/users/new}" class="fa-solid fa-user-plus fa-2x" title="Add a new User"></a>
 			&nbsp;|&nbsp;
@@ -22,16 +22,16 @@
 		<div class="m-2" >
 			<div th:replace="~{fragments :: search_form('/users')}" ></div>
 		</div>
-		<div class="full-details">
+		<div class="full-details m-2">
 			<table class="table table-reponsive-xl table-bordered table-striped table-hover">
 				<thead class="thead-dark">
 					<tr>
 		
-					<th th:replace="fragments :: column_Link('/users','id', 'User ID')" />
+					<th th:replace="~{fragments :: column_Link('/users','id', 'User ID')}"/>
 					<th>Photo</th>
-					<th th:replace="fragments :: column_Link('/users','email', 'Email')" />
-					<th th:replace="fragments :: column_Link('/users','firstName', 'Fisrt Name')" />
-					<th th:replace="fragments :: column_Link('/users','lastName', 'Last Name')" />
+					<th th:replace="~{fragments :: column_Link('/users','email', 'Email')}" />
+					<th th:replace="~{fragments :: column_Link('/users','firstName', 'Fisrt Name')}" />
+					<th th:replace="~{fragments :: column_Link('/users','lastName', 'Last Name')}" />
 					
 					<th>Roles</th>
 					<th>Enabled</th>
@@ -65,8 +65,8 @@
 			</table>
 		</div>
 		
-		<div class="less-details">
-			<div  th:each="user:${listUsers}" class="row">
+		<div class="less-details m-1">
+			<div  th:each="user:${listUsers}" class="row my-2">
 				<div class="col-2 text-center">[[${user.id}]]</div>
 				<div class="col-4">
 					<i th:if="${user.photos==null}" class="fa-solid fa-image-portrait fa-3x icon-dark my-2"></i>
@@ -90,9 +90,9 @@
 		
 		<div th:replace="~{fragments :: pagination('/users','users')}" ></div>
 		
-		<div th:replace="fragments :: confirm_modal" ></div>
+		<div th:replace="~{fragments :: confirm_modal}" ></div>
 		
-		<div th:replace="fragments :: footer" ></div>
+		<div th:replace="~{fragments :: footer}" ></div>
 	</div>
 <script th:src="@{/js/common_list.js}"></script>
 <script type="text/javascript">
@@ -106,6 +106,6 @@
 	});
 
 </script>
-
+<script th:src="@{/js/common.js}"></script>
 </body>
 </html>

@@ -1,0 +1,36 @@
+server:
+  port: 8081
+  servlet:
+    context-path: /Eshop
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    password: ${DB_PASSWORD:Cuong23111994@}
+    url: jdbc:mysql://${MYSQL_HOST:localhost}:3306/eshopdb
+    username: ${DB_USER:root}
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL8Dialect
+    show-sql: true
+
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            client-id: 802769576404-if0c8f4dqe1jl16ta5qg8os6d6t7loq4.apps.googleusercontent.com
+            client-secret: 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
+            scope:
+            - email
+            - profile
+          facebook:
+            client-id: 2236264266560858
+            client-secret: b35469a1d491d1594efe0557a2d7a122
+            scope:
+            - email
+            - public_profile
+          
+ 

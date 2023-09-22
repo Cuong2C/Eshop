@@ -25,6 +25,8 @@ import com.eshop.common.entity.Category;
 import com.eshop.common.entity.Product;
 import com.eshop.common.exception.ProductNotFoundException;
 
+import jakarta.servlet.http.HttpServletResponse;
+
 @Controller
 public class ProductController {
 	
@@ -43,7 +45,7 @@ public class ProductController {
 	}
 	
 	@GetMapping("/products/page/{pageNum}")
-	public String listByPage(@PathVariable(name="pageNum") int pageNum, Model model, @Param("sortField") String sortField,  @Param("sortDir") String sortDir,@Param("keyword") String keyword, @Param("categoryId") Integer categoryId ) {
+	public String listByPage(@PathVariable(name="pageNum") int pageNum, Model model, String sortField, String sortDir, String keyword, @Param("categoryId") Integer categoryId ) {
 		if(sortDir == null || sortDir.isEmpty()) {
 			sortDir = "asc";
 		}	
@@ -102,11 +104,15 @@ public class ProductController {
 			@RequestParam(name = "imageNames", required = false) String[] imageNames,
 			@AuthenticationPrincipal EshopUserDetails loggedUser
 			) throws IOException {
-		if(loggedUser.hasRole("Salesperson")) {
-			productService.saveProductSalesPerson(product);
-			redirect.addFlashAttribute("message", "The product has been saved successfully");
-			return "redirect:/products";
+		
+		if (!loggedUser.hasRole("Admin") && !loggedUser.hasRole("Editor")) {
+			if (loggedUser.hasRole("Salesperson")) {
+				productService.saveProductSalesPerson(product);
+				redirect.addFlashAttribute("message", "The product has been saved successfully.");			
+				return "redirect:/products";
+			}
 		}
+		
 
 		ProductHelper.setMainImageName(mainImageMultipart, product);
 		ProductHelper.setExistingExtraImgName(imageIDs, imageNames, product);
@@ -150,12 +156,20 @@ public class ProductController {
 	}
 	
 	@GetMapping("products/edit/{id}")
-	public String editProduct(@PathVariable("id") Integer id, Model model, RedirectAttributes redirect) {
+	public String editProduct(@PathVariable("id") Integer id, Model model, RedirectAttributes redirect, @AuthenticationPrincipal EshopUserDetails loggedUser) {
 		try {
 			Product product = productService.get(id);
 			List<Brand> listBrands = brandService.listAll();
 			Integer numberExistExtraImg = product.getImages().size();
 			
+			boolean isForSalesperson = false;
+			if (!loggedUser.hasRole("Admin") && !loggedUser.hasRole("Editor")) {
+				if (loggedUser.hasRole("Salesperson")) {
+					 isForSalesperson = true;
+				}
+			}
+			
+			model.addAttribute("isForSalesperson", isForSalesperson);
 			model.addAttribute("product", product);
 			model.addAttribute("listBrands", listBrands);
 			model.addAttribute("pageTitle", "Edit product ID: " + id);
@@ -182,6 +196,13 @@ public class ProductController {
 			
 			return "redirect:/products";
 		}
+	}
+	
+	@GetMapping("/products/export/csv")
+	public void exportCSV(HttpServletResponse reponse) throws IOException {
+		List<Product> listProducts = productService.listAll();
+		ProductCsvExporter exporter = new ProductCsvExporter();
+		exporter.export(listProducts, reponse);
 	}
 
 }

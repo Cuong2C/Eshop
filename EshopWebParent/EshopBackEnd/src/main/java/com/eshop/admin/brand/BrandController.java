@@ -5,7 +5,6 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
@@ -39,7 +38,7 @@ public class BrandController {
 	}
 	
 	@GetMapping("/brands/page/{pageNum}")
-	public String listByPage(@PathVariable(name="pageNum") int pageNum, Model model, @Param("sortDir") String sortDir,@Param("keyword") String keyword ) {
+	public String listByPage(@PathVariable(name="pageNum") int pageNum, Model model, String sortDir, String keyword ) {
 		if(sortDir == null || sortDir.isEmpty()) {
 			sortDir = "asc";
 		}	

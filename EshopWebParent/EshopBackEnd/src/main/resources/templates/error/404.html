@@ -1,19 +1,19 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
-<head th:replace="fragments :: page_head('Error-Eshop Admin', 'none')"/>
+<head th:replace="~{fragments :: page_head('Error-Eshop Admin', 'none')}"/>
 <body>
 
-	<div class="container-fluid">
+	<div class="container-fluid p-0">
 		<div th:replace="navigation :: menu" ></div>
 		
 		<div class="text-center m-5">
 			<h2>Sorry! The page could not be found</h2>
 		</div>
 
-		<div th:replace="fragments :: footer" ></div>
+		<div th:replace="~{fragments :: footer}" ></div>
 	</div>
 
 
-
+<script th:src="@{/js/common.js}"></script>
 </body>
 </html>

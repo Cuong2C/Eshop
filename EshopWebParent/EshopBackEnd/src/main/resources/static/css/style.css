@@ -45,6 +45,14 @@
     height: 200px !important; 
 }
   
+.navtext{
+	font-size: 1.15rem;
+}
+
+
+.title{
+	color:  #fe9765;
+}
 
 
 @media screen and (max-width: 768px) {

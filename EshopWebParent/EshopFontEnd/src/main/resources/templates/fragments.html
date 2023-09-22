@@ -5,7 +5,7 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<meta name="viewport" content="width=divice-width, initial-scale=1.0, minimum-scale=1.0">
 
-	<title>[[${tittle}]]</title>
+	<title>[[${tittle}]] - [[${SITE_NAME}]]</title>
 
 	<link rel="stylesheet" type="text/css" th:href="@{/css/style.css}" />
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
@@ -78,17 +78,76 @@
 				</div>
 			</a>
 			<div th:if="${product.discountPercent <= 0}">
-				<span style="font-size: larger; color: #fe9765;">$[[${product.price}]]</span>
+				<span style="font-size: larger; color: #fe9765;">
+					<div th:replace="~{fragments :: product_price_symbol(${product.price})}" ></div>
+				</span>
 			</div>
+			
 			<div th:if="${product.discountPercent > 0}">
-				<span style="font-size: larger; color: #fe9765;">$[[${product.discountPrice}]]</span>
-				<del><span>$[[${product.price}]]</span></del>
+				<span style="font-size: larger; color: #fe9765;">
+					<div th:replace="~{fragments :: product_price_symbol(${product.discountPrice})}" ></div>
+				</span>
+				<del>
+					<div th:replace="~{fragments :: product_price_symbol(${product.price})}" ></div>
+				</del>
+	
 			</div>
 			
 		</div>
 	</div>
 	
-
+	<div th:fragment="product_price_symbol(productPrice)" th:remove="tag">
+		<span th:if="${CURRENCY_SYMBOL_POSITION == 'Before price'}" th:remove="tag">[[${CURRENCY_SYMBOL}]]</span>
+		<span>[[${#numbers.formatDecimal(productPrice, 1, THOUSANDS_POINT_TYPE, DECIMAL_DIGITS, DECIMAL_POINT_TYPE)}]]</span>
+		<span th:if="${CURRENCY_SYMBOL_POSITION == 'After price'}" th:remove="tag">[[${CURRENCY_SYMBOL}]]</span>
+	</div>
+	
+	<div th:fragment="product_price_symbol_cart(productPrice, product_id, class)" th:remove="tag">
+		<span th:if="${CURRENCY_SYMBOL_POSITION == 'Before price'}" th:remove="tag">[[${CURRENCY_SYMBOL}]]</span>
+		<span th:id="${product_id}" th:class="${class}">[[${#numbers.formatDecimal(productPrice, 1, THOUSANDS_POINT_TYPE, DECIMAL_DIGITS, DECIMAL_POINT_TYPE)}]]</span>
+		<span th:if="${CURRENCY_SYMBOL_POSITION == 'After price'}" th:remove="tag">[[${CURRENCY_SYMBOL}]]</span>
+	</div>
+	
+	<div th:fragment="modal_dialog"  class="modal" tabindex="-1" id="modalDialog">
+	  <div class="modal-dialog">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <h5 class="modal-title">Warning</h5>
+	        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+	          <span aria-hidden="true">&times;</span>
+	        </button>
+	      </div>
+	      <div class="modal-body" id="modalBody">
+	       
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> 
+	      </div>
+	    </div>
+	  </div>
+	</div>	
+	
+	<div th:fragment="confirm_modal"  class="modal" tabindex="-1" id="confirmModal">
+	  <div class="modal-dialog">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <h5 class="modal-title">Delete Confirmation</h5>
+	        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+	          <span aria-hidden="true">&times;</span>
+	        </button>
+	      </div>
+	      <div class="modal-body" >
+	       		<span id="confirmText"></span>
+	      </div>
+	      <div class="modal-footer">
+			  <a type="button" class="btn btn-success" href="" id="yesBtn">Yes</a> 
+	         <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button> 
+	      </div>
+	    </div>
+	  </div>
+	</div>	
+	
+	
 	<div th:fragment="footer" class="text-center">
 		<p>Eshop Control Panel - Copyright &copy; Eshop</p>
 	</div>

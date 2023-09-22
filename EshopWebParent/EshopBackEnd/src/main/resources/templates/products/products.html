@@ -3,11 +3,11 @@
 <head th:replace="~{fragments :: page_head('Eshop - Products', 'none')}"/>
 <body>
 
-	<div class="container-fluid">
+	<div class="container-fluid p-0">
 		<div th:replace="navigation :: menu" ></div>
-		<div>
+		<div class="m-2">
 			<h2>Manage Products</h2>
-			<a sec:authorize="hasAnyAuthority('Admin', 'Editor')" th:href="@{/products/new}" class="fa-solid fa-folder-plus fa-2x" title="Add a new Categories"></a>
+			<a sec:authorize="hasAnyAuthority('Admin', 'Editor')" th:href="@{/products/new}" class="fa-solid fa-folder-plus fa-2x" title="Add a new Product"></a>
 			&nbsp; &nbsp;
 			<a sec:authorize="hasAnyAuthority('Admin', 'Editor')" th:href="@{/products/export/csv}" class="fa-solid fa-file-csv fa-2x" title="Export to CSV"></a>
 			
@@ -36,16 +36,16 @@
 			
 		</div>
 		
-		<div class="full-details">
+		<div class="full-details m-2">
 			<table class="table table-reponsive-xl table-bordered table-striped table-hover">
 				<thead class="thead-dark">
 					<tr>
 		
-					<th th:replace="fragments :: column_Link('/products','id', 'ID')" />
+					<th th:replace="~{fragments :: column_Link('/products','id', 'ID')}" />
 					<th>Image</th>
-					<th th:replace="fragments :: column_Link('/products','name', 'Product Name')" />
-					<th th:replace="fragments :: column_Link('/products','brand', 'Brand')" />
-					<th th:replace="fragments :: column_Link('/products','category', 'Category')" />
+					<th th:replace="~{fragments :: column_Link('/products','name', 'Product Name')}" />
+					<th th:replace="~{fragments :: column_Link('/products','brand', 'Brand')}" />
+					<th th:replace="~{fragments :: column_Link('/products','category', 'Category')}" />
 					<th sec:authorize="hasAnyAuthority('Admin', 'Editor', 'Salesperson')">Enabled</th>
 					<th></th>
 					</tr>
@@ -82,7 +82,7 @@
 		</div>
 		
 		<div class="less-details">
-			<div  th:each="product:${listProducts}" class="row">
+			<div  th:each="product:${listProducts}" class="row my-2">
 				<div class="col-1 text-center">[[${product.id}]]</div>
 				<div class="col-4 br-1">
 					<img th:unless="${product.mainImage == null || product.mainImage.isEmpty()}" th:src="@{${product.mainImagePath}}" style="width: auto; height: 90px;" />	
@@ -105,7 +105,7 @@
 		</div>
 		
 
-		<div th:replace="fragments :: confirm_modal" ></div>
+		<div th:replace="~{fragments :: confirm_modal}" ></div>
 		
 		<div class="modal fade" id="detailModal">
 			<div class="modal-dialog modal-xl">
@@ -115,7 +115,7 @@
 		
 		<div th:replace="~{fragments :: pagination('/products','products')}" ></div>
 		
-		<div th:replace="fragments :: footer" ></div>
+		<div th:replace="~{fragments :: footer}" ></div>
 	</div>
 		
 <script th:src="@{/js/common_list.js}"></script>
@@ -142,5 +142,6 @@
 	});
 	
 </script>
+<script th:src="@{/js/common.js}"></script>
 </body>
 </html>

@@ -44,7 +44,7 @@ public class WebSecurityConfig {
 	@Bean
 	SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception{
 		http.authorizeHttpRequests(auth->auth
-				.requestMatchers("/users/**","/settings/**").hasAuthority("Admin")
+				.requestMatchers("/users/**","/settings/**", "/countries/**", "/states/**").hasAuthority("Admin")
 				.requestMatchers("/categories/**","/brands/**","/articles/**","/menu/**").hasAnyAuthority("Admin", "Editor")
 				
 				.requestMatchers("/products/new", "/products/delete/**" ).hasAnyAuthority("Admin","Editor")
@@ -53,20 +53,21 @@ public class WebSecurityConfig {
 				.requestMatchers("/products/**").hasAnyAuthority("Admin","Editor")
 				
 				.requestMatchers("/customer/**","/report/**").hasAnyAuthority("Admin","Salesperson")
-				.requestMatchers("/shipping/**").hasAnyAuthority("Admin","Shipper")
+				.requestMatchers("/shipping_rates/**").hasAnyAuthority("Admin","Shipper")
 				.requestMatchers("/orders/**").hasAnyAuthority("Admin","Salesperson","Shipper")		
 				.anyRequest().authenticated());
-		http.csrf((csrf) -> csrf.disable())
-			.formLogin(form ->form
+		http.formLogin(form ->form
 					.loginPage("/login")
 					.usernameParameter("email")
 					.defaultSuccessUrl("/")
+					.permitAll());
+		http.logout(logout->logout
 					.permitAll())
-			.logout(logout->logout
-					.logoutUrl("/logout")
-					.logoutSuccessUrl("/login?logoutSuccess=true")
-					.permitAll())
-			.rememberMe(Customizer.withDefaults());
+					
+			.rememberMe(me -> me
+		            .key("RememberMeKey")
+		            .tokenValiditySeconds(7*24*60*60));
+	
 		return http.build();
 	}
 	

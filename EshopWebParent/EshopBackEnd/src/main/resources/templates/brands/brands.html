@@ -3,11 +3,11 @@
 <head th:replace="~{fragments :: page_head('Eshop - Brands', 'none')}"/>
 <body>
 
-	<div class="container-fluid">
+	<div class="container-fluid p-0">
 		<div th:replace="navigation :: menu" ></div>
-		<div>
+		<div class="m-2">
 			<h2>Manage Brands</h2>
-			<a th:href="@{/brands/new}" class="fa-solid fa-folder-plus fa-2x" title="Add a new Categories"></a>
+			<a th:href="@{/brands/new}" class="fa-solid fa-folder-plus fa-2x" title="Add a new Brand"></a>
 			&nbsp;|&nbsp;
 			<a th:href="@{/brands/export/csv}" class="fa-solid fa-file-csv fa-2x" title="Export to CSV"></a>
 			
@@ -20,7 +20,7 @@
 			<div th:replace="~{fragments :: search_form('/brands')}" ></div>
 		</div>
 		
-		<div class="full-details">
+		<div class="full-details m-2">
 			<table class="table table-reponsive-xl table-bordered table-striped table-hover">
 				<thead class="thead-dark">
 					<tr>
@@ -62,8 +62,8 @@
 			</table>
 		</div>
 		
-		<div class="less-details">
-			<div th:each="brand:${listBrands}" class="row">
+		<div class="less-details m-1">
+			<div th:each="brand:${listBrands}" class="row my-2">
 				<div class="col-2 text-center">[[${brand.id}]]</div>
 				<div class="col-4">
 					<<img th:if="${brand.logo == null || brand.logo.isEmpty()}" th:src="@{/images/defaultCate.jpg}" style="width: 100px; height: 75px;" />	
@@ -83,9 +83,9 @@
 		
 		<div th:replace="~{fragments :: pagination('/brands','brands')}" ></div>
 		
-		<div th:replace="fragments :: confirm_modal" ></div>
+		<div th:replace="~{fragments :: confirm_modal}" ></div>
 		
-		<div th:replace="fragments :: footer" ></div>
+		<div th:replace="~{fragments :: footer}" ></div>
 	</div>
 		
 <script th:src="@{/js/common_list.js}"></script>
@@ -101,5 +101,6 @@
 	});
 	
 </script>
+<script th:src="@{/js/common.js}"></script>
 </body>
 </html>

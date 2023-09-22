@@ -3,9 +3,9 @@
 <head th:replace="~{fragments :: page_head('Eshop - Categories', 'none')}"/>
 <body>
 
-	<div class="container-fluid">
+	<div class="container-fluid p-0">
 		<div th:replace="navigation :: menu" ></div>
-		<div>
+		<div class="m-2">
 			<h2>Manage Categories</h2>
 			<a th:href="@{/categories/new}" class="fa-solid fa-folder-plus fa-2x" title="Add a new Categories"></a>
 			&nbsp;|&nbsp;
@@ -19,7 +19,7 @@
 		<div class="m-2" >
 			<div th:replace="~{fragments :: search_form('/categories')}" ></div>
 		</div>
-		<div class="full-details">
+		<div class="full-details m-2">
 			<table class="table table-reponsive-xl table-bordered table-striped table-hover">
 				<thead class="thead-dark">
 					<tr>
@@ -64,8 +64,8 @@
 			</table>
 		</div>
 		
-		<div class="less-details">
-			<div th:each="cat:${listCategories}" class="row">
+		<div class="less-details m-1">
+			<div th:each="cat:${listCategories}" class="row my-2">
 				<div class="col-2 text-center">[[${cat.id}]]</div>
 				<div class="col-4">
 					<img th:if="${cat.image == null || cat.image.isEmpty()}" th:src="@{/images/defaultCate.jpg}" style="width: 75px; height: 100px;" />
@@ -97,9 +97,9 @@
 			<div th:replace="~{fragments :: pagination('/categories','top-level categories')}" ></div>	
 		</div>
 		
-		<div th:replace="fragments :: confirm_modal" ></div>
+		<div th:replace="~{fragments :: confirm_modal}" ></div>
 		
-		<div th:replace="fragments :: footer" ></div>
+		<div th:replace="~{fragments :: footer}" ></div>
 	</div>
 		
 <script th:src="@{/js/common_list.js}"></script>
@@ -114,5 +114,6 @@
 		});
 	});
 </script>
+<script th:src="@{/js/common.js}"></script>
 </body>
 </html>

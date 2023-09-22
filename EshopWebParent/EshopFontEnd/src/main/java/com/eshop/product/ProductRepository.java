@@ -16,4 +16,6 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
 	
 	@Query(value = "SELECT * FROM products WHERE enabled = true AND MATCH(name, short_description,full_description) AGAINST (?1)", nativeQuery = true)
 	public Page<Product> search(String keyword, Pageable pageable);
+	
+	
 }

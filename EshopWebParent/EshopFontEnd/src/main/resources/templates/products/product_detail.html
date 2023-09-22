@@ -4,10 +4,10 @@
 
 </head>
 <body>
-	<div class="container-fluid  bg-light">
+	<div class="container-fluid  bg-light p-0">
 		<div th:replace="~{navigation :: header_menu}" ></div>
+	<div class="my-2 container bg-white">
 		<div th:replace="~{navigation :: search_nav}" ></div>
-	<div class="container bg-white">
 		<div th:replace="~{breadcrumb :: content}" ></div>
 		
 		<div class="row">
@@ -37,23 +37,41 @@
 					<span>Brand: [[${product.brand.name}]]</span>
 				</div>
 				<div th:if="${product.discountPercent <= 0}">
-					<span style="font-size:larger; color: #fe9765;"><b>$[[${product.price}]]</b></span>
+					<span style="font-size:larger; color: #fe9765;">
+						<b>
+							<div th:replace="~{fragments :: product_price_symbol(${product.price})}" ></div>
+						</b>
+					</span>
 				</div>
-				<div th:if="${product.discountPercent > 0}">
-					<del><span>$[[${product.price}]]</span></del>
-					<span style="font-size:larger; color: #fe9765;"><b>$[[${product.discountPrice}]]</b></span> <span style="font-size: 90%; color: #fe9765;">([[${product.discountPercent}]] % OFF)</span>
+				
+				<div th:if="${product.discountPercent > 0}">   
+					<del>
+						<span>
+							<div th:replace="~{fragments :: product_price_symbol(${product.price})}" ></div>
+						</span>
+					</del>
+					<div class="d-inline-block" style="font-size:larger; color: #fe9765;">  
+						<b >
+							<div th:replace="~{fragments :: product_price_symbol(${product.discountPrice})}" ></div>
+						</b>
+					</div>
+			 			<span style="font-size: 90%; color: #fe9765;">([[${product.discountPercent}]] % OFF)</span>
 				</div>
+				
 				<div class="my-2" th:utext="${product.shortDescription}"></div>
 				
 				<div>
 					<span th:if="${product.inStock}" class="text-success"><b>In Stock</b></span>
-					<span th:unless="${product.inStock}" class="text-success"><b>Out Of Stock</b></span>
-					<input type="text" size="5" value="1"/>
+					<span th:unless="${product.inStock}" class="text-danger"><b>Out Of Stock</b></span>
+					
 				</div>
-				<div class="my-2">
-					<input type="button" value="Add To Cart" class="btn btn-outline-primary"/>
+				<th:block th:if="${product.inStock}">
+				<div th:replace="~{cart/quantity_control :: quantity_control(1, ${product.id})}" ></div>
+				<div class="my-2" >
+					<input type="button" id="buttonAddToCart" value="Add To Cart" class="btn btn-outline-primary"/>
 					<input type="button" value="Buy Now" class="btn btn-primary"/>
-				</div>			
+				</div>	
+				</th:block>		
 			</div>
 					
 		</div>
@@ -89,11 +107,17 @@
 		
 		<div th:replace="~{products/images_carousel :: content}" ></div>
 		</div>
+		<div th:replace="~{fragments :: modal_dialog}" ></div>
 		<div th:replace="~{navigation :: footer_menu}" ></div>
 		
 	</div>
 	
 <script type="text/javascript">
+	contextPath = "[[@{/}]]";
+	productId = "[[${product.id}]]";
+	var csrfHeaderName = "[[${_csrf.headerName}]]";
+	var csrfValue = "[[${_csrf.token}]]";	
+	
 	$(document).ready(function(){
 		bigImage = $("#bigImage");
 		$(".image-thumbnail").mouseover(function(){
@@ -106,12 +130,14 @@
 		
 		bigImage.on("click", function(){
 			$("#carouselModal").modal("show");
-			imageIndex = parseInt(bigImage.attr("index"));
+			imageIndex = parseInt(bigImage.attr("index"));  
 			$("#carouselExampleIndicators").carousel(imageIndex);
 		})
-		
 	});
 	
 </script>	
+<script type="text/javascript" th:src="@{/js/quantity_control.js}"></script>
+<script type="text/javascript" th:src="@{/js/common_modal.js}"></script>
+<script type="text/javascript" th:src="@{/js/add_to_cart.js}"></script>
 </body>
 </html>

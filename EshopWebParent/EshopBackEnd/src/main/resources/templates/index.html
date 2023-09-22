@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
-<head th:replace="fragments :: page_head('HomePage-Eshop Admin','none')"/>
+<head th:replace="~{fragments :: page_head('HomePage-Eshop Admin','none')}"/>
 
 
 <body>
 
-	<div class="container-fluid">
+	<div class="container-fluid p-0">
 		<div th:replace="navigation :: menu" ></div>
 		
-		<div>
+		<div class="m-2">
 			<h1>Eshop control panel</h1>
 			Welcome <a th:href="@{/account}" sec:authentication="principal.fullName"></a>
 			<span sec:authentication="principal.authorities" ></span>
@@ -18,6 +18,6 @@
 	</div>
 
 
-
+<script th:src="@{/js/common.js}"></script>
 </body>
 </html>
