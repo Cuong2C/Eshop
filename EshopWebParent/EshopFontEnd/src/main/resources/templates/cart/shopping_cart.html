@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" >
+<head th:replace="~{fragments :: page_head('HomePage-Eshop','none')}"/>
+
+</head>
+<body>
+	<div class="container-fluid bg-light p-0">
+		<div th:replace="~{navigation :: header_menu}" ></div>
+		<div th:replace="~{navigation :: search_nav}" ></div>
+	
+	<section >
+	  <div class="container py-5 ">
+	    <div class="row d-flex justify-content-center align-items-center">
+	      <div class="col-12 p-0">
+	        <div class="card card-registration card-registration-2" style="border-radius: 15px;">
+	          <div class="card-body p-0">
+				  
+	            <div class="row ">
+	              <div class="col-lg-9">
+	                <div class="p-4">
+	                  <div class="d-flex justify-content-between align-items-center mb-3">
+	                    <h1 class="fw-bold  title">Shopping Cart</h1>
+	                    <h5 class="mb-0 text-muted itemCount">Item [[${cartItems.size}]]</h5>
+	                  </div>
+	                  
+	                  <hr class="my-4">
+						<div class="text-center m-2" th:if="${#lists.isEmpty(cartItems)}">
+							<h3>You have not chosen any products yet.</h3>
+						</div>
+					
+					<th:block th:each="item, status : ${cartItems}" >
+					 <div th:id="'row' + ${status.count}">
+	                  <div class="row mb-4 d-flex justify-content-between align-items-center" th:with="product = ${item.product}" >
+	                    <div class="col-md-2 col-lg-2 col-xl-2">
+	                      <img th:src="@{${product.mainImagePath}}" class="img-fluid rounded-3" alt="">
+	                    </div>
+	                    <div class="col-md-3 col-lg-3 col-xl-3">
+	                      <a th:href="@{'/p/' + ${product.alias}}" target="_blank" th:title="${product.name}">
+							<p>[[${product.shortNameSmallScreen}]]</p>
+						</a>
+	                    </div>
+	                    <div class="col-md-3 col-lg-3 col-xl-2">
+	                     	<div th:replace="~{cart/quantity_control :: quantity_control(${item.quantity}, ${product.id})}"></div>
+	                    </div>
+	                    <div class="col-md-3 col-lg-3 col-xl-3 ">
+	                      	<div th:if="${product.discountPercent <= 0}">
+								<span style="font-size:larger; color: #fe9765;">
+								
+										<div th:replace="~{fragments :: product_price_symbol_cart(${product.price}, '', '')}" ></div>
+									
+								</span>
+							</div>
+							<div th:if="${product.discountPercent > 0}">
+								<del>
+									<span>
+										<div th:replace="~{fragments :: product_price_symbol_cart(${product.price}, '', '')}" ></div>
+									</span>
+								</del>
+								<div style="font-size:larger; color: #fe9765;">
+									
+										<div th:replace="~{fragments :: product_price_symbol_cart(${product.discountPrice}, '', '')}" ></div>
+								</div>
+						 			
+							</div>
+								<i class="fa-solid fa-equals"></i> <b style="font-size:larger;"><div th:replace="~{fragments :: product_price_symbol_cart(${item.subtotal},'subtotal' + ${product.id},'subtotal')}" ></div></b>
+							
+	                    </div>
+	                    
+	                    
+	                    <div class="col-md-1 col-lg-1 col-xl-1 text-end">
+							
+	                      <a class="fa-solid fa-trash fa-2x text-muted linkRemove" th:rowNumber="${status.count}" th:href="@{'/cart/remove/' + ${product.id}}" title="Remove this product form cart"></a>
+	                    </div>
+	                  </div>
+						<hr class="my-4">
+					 </div>
+					</th:block>
+	
+	                  <div class="pt-5">
+	                    <h6 class="mb-0"><a href="javascript: history.go(-1)" class="text-body"><i class="fas fa-long-arrow-alt-left me-2"></i>Back to shop</a></h6>
+	                  </div>
+	                </div>
+	              </div>
+	              <div class="col-lg-3 bg-grey">
+	                <div class="p-3">
+	                  <h3 class="fw-bold mb-5 mt-2 pt-1 title">Summary</h3>
+	                  <hr class="my-4">
+	
+	                  <div class="d-flex justify-content-between mb-4">
+	                    <h5 class="text-uppercase">sub total</h5>
+	                   	<h5><div th:replace="~{fragments :: product_price_symbol_cart(${estimatedTotal},'total','total')}" ></div></h5>
+	                  </div>
+	
+	                  <h5 class="text-uppercase mb-3">Shipping</h5>
+	
+	                  <div class="mb-4 pb-2">
+	                    <select class="select">
+	                      <option value="1">Standard-Delivery- €5.00</option>
+	                      <option value="2"></option>
+	                     
+	                    </select>
+	                  </div>
+	
+	                  <h5 class="text-uppercase mb-3">Give code</h5>
+	
+	                  <div class="mb-5">
+	                    <div class="form-outline">
+	                      <input type="text" id="giveCode" class="form-control form-control-lg" />
+	                      <label class="form-label" for="giveCode">Enter your code</label>
+	                    </div>
+	                  </div>
+	
+	                  <hr class="my-4">
+	
+	                  <div class="d-flex justify-content-between mb-5">
+	                    <h5 class="text-uppercase">Total price</h5>
+	                    <h5><div th:replace="~{fragments :: product_price_symbol_cart(${estimatedTotal}, 'totalprice', 'totalprice')}" ></div></h5>
+	                  </div>
+	                  
+	                  <button type="button" class="btn text-white btn-block btn-lg" style="background-color:  #fe9765;" data-mdb-ripple-color="dark">Check Out</button>
+	
+	                </div>
+	              </div>
+	              
+	            </div>
+	          </div>
+	        </div>
+	      </div>
+	      
+	    </div>
+	  </div>
+	</section>
+		<div th:replace="~{fragments :: modal_dialog}" ></div>
+		<div th:replace="~{navigation :: footer_menu}" ></div>
+	</div>
+<script type="text/javascript">
+	contextPath = "[[@{/}]]";
+	decimalDigits = [[${DECIMAL_DIGITS}]];
+	decimalPointType = "[[${DECIMAL_POINT_TYPE}]]";
+	thousandsPointType = "[[${THOUSANDS_POINT_TYPE}]]";
+		
+	var csrfHeaderName = "[[${_csrf.headerName}]]";
+	var csrfValue = "[[${_csrf.token}]]";
+</script>
+<script type="text/javascript" th:src="@{/js/jquery.number.min.js}"></script>
+<script type="text/javascript" th:src="@{/js/shopping_cart.js}"></script>
+<script type="text/javascript" th:src="@{/js/common_modal.js}"></script>
+</body>
+</html>

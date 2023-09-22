@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" >
+<head th:replace="~{fragments :: page_head(${pageTitle},'none')}"/>
+
+</head>
+<body>
+<div class="container-fluid bg-secondary p-0">
+	<div th:replace="~{navigation :: header_menu}" ></div>
+	
+		
+	<section class="h-100 bg-secondary">
+	  <div class="container  h-100">
+	    <div class="row d-flex justify-content-center align-items-center h-100">
+	      <div class="col">
+	        <div class="card card-registration my-4" style="border-radius: 1rem;">
+	          <div class="row g-0">
+	            <div class="col-xl-6 d-none d-xl-block">
+	              <img th:src="@{/images/LogoBG.jpg}" alt="Sample photo" class="img-fluid"  style="border-top-left-radius: 1rem; border-bottom-left-radius: 1rem; height: 100%;" />
+	            </div>
+	            <form class="col-xl-6" th:action="@{/create_customer}" method="post" th:object="${customer}" onsubmit="return checkEmailUnique(this);">
+	              <div class="card-body p-md-5 text-black">
+					   <div class="mb-1 ">	
+			               <img th:src="@{/images/EshopLogo.png}" style="max-width: 125px; height: auto;">	                
+			           </div>
+	                <h3 class="mb-3 text-uppercase title" >Customer Registration</h3>
+	
+	                <div class="row">
+	                  <div class="col-md-6 mb-4">
+	                    <div class="form-outline">
+	                      <input type="text"  class="form-control form-control-lg" th:field="*{firstName}" required maxlength="45"/>
+	                      <label class="form-label" for="firstName">First name</label>
+	                    </div>
+	                  </div>
+	                  <div class="col-md-6 mb-4">
+	                    <div class="form-outline">
+	                      <input type="text" class="form-control form-control-lg" th:field="*{lastName}" required maxlength="45"/>
+	                      <label class="form-label" for="lastName">Last name</label>
+	                    </div>
+	                  </div>
+	                </div>
+	
+	
+	                <div class="form-outline mb-4">
+	                  <input type="email"  class="form-control form-control-lg"  th:field="*{email}" required maxlength="45"/>
+	                  <label class="form-label" for="email" >Email</label>
+	                </div>
+	                
+	                 <div class="row">
+	                  <div class="col-md-6 mb-4">
+	                    <div class="form-outline">
+	                      <input type="password"  class="form-control form-control-lg"  required 
+	                      minlength="8" maxlength="24" th:field="*{password}" oninput="checkPasswordMatch(document.getElementById('confirmPassword'))"/>
+	                      <label class="form-label" for="password">Password</label>
+	                    </div>
+	                  </div>
+	                  <div class="col-md-6 mb-4">
+	                    <div class="form-outline">
+	                      <input type="password" class="form-control form-control-lg" required 
+	                      minlength="8" maxlength="24" id="confirmPassword" oninput="checkPasswordMatch(this)"/>
+	                      <label class="form-label" for="confirmPassword">Re-type Password</label>
+	                    </div>
+	                  </div>
+	                </div>
+	                
+	                <div class="form-outline mb-4">
+	                  <input type="text" class="form-control form-control-lg" th:field="*{phoneNumber}" required minlength="8" maxlength="15"/>
+	                  <label class="form-label" for="phoneNumber">Phone Number</label>
+	                </div>
+	
+				
+	               
+	
+	                <div class="form-outline mb-4">
+	                  <input type="text"  class="form-control form-control-lg" th:field="*{addressLine1}" required maxlength="64"/>
+	                  <label class="form-label" for="addressLine1">Address Line 1</label>
+	                </div>
+	
+	                <div class="form-outline mb-4">
+	                  <input type="text"  class="form-control form-control-lg" th:field="*{addressLine2}" maxlength="64"/>
+	                  <label class="form-label" for="addressLine2">Address Line 2</label>
+	                </div>
+	                
+	                  <div class="row">
+	                   <div class="col-md-6 mb-4">
+						  <div >    
+							  <div >                 
+			                    <select class="form-control form-control-lg" th:field="*{country}">	
+									<th:block th:each="country : ${listCountries}">
+										<option th:value="${country.id}">[[${country.name}]]</option>
+									</th:block>
+			                    </select>
+	               			 </div>   
+	                     	 <label class="form-label" for="country">Country</label>  
+	                      </div>                 
+	                  </div>
+	                   <div class="col-md-6 mb-4">
+	                    <div class="form-outline">
+	                      <input type="text" class="form-control form-control-lg" th:field="*{state}" maxlength="45" list="listStates"/>
+	                       <datalist id="listStates"></datalist>
+	                      <label class="form-label" for="state">State/Province</label>
+	                      
+	                    </div>
+	                  </div>
+	                </div>
+	                
+	                 <div class="row">                  
+	                    <div class="col-md-6 mb-4">
+	                    <div class="form-outline">
+	                      <input type="text"  class="form-control form-control-lg" th:field="*{city}" maxlength="45"/>
+	                      <label class="form-label" for="city">City</label>
+	                    </div>
+	                  </div>
+	                  <div class="col-md-6 mb-4">
+	                    <div class="form-outline">
+	                      <input type="text" class="form-control form-control-lg" th:field="*{postalCode}" minlength="2" maxlength="10"/>
+	                      <label class="form-label" for="postalCode">Postal Code</label>
+	                    </div>
+	                  </div>
+	                </div>
+	
+
+	                <div class="d-flex justify-content-end pt-3">
+	                  <input type="submit" class="btn btn-lg ms-2 text-white" style="background-color:  #fe9765;" value="Create Account"/>
+	                </div>
+	
+	              </div>
+	            </form>
+	          </div>
+	        </div>
+	      </div>
+	    </div>
+	  </div>
+	</section>
+		
+	<div>&nbsp;</div>
+	<div th:replace="~{fragments :: modal_dialog}" ></div>
+	<div th:replace="~{navigation :: footer_menu}" ></div>
+</div>
+	
+	
+<script type="text/javascript">
+	contextPath = "[[@{/}]]";
+
+		function checkEmailUnique(form){
+		url = contextPath + "customers/check_unique_email";
+		customerEmail = $("#email").val();
+		csrfValue = $("input[name='_csrf']").val();
+		params = {email: customerEmail,_csrf: csrfValue};
+		
+		$.post(url, params, function(response){
+			if(response=="OK"){
+				form.submit();
+			}else if(response=="Duplicated"){
+				showWarningModal("There is another Customer using the email: "+ customerEmail);
+			}else{
+				showErrorModal("Unknown response from server");
+			}
+		}).fail(function(){
+				showErrorModal("Could not connect to the server");
+		});
+		
+		return false;
+	}
+
+</script>
+<script type="text/javascript" th:src="@{/js/common_modal.js}"></script>
+<script type="text/javascript" th:src="@{/js/common_customer_form.js}"></script>
+</body>
+</html>

@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<head th:replace="~{fragments :: page_head(${pageTitle}, 'tag')}"/>
+	<link rel="stylesheet" th:href = "@{/richtext/richtext.min.css}"/>
+	<script th:src="@{/richtext/jquery.richtext.min.js}"></script>
+
+</head>
+<body>
+
+	<div class="container-fluid bg-light p-0">
+		<div th:replace="navigation :: menu" ></div>
+		<div class="text-center m-3">
+			<h2>Manage Customer | [[${pageTitle}]]</h2>
+		</div>
+
+		
+		<form class = "container border rounded bg-white" th:action="@{/customers/save}" method="post" th:object="${customer}" onsubmit="return checkUnique(this)" enctype="multipart/form-data" style="max-width: 800px;">
+			<input type="hidden" th:field="*{id}"/>
+			<div class="m-2 p-2">
+				<div class="row">
+                  <div class="col-md-6 mb-2">
+                    <div class="form-outline">
+						<label class="form-label" for="firstName">First name</label>
+                      <input type="text"  class="form-control form-control-lg" th:field="*{firstName}" required maxlength="45"/>
+                      
+                    </div>
+                  </div>
+                  <div class="col-md-6 mb-2">
+                    <div class="form-outline">
+						<label class="form-label" for="lastName">Last name</label>
+                      <input type="text" class="form-control form-control-lg" th:field="*{lastName}" required maxlength="45"/>
+                      
+                    </div>
+                  </div>
+                </div>
+
+
+                <div class="form-outline mb-2">
+					 <label class="form-label" for="email">Email</label>
+                  <input type="email"  class="form-control form-control-lg"  th:field="*{email}" required maxlength="45"/>
+                  
+                </div>
+                
+                <div class="form-outline mb-2">
+					 <label class="form-label" for="password">Password</label>
+                      <input type="password"  class="form-control form-control-lg" minlength="8" maxlength="24" th:field="*{password}" placeholder="Leave blank if you don't want to change password"/> 
+                </div>
+                
+                
+                <div class="form-outline mb-2">
+					<label class="form-label" for="phoneNumber">Phone Number</label>
+                  <input type="text" class="form-control form-control-lg" th:field="*{phoneNumber}" required minlength="8" maxlength="15"/>
+                  
+                </div>     
+
+                <div class="form-outline mb-2">
+					<label class="form-label" for="addressLine1">Address Line 1</label>
+                  <input type="text"  class="form-control form-control-lg" th:field="*{addressLine1}" required maxlength="64"/>
+                  
+                </div>
+
+                <div class="form-outline mb-2">
+					<label class="form-label" for="addressLine2">Address Line 2</label>
+                  <input type="text"  class="form-control form-control-lg" th:field="*{addressLine2}" maxlength="64"/>
+                  
+                </div>
+                
+                  <div class="row">
+                   <div class="col-md-6 mb-2">
+					  <div >
+						  <label class="form-label" for="country">Country</label>    
+						  <div >                 
+		                    <select th:field="*{country}" class="form-control form-control-lg">
+								<option th:each="country : ${listCountries}" th:value="${country.id}">[[${country.name}]]</option>
+							</select>
+               			 </div>   
+                     	
+                      </div>                 
+                  </div>
+                   <div class="col-md-6 mb-2">
+                    <div class="form-outline">
+					  <label class="form-label" for="state">State/Province</label>
+                      <input type="text" class="form-control form-control-lg" th:field="*{state}" required maxlength="45" list="listStates"/>
+                       <datalist id="listStates"></datalist>
+                      
+                      
+                    </div>
+                  </div>
+                </div>
+                
+                 <div class="row">                  
+                    <div class="col-md-6 mb-2">
+                    <div class="form-outline">
+						<label class="form-label" for="city">City</label>
+                      <input type="text"  class="form-control form-control-lg" th:field="*{city}" required maxlength="45"/>
+                      
+                    </div>
+                  </div>
+                  <div class="col-md-6 mb-2">
+                    <div class="form-outline">
+						 <label class="form-label" for="postalCode">Postal Code</label>
+                      <input type="text" class="form-control form-control-lg" th:field="*{postalCode}" required minlength="2" maxlength="10"/>
+                      
+                    </div>
+                  </div>
+                </div>
+	    
+				<div class="text-center m-2">
+					<button type="submit" class="btn btn-primary mx-3 " value="Save">Submit</button>
+					<button type="button" class="btn btn-secondary mx-3 " id="cancelbtn" value="Cancel">Cancel</button>
+				</div>
+			</div>
+		</form>
+
+		<div th:replace="~{fragments :: modal_dialog}" ></div>
+
+		<div th:replace="~{fragments :: footer}" ></div>
+	</div>
+
+
+<script type="text/javascript">
+	contextPath = "[[@{/}]]";
+		moduleURL = "[[@{/customers}]]";
+
+		function checkEmailUnique(form) {
+			customerId = $("#id").val();
+			customerEmail = $("#email").val();
+			csrfValue = $("input[name='_csrf'").val();
+
+			url = "[[@{/customers/check_email}]]";
+			params = {id: customerId, email: customerEmail, _csrf: csrfValue};
+
+			$.post(url, params, function (response) {
+				if (response == "OK") {
+					form.submit();
+				} else if (response == "Duplicated") {
+					showWarningModal("There is another customer having the email " + customerEmail);
+				} else {
+					showErrorModal("Unknown response from server");
+				}
+			}).fail(function () {
+				showErrorModal("Could not connect to the server");
+			});
+
+			return false;
+		}
+</script> 
+<script th:src="@{/js/common.js}"></script>
+<script th:src="@{/js/common_form.js}"></script>
+<script th:src="@{/js/common_form_country_state.js}"></script>
+</body>
+</html>

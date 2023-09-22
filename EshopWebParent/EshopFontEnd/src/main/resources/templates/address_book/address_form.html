@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" >
+<head th:replace="~{fragments :: page_head(${pageTitle},'none')}"/>
+
+</head>
+<body>
+	<div class="container-fluid bg-light p-0">
+		<div th:replace="~{navigation :: header_menu}" ></div>
+		<div th:replace="~{navigation :: search_nav}" ></div>
+	
+		<form class = "container border rounded bg-white " th:action="@{/address_book/save}" method="post" th:object="${address}" enctype="multipart/form-data" style="max-width: 800px;">
+			<input type="hidden" th:field="*{id}"/>
+			<input type="hidden" th:field="*{defaultForShipping}" />	
+			
+               <img class="m-4" th:src="@{/images/EshopLogo.png}" style="width: 125px; height: 75px;">	   
+                            
+           		<div class="d-inline-block">
+			 		<h3 class="mb-3 text-uppercase title " > [[${pageTitle}]] </h3>
+			 	</div>
+
+				<div class="row">
+                  <div class="col-md-6 mb-4">
+                    <div class="form-outline">
+						 <label class="form-label" for="firstName">First name</label>
+                      <input type="text"  class="form-control form-control-lg" th:field="*{firstName}" required maxlength="45"/> 
+                    </div>
+                  </div>
+                  <div class="col-md-6 mb-4">
+                    <div class="form-outline">
+						<label class="form-label" for="lastName">Last name</label>
+                      <input type="text" class="form-control form-control-lg" th:field="*{lastName}" required maxlength="45"/>
+                    </div>
+                  </div>
+                </div>
+	
+	                
+	                <div class="form-outline mb-4">
+						<label class="form-label" for="phoneNumber">Phone Number</label>
+	                  <input type="text" class="form-control form-control-lg" th:field="*{phoneNumber}" required minlength="8" maxlength="15"/>
+	                </div>
+
+	
+	                <div class="form-outline mb-4">
+						 <label class="form-label" for="addressLine1">Address Line 1</label>
+	                  <input type="text"  class="form-control form-control-lg" th:field="*{addressLine1}" required maxlength="64"/>
+	                 
+	                </div>
+	
+	                <div class="form-outline mb-4">
+						 <label class="form-label" for="addressLine2">Address Line 2</label>
+	                  <input type="text"  class="form-control form-control-lg" th:field="*{addressLine2}" maxlength="64"/>
+	                </div>
+	                
+	                  <div class="row">
+	                   <div class="col-md-6 mb-4">
+						  <div >    
+							   <label class="form-label" for="country">Country</label>  
+							  <div >                 
+			                    <select class="form-control form-control-lg" th:field="*{country}">	
+									<th:block th:each="country : ${listCountries}">
+										<option th:value="${country.id}">[[${country.name}]]</option>
+									</th:block>
+			                    </select>
+	               			 </div>   
+	                      </div>                 
+	                  </div>
+	                   <div class="col-md-6 mb-4">
+	                    <div class="form-outline">
+							<label class="form-label" for="state" >State/Province</label>
+	                      <input type="text" class="form-control form-control-lg" th:field="*{state}" maxlength="45" list="listStates"/>
+	                       <datalist id="listStates"></datalist>
+	                    </div>
+	                  </div>
+	                </div>
+	                
+	                 <div class="row">                  
+	                    <div class="col-md-6 mb-4">
+	                    <div class="form-outline">
+							 <label class="form-label" for="city">City</label>
+	                      <input type="text"  class="form-control form-control-lg" th:field="*{city}" required maxlength="45"/> 
+	                    </div>
+	                  </div>
+	                  <div class="col-md-6 mb-4">
+	                    <div class="form-outline">
+							<label class="form-label" for="postalCode" >Postal Code</label>
+	                      <input type="text" class="form-control form-control-lg" th:field="*{postalCode}" required minlength="2" maxlength="10"/> 
+	                    </div>
+	                  </div>
+	                </div>
+	
+
+	                <div class="d-flex justify-content-center pt-3 mb-3">
+	                  <input type="submit" class="btn btn-lg ms-2 text-white" style="background-color:  #fe9765;" value="Save"/> 
+	                </div>
+			
+		</form>
+		<div>&nbsp;</div>
+		<div th:replace="~{navigation :: footer_menu}" ></div>
+	</div>
+<script type="text/javascript">
+	contextPath = "[[@{/}]]";
+</script>
+<script type="text/javascript" th:src="@{/js/common_customer_form.js}"></script>
+</body>
+</html>
