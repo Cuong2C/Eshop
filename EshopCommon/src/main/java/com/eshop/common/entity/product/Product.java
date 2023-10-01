@@ -1,4 +1,4 @@
-package com.eshop.common.entity;
+package com.eshop.common.entity.product;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -6,6 +6,10 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
+
+import com.eshop.common.Constants;
+import com.eshop.common.entity.Brand;
+import com.eshop.common.entity.Category;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -266,7 +270,7 @@ public class Product {
 	@Transient
 	public String getMainImagePath() {
 		if(this.id==null|| this.mainImage == null)return "/images/defaultCate.jpg";
-		return "/product-images/" + this.id + "/" + this.mainImage;
+		return Constants.S3_BASE_URI + "/product-images/" + this.id + "/" + this.mainImage;
 	}
 	
 	public void addDetail(String name, String value) {

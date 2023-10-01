@@ -4,7 +4,6 @@ $(document).ready(function() {
 		document.logoutForm.submit();
 	});
 
-	customizeDropDownMenu();
 	customizeTabs();
 });
 

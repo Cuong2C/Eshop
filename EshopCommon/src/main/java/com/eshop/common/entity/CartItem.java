@@ -1,5 +1,7 @@
 package com.eshop.common.entity;
 
+import com.eshop.common.entity.product.Product;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -27,6 +29,9 @@ public class CartItem {
 
 	private int quantity;
 
+	@Transient
+	private float shippingCost;
+	
 	public CartItem() {
 	}
 
@@ -66,6 +71,15 @@ public class CartItem {
 	public String toString() {
 		return "CartItem [id=" + id + ", customer=" + customer.getFullName() + ", product=" + product.getShortName()
 				+ ", quantity=" + quantity + "]";
+	}
+	
+	@Transient
+	public float getShippingCost() {
+		return shippingCost;
+	}
+
+	public void setShippingCost(float shippingCost) {
+		this.shippingCost = shippingCost;
 	}
 	
 

@@ -12,8 +12,7 @@
 			<a sec:authorize="hasAnyAuthority('Admin', 'Editor')" th:href="@{/products/export/csv}" class="fa-solid fa-file-csv fa-2x" title="Export to CSV"></a>
 			
 		</div>
-		
-		
+
 		<div th:if="${message!=null}" class="alert alert-success text-center">
 			[[${message}]]
 		</div>

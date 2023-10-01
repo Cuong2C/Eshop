@@ -39,26 +39,26 @@
 							<p>[[${product.shortNameSmallScreen}]]</p>
 						</a>
 	                    </div>
-	                    <div class="col-md-3 col-lg-3 col-xl-2">
+	                    <div class="col-5 col-md-3 col-lg-3 col-xl-2">
 	                     	<div th:replace="~{cart/quantity_control :: quantity_control(${item.quantity}, ${product.id})}"></div>
 	                    </div>
-	                    <div class="col-md-3 col-lg-3 col-xl-3 ">
+	                    <div class="col-5 col-md-3 col-lg-3 col-xl-3 ">
 	                      	<div th:if="${product.discountPercent <= 0}">
 								<span style="font-size:larger; color: #fe9765;">
 								
-										<div th:replace="~{fragments :: product_price_symbol_cart(${product.price}, '', '')}" ></div>
+										<div th:replace="~{fragments :: product_price_symbol(${product.price})}" ></div>
 									
 								</span>
 							</div>
 							<div th:if="${product.discountPercent > 0}">
 								<del>
 									<span>
-										<div th:replace="~{fragments :: product_price_symbol_cart(${product.price}, '', '')}" ></div>
+										<div th:replace="~{fragments :: product_price_symbol(${product.price})}" ></div>
 									</span>
 								</del>
 								<div style="font-size:larger; color: #fe9765;">
 									
-										<div th:replace="~{fragments :: product_price_symbol_cart(${product.discountPrice}, '', '')}" ></div>
+										<div th:replace="~{fragments :: product_price_symbol(${product.discountPrice})}" ></div>
 								</div>
 						 			
 							</div>
@@ -67,7 +67,7 @@
 	                    </div>
 	                    
 	                    
-	                    <div class="col-md-1 col-lg-1 col-xl-1 text-end">
+	                    <div class="col-2 col-md-1 col-lg-1 col-xl-1 text-end">
 							
 	                      <a class="fa-solid fa-trash fa-2x text-muted linkRemove" th:rowNumber="${status.count}" th:href="@{'/cart/remove/' + ${product.id}}" title="Remove this product form cart"></a>
 	                    </div>
@@ -91,25 +91,31 @@
 	                   	<h5><div th:replace="~{fragments :: product_price_symbol_cart(${estimatedTotal},'total','total')}" ></div></h5>
 	                  </div>
 	
-	                  <h5 class="text-uppercase mb-3">Shipping</h5>
+						<table>
+							<th:block th:each="item : ${cartItems}">
+							<tr th:with="product = ${item.product}">
+								<td width="65%">
+									<a th:href="@{'/p/' + ${product.alias}}" target="_blank">[[${product.shortNameSmallScreen}]]</a>
+									<br/>
+								</td>
+								<td>
+									<div th:replace="~{fragments :: product_price_symbol_cart(${item.subtotal},'sub_total' + ${product.id},'sub_total')}" ></div>
+								</td>
+							</tr>
+							</th:block>
+							<tr><td colspan="2"><hr/></tr>
+						</table>
+						
+	                  <h5 class="text-uppercase mb-3">Shipping Unit</h5>
 	
 	                  <div class="mb-4 pb-2">
 	                    <select class="select">
-	                      <option value="1">Standard-Delivery- €5.00</option>
-	                      <option value="2"></option>
-	                     
+	                      <option value="1">GrabExpress - Delivery</option>
+	                      <option value="2">Giao hang tiet kiem </option>
 	                    </select>
 	                  </div>
 	
-	                  <h5 class="text-uppercase mb-3">Give code</h5>
-	
-	                  <div class="mb-5">
-	                    <div class="form-outline">
-	                      <input type="text" id="giveCode" class="form-control form-control-lg" />
-	                      <label class="form-label" for="giveCode">Enter your code</label>
-	                    </div>
-	                  </div>
-	
+	                 
 	                  <hr class="my-4">
 	
 	                  <div class="d-flex justify-content-between mb-5">
@@ -117,8 +123,24 @@
 	                    <h5><div th:replace="~{fragments :: product_price_symbol_cart(${estimatedTotal}, 'totalprice', 'totalprice')}" ></div></h5>
 	                  </div>
 	                  
-	                  <button type="button" class="btn text-white btn-block btn-lg" style="background-color:  #fe9765;" data-mdb-ripple-color="dark">Check Out</button>
-	
+	                  <div th:if="${shippingSupported}">
+						<form th:action="@{/checkout}">
+	                  		<button type="submit" class="btn text-white btn-block btn-lg" style="background-color:  #fe9765;" data-mdb-ripple-color="dark">Check Out</button>
+						</form>
+					  </div>
+					  
+					  <div th:unless="${shippingSupported}">
+						<div><span class="h5 text-danger">No shipping available for your location</span></div>
+						
+						<div th:if="${usePrimaryAddressAsDefault}">
+							<a th:href="@{/account_details(redirect=cart)}" class="h6">Update your address</a>
+						</div>
+						
+						<div th:unless="${usePrimaryAddressAsDefault}">
+							<a th:href="@{/address_book(redirect=cart)}" class="h6">Use another shipping address</a>
+						</div>
+					</div>
+					  
 	                </div>
 	              </div>
 	              

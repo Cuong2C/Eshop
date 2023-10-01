@@ -34,15 +34,23 @@
 			</th:block>
 			
 			<div class="col border m-3 p-2" th:id="'divExtraImage' + ${#lists.size(product.images)}">
-				<div th:if="${numberExistExtraImg != null}" th:id="extraImageHeader + ${numberExistExtraImg}"><label >Extra Image #[[${numberExistExtraImg +1}]]:</label></div>
-				<div th:if="${numberExistExtraImg == null}" th:id="extraImageHeader0"><label >Extra Image #1:</label></div>
-				<div class="m-2">
-					<img th:id="'extraThumbnail' + ${numberExistExtraImg}" th:alt="'Extra image #'+${#lists.size(product.images) + 1}+' preview'" class="img-fluid" th:src="@{/images/defaultCate.jpg}" style="width: auto; height: 180px;">
+				<div th:if="${numberExistExtraImg == null}" th:id="extraImageHeader0"><label >Extra Image #1:</label>
+					<div class="m-2">
+					<img th:id="extraThumbnail0" th:alt="'Extra image #'+${#lists.size(product.images) + 1}+' preview'" class="img-fluid" th:src="@{/images/defaultCate.jpg}" style="width: auto; height: 180px;">
+					</div>
+					<div>
+						<input type="file"  name="extraImage" accept="image/png, image/jpeg"/>
+					</div>
+					
 				</div>
-				<div>
-					<input type="file"  name="extraImage" accept="image/png, image/jpeg"/>
+				<div th:if="${numberExistExtraImg != null}" th:id="extraImageHeader + ${numberExistExtraImg}"><label >Extra Image #[[${numberExistExtraImg +1}]]:</label>
+					<div class="m-2">
+						<img th:id="'extraThumbnail' + ${numberExistExtraImg}" th:alt="'Extra image #'+${#lists.size(product.images) + 1}+' preview'" class="img-fluid" th:src="@{/images/defaultCate.jpg}" style="width: auto; height: 180px;">
+					</div>
+					<div>
+						<input type="file"  name="extraImage" accept="image/png, image/jpeg"/>
+					</div>
 				</div>
-				
 			</div>	
 		</div>
 	</div>

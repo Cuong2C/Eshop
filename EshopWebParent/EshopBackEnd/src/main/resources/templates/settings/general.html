@@ -21,7 +21,7 @@
 			<div class="form-group row">
 				<label class="col-sm-4 col-form-label">Site Logo:</label>
 				<div class="col-sm-8">
-					<img th:unless="${SITE_LOGO == null || SITE_LOGO.isEmpty()}" id="thumbnail" alt="Site Logo thumbnail" th:src="@{${SITE_LOGO}}" height="90" width="125" />
+					<img th:unless="${SITE_LOGO == null || SITE_LOGO.isEmpty()}" id="thumbnail" alt="Site Logo thumbnail" th:src="@{${S3_BASE_URI + SITE_LOGO}}" height="90" width="125" />
 					<img th:if="${SITE_LOGO == null || SITE_LOGO.isEmpty()}" id="thumbnail" alt="Site Logo thumbnail" th:src="@{${/images/defaultCate.jpg}}" height="90" width="125" />
 					<input id="fileImg" type="file" name="fileImg" accept="image/png, image/jpeg" />
 				</div>

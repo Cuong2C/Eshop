@@ -11,7 +11,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import com.eshop.common.entity.Product;
+import com.eshop.common.entity.product.Product;
 import com.eshop.common.exception.ProductNotFoundException;
 
 import jakarta.transaction.Transactional;
@@ -53,6 +53,22 @@ public class ProductService {
 		}
 		
 		return repo.findAll(pageable);
+	}
+	
+	public Page<Product> searchProducts(int pageNum, String sortField, String sortDir, String keyword) {
+		Sort sort = Sort.by(sortField);
+		
+		if(sortDir.equals("asc")) {
+			sort = sort.ascending();
+		}else if(sortDir.equals("desc")) {
+			sort = sort.descending();
+		}
+		
+		Pageable pageable = PageRequest.of(pageNum -1, PRODUCTS_PER_PAGE, sort);
+		
+		return repo.searchProductsByName(keyword, pageable);
+	
+	
 	}
 	
 	public Product save(Product product) {

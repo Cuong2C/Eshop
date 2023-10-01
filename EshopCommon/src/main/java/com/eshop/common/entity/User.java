@@ -4,6 +4,8 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
 
+import com.eshop.common.Constants;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -155,7 +157,7 @@ public class User {
 	@Transient
 	public String getPhotosImagesPath() {
 		if(id==null || photos == null) return "/images/defaultPhoto.png";
-		return "/user-photos/" + this.id + "/"+this.photos;
+		return Constants.S3_BASE_URI+ "/user-photos/" + this.id + "/"+this.photos;
 	}
 	
 	@Transient

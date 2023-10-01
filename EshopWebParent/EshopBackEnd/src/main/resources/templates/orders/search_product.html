@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments :: page_head('Search Products', 'none')}"/>
+<body>
+	<div class="container-fluid p-0">
+	<div class="m-2">
+		<form th:action="@{/orders/search_product}" method="post" class="form-inline align-self-start">
+				<input type="hidden" name="sortField" th:value="${sortField}">
+				<input type="hidden" name="sortDir" th:value="${sortDir}">
+
+				<input class="form-control" type="search" name="keyword" required="required" placeholder="Product name" th:value="${keyword}"/>
+				 &nbsp;
+				<button type="submit" class="btn btn-primary" ><i class="fa-solid fa-magnifying-glass"></i></button>
+				
+			</form>
+	</div>
+	
+	<div class="row">
+		<th:block th:each="product : ${listProducts}">
+			<div class="col" >
+				<div class="p-2" style="max-width: 300px;">
+					<a href="" class="linkProduct" th:pid="${product.id}">
+						<img class="m-2" th:src="@{${product.mainImagePath}}"  height="150" >
+						<br/>
+						<b th:id="'pname' + ${product.id}">[[${product.shortName}]]</b>
+					</a>
+				</div>
+			</div>
+		</th:block>
+		
+
+	</div>
+	<div th:replace="~{fragments :: modal_dialog}" ></div>
+	<div th:replace="~{fragments :: pagination('/orders/search_product','products')}" ></div>
+	<div class="text-center" th:if="${keyword == null}">Please enter the keyword</div>
+</div>
+<script th:src="@{/js/common_form.js}"></script>
+
+<script type="text/javascript">
+	$(document).ready(function() {
+		handleLinkProduct();
+	});
+	
+	function handleLinkProduct() {
+		$(".linkProduct").on("click", function(e) {
+			e.preventDefault();
+			productId = $(this).attr("pid");
+			productName = $("#pname" + productId).text();
+			
+			if (window.parent.isProductAlreadyAdded(productId)) {
+				showWarningModal("The product '" + productName + "' was already added.");
+			} else {				
+				window.parent.addProduct(productId, productName);
+			}
+			
+		});
+	}
+</script>
+<script th:src="@{/js/order_form_add_product.js}"></script>
+</body>
+</html>

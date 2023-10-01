@@ -1,18 +1,21 @@
 package com.eshop.setting;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.eshop.common.entity.Setting;
-import com.eshop.common.entity.SettingCategory;
+import com.eshop.common.entity.Currency;
+import com.eshop.common.entity.setting.Setting;
+import com.eshop.common.entity.setting.SettingCategory;
 
 @Service
 public class SettingService {
 	@Autowired
 	private SettingRepository settingRepo;
+	
+	@Autowired
+	private CurrencyRepository currencyRepo;
 
 	public List<Setting> getGeneralSettings() {
 		return settingRepo.findByTwoCategories(SettingCategory.GENERAL, SettingCategory.CURRENCY);
@@ -25,22 +28,22 @@ public class SettingService {
 		return new EmailSettingBag(settings);
 	}
 	
-//	public CurrencySettingBag getCurrencySettings() {
-//		List<Setting> settings = settingRepo.findByCategory(SettingCategory.CURRENCY);
-//		return new CurrencySettingBag(settings);
-//	}
-//	
-//	public PaymentSettingBag getPaymentSettings() {
-//		List<Setting> settings = settingRepo.findByCategory(SettingCategory.PAYMENT);
-//		return new PaymentSettingBag(settings);
-//	}
-//	
-//	public String getCurrencyCode() {
-//		Setting setting = settingRepo.findByKey("CURRENCY_ID");
-//		Integer currencyId = Integer.parseInt(setting.getValue());
-//		Currency currency = currencyRepo.findById(currencyId).get();
-//		
-//		return currency.getCode();
-//	}
+	public CurrencySettingBag getCurrencySettings() {
+		List<Setting> settings = settingRepo.findByCategory(SettingCategory.CURRENCY);
+		return new CurrencySettingBag(settings);
+	}
+	
+	public PaymentSettingBag getPaymentSettings() {
+		List<Setting> settings = settingRepo.findByCategory(SettingCategory.PAYMENT);
+		return new PaymentSettingBag(settings);
+	}
+	
+	public String getCurrencyCode() {
+		Setting setting = settingRepo.findByKey("CURRENCY_ID");
+		Integer currencyId = Integer.parseInt(setting.getValue());
+		Currency currency = currencyRepo.findById(currencyId).get();
+		
+		return currency.getCode();
+	}
 	
 }

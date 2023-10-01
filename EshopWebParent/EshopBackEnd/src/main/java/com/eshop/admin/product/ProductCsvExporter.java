@@ -8,8 +8,7 @@ import org.supercsv.io.ICsvBeanWriter;
 import org.supercsv.prefs.CsvPreference;
 
 import com.eshop.admin.AbstractExporter;
-import com.eshop.common.entity.Brand;
-import com.eshop.common.entity.Product;
+import com.eshop.common.entity.product.Product;
 
 import jakarta.servlet.http.HttpServletResponse;
 

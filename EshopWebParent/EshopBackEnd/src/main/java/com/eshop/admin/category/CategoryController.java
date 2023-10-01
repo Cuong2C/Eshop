@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.eshop.admin.FileUploadUtil;
+import com.eshop.admin.AmazonS3Util;
 import com.eshop.admin.user.UserNotFoundException;
 import com.eshop.common.entity.Category;
 import com.eshop.common.exception.CategoryNotFoundException;
@@ -81,10 +81,10 @@ public class CategoryController {
 		category.setImage(fileName);
 		
 		Category savedCategory = service.save(category);		
-		String uploadDir = "../category-images/" + savedCategory.getId();
+		String uploadDir = "category-images/" + savedCategory.getId();
 		
-		FileUploadUtil.cleanDir(uploadDir);
-		FileUploadUtil.savefile(uploadDir, fileName, multipartFile);
+		AmazonS3Util.removeFolder(uploadDir);
+		AmazonS3Util.uploadFile(uploadDir, fileName, multipartFile.getInputStream());
 		}else {
 			service.save(category);	
 		}
@@ -120,8 +120,8 @@ public class CategoryController {
 	public String deleteCategories(@PathVariable("id") Integer id, Model model, RedirectAttributes redirect) {
 		try {
 			service.delete(id);
-			String categoryDir = "../categories-images/" +id;
-			FileUploadUtil.removeDir(categoryDir);
+			String categoryDir = "categories-images/" +id;
+			AmazonS3Util.removeFolder(categoryDir);
 			
 			redirect.addFlashAttribute("message", "The category id "+id+" has been deleted successfully");		
 		}catch(CategoryNotFoundException e){

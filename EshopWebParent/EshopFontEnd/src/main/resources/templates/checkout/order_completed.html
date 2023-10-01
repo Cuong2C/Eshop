@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" >
+<head th:replace="~{fragments :: page_head('HomePage-Eshop','none')}"/>
+
+</head>
+<body>
+	<div class="container-fluid bg-light p-0">
+		<div th:replace="~{navigation :: header_menu}" ></div>
+		<div th:replace="~{navigation :: search_nav}" ></div>
+	
+	<div class="bg-white">
+		<div class="m-2 text-center">
+			<h1 class="title">Your Order has been Completed!</h1>
+		</div>
+		
+		<div>&nbsp;</div>
+
+		<div class="text-center">
+			<h4>A confirmation email has been sent to you.</h4>
+			<h4>Please check your email for the details.</h4>
+		</div>
+
+		<div>&nbsp;</div>
+	</div>
+		<div th:replace="~{navigation :: footer_menu}" ></div>
+	</div>
+</body>
+</html>

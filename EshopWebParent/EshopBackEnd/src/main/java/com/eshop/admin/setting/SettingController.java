@@ -15,9 +15,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.eshop.admin.AmazonS3Util;
 import com.eshop.admin.FileUploadUtil;
+import com.eshop.common.Constants;
 import com.eshop.common.entity.Currency;
-import com.eshop.common.entity.Setting;
+import com.eshop.common.entity.setting.Setting;
 
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -41,7 +43,7 @@ public class SettingController {
 			model.addAttribute(setting.getKey(), setting.getValue());
 		}
 		
-//		model.addAttribute("S3_BASE_URI", Constants.S3_BASE_URI);
+		model.addAttribute("S3_BASE_URI", Constants.S3_BASE_URI);
 		
 		return "settings/settings";
 	}
@@ -66,9 +68,9 @@ public class SettingController {
 			String value = "/site-logo/" + fileName;
 			settingBag.updateSiteLogo(value);
 				
-			String uploadDir = "../site-logo/";
-			FileUploadUtil.cleanDir(uploadDir);
-			FileUploadUtil.savefile(uploadDir, fileName, multipartFile);
+			String uploadDir = "site-logo";
+			AmazonS3Util.removeFolder(uploadDir);
+			AmazonS3Util.uploadFile(uploadDir, fileName, multipartFile.getInputStream());
 		}
 	}
 	
@@ -94,31 +96,31 @@ public class SettingController {
 	}
 	
 	@PostMapping("/settings/save_mail_server")
-	public String saveMailServerSetttings(HttpServletRequest request, RedirectAttributes ra) {
+	public String saveMailServerSetttings(HttpServletRequest request, RedirectAttributes redirect) {
 		List<Setting> mailServerSettings = service.getMailServerSettings();
 		updateSettingValuesForm(request, mailServerSettings);
 		
-		ra.addFlashAttribute("message", "Mail server settings have been saved");
+		redirect.addFlashAttribute("message", "Mail server settings have been saved");
 		
 		return "redirect:/settings#mailServer";
 	}
 	
 	@PostMapping("/settings/save_mail_templates")
-	public String saveMailTemplateSetttings(HttpServletRequest request, RedirectAttributes ra) {
+	public String saveMailTemplateSetttings(HttpServletRequest request, RedirectAttributes redirect) {
 		List<Setting> mailTemplateSettings = service.getMailTemplateSettings();
 		updateSettingValuesForm(request, mailTemplateSettings);
 		
-		ra.addFlashAttribute("message", "Mail template settings have been saved");
+		redirect.addFlashAttribute("message", "Mail template settings have been saved");
 		
 		return "redirect:/settings#mailTemplates";
 	}
 	
 	@PostMapping("/settings/save_payment")
-	public String savePaymentSetttings(HttpServletRequest request, RedirectAttributes ra) {
+	public String savePaymentSetttings(HttpServletRequest request, RedirectAttributes redirect) {
 		List<Setting> paymentSettings = service.getPaymentSettings();
 		updateSettingValuesForm(request, paymentSettings);
 		
-		ra.addFlashAttribute("message", "Payment settings have been saved");
+		redirect.addFlashAttribute("message", "Payment settings have been saved");
 		
 		return "redirect:/settings#payment";
 	}		

@@ -3,6 +3,8 @@ package com.eshop.common.entity;
 import java.util.HashSet;
 import java.util.Set;
 
+import com.eshop.common.Constants;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -99,7 +101,7 @@ public class Brand {
 	public String getLogoPath() {
 		if(this.id == null || this.logo == null) return "/images/defaultCate.jpg";
 		
-		return "/brand-logos/" + this.id + "/" + this.logo;
+		return Constants.S3_BASE_URI + "/brand-logos/" + this.id + "/" + this.logo;
 	}
 	
 }

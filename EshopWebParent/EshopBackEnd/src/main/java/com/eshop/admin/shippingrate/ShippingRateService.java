@@ -10,9 +10,11 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import com.eshop.admin.product.ProductRepository;
 import com.eshop.admin.setting.country.CountryRepository;
 import com.eshop.common.entity.Country;
 import com.eshop.common.entity.ShippingRate;
+import com.eshop.common.entity.product.Product;
 
 import jakarta.transaction.Transactional;
 
@@ -21,11 +23,13 @@ import jakarta.transaction.Transactional;
 public class ShippingRateService {
 	
 	public static final int RATES_PER_PAGE = 10;
-	
+	private static final int DIM_DIVISOR = 139;	
 	@Autowired 
 	private ShippingRateRepository shipRepo;
 	@Autowired 
 	private CountryRepository countryRepo;
+	@Autowired 
+	private ProductRepository productRepo;
 	
 	public Page<ShippingRate> listByPage(int pageNum, String sortField, String sortDir, String keyword){
 		Sort sort = Sort.by(sortField);
@@ -79,4 +83,21 @@ public class ShippingRateService {
 		}
 		shipRepo.deleteById(id);
 	}	
+	
+	public float calculateShippingCost(Integer productId, Integer countryId, String state) 
+			throws ShippingRateNotFoundException {
+		ShippingRate shippingRate = shipRepo.findByCountryAndState(countryId, state);
+		
+		if (shippingRate == null) {
+			throw new ShippingRateNotFoundException("No shipping rate found for the given "
+					+ "destination. You have to enter shipping cost manually.");
+		}
+		
+		Product product = productRepo.findById(productId).get();
+		
+		float dimWeight = (product.getLength() * product.getWidth() * product.getHeight()) / DIM_DIVISOR;
+		float finalWeight = product.getWeight() > dimWeight ? product.getWeight() : dimWeight;
+				
+		return finalWeight * shippingRate.getRate();
+	}
 }

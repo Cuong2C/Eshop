@@ -8,7 +8,7 @@ import org.springframework.data.repository.CrudRepository;
 
 import com.eshop.common.entity.CartItem;
 import com.eshop.common.entity.Customer;
-import com.eshop.common.entity.Product;
+import com.eshop.common.entity.product.Product;
 
 public interface CartItemRepository extends CrudRepository<CartItem, Integer>{
 
@@ -23,4 +23,8 @@ public interface CartItemRepository extends CrudRepository<CartItem, Integer>{
 	@Modifying
 	@Query("DELETE FROM CartItem c WHERE c.customer.id = ?1 AND c.product.id = ?2")
 	public void deleteByCustomerAndProduct(Integer customerId, Integer productId);
+	
+	@Modifying
+	@Query("DELETE CartItem c WHERE c.customer.id = ?1")
+	public void deleteByCustomer(Integer customerId);
 }

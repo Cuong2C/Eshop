@@ -16,7 +16,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.eshop.admin.product.ProductCsvExporter;
 import com.eshop.common.entity.Country;
 import com.eshop.common.entity.Customer;
-import com.eshop.common.entity.Product;
+import com.eshop.common.entity.product.Product;
 import com.eshop.common.exception.CustomerNotFoundException;
 
 import jakarta.servlet.http.HttpServletResponse;

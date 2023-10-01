@@ -9,7 +9,7 @@
 		<form class = "container border rounded bg-white" th:action="@{/update_account_details}" method="post" th:object="${customer}" enctype="multipart/form-data" style="max-width: 800px;">
 			<input type="hidden" th:field="*{id}"/>  
 			<input type="hidden" name="redirect" th:value="${param.redirect}" />
-               <img class="m-4" th:src="@{/images/EshopLogo.png}" style="width: 125px; height: 75px;">	   
+               <img class="m-4" th:src="@{${SITE_LOGO}}"  style="width: 125px; height: 75px;">	   
                             
            		<div class="d-inline-block">
 			 		<h3 class="mb-3 text-uppercase title " > Account Details</h3>

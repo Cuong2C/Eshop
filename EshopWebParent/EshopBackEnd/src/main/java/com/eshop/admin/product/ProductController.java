@@ -16,13 +16,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.eshop.admin.FileUploadUtil;
+import com.eshop.admin.AmazonS3Util;
 import com.eshop.admin.brand.BrandService;
 import com.eshop.admin.category.CategoryService;
 import com.eshop.admin.security.EshopUserDetails;
 import com.eshop.common.entity.Brand;
 import com.eshop.common.entity.Category;
-import com.eshop.common.entity.Product;
+import com.eshop.common.entity.product.Product;
 import com.eshop.common.exception.ProductNotFoundException;
 
 import jakarta.servlet.http.HttpServletResponse;
@@ -49,7 +49,7 @@ public class ProductController {
 		if(sortDir == null || sortDir.isEmpty()) {
 			sortDir = "asc";
 		}	
-		
+	
 		Page<Product> page = productService.listByPage(pageNum, sortField, sortDir, keyword , categoryId );
 		List<Product> listProducts = page.getContent();
 		List<Category> listCategories = categoryService.listCategoryUsedInForm();
@@ -62,7 +62,6 @@ public class ProductController {
 		if(categoryId != null) {
 			model.addAttribute("categoryId", categoryId);
 		}
-		
 		
 		model.addAttribute("currentPage", pageNum);
 		model.addAttribute("startCount", startCount);
@@ -113,7 +112,6 @@ public class ProductController {
 			}
 		}
 		
-
 		ProductHelper.setMainImageName(mainImageMultipart, product);
 		ProductHelper.setExistingExtraImgName(imageIDs, imageNames, product);
 		ProductHelper.setNewExtraImageName(extraImageMultiparts, product);
@@ -144,10 +142,12 @@ public class ProductController {
 	public String deleteProduct(@PathVariable(name = "id") Integer id, Model model, RedirectAttributes redirect) {
 		try {
 			productService.delete(id);
-			String productExtraImgDir = "../product-images/" + id + "/extras";
-			FileUploadUtil.removeDir(productExtraImgDir);
-			String productImgDir = "../product-images/" + id;
-			FileUploadUtil.removeDir(productImgDir);
+			String productExtraImgDir = "product-images/" + id + "/extras";
+			AmazonS3Util.removeFolder(productExtraImgDir);
+			
+			String productImgDir = "product-images/" + id;
+			AmazonS3Util.removeFolder(productImgDir);
+			
 			redirect.addFlashAttribute("message", "The product ID " + id + " has been deleted successfully");
 		} catch (ProductNotFoundException e) {
 			redirect.addFlashAttribute("message", e.getMessage());
@@ -204,5 +204,5 @@ public class ProductController {
 		ProductCsvExporter exporter = new ProductCsvExporter();
 		exporter.export(listProducts, reponse);
 	}
-
+	
 }

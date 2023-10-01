@@ -6,7 +6,7 @@
 			<input type="submit" />
 		</form>
 		<nav class="navbar navbar-expand-lg bg-dark navbar-dark">
-			<a class="navbar-brand" th:href="@{/}"> <img style="width: 125px; height: 75px;" th:src="@{/images/EshopLogo.png}"></a>
+			<a class="navbar-brand" th:href="@{/}"> <img style="width: 125px; height: 75px;" th:src="@{/images/EshopLogo.png}" ></a>
 			<button class="navbar-toggler" type="button" data-toggle="collapse"
 				data-target="#navbarNavDropdown">
 				<span class="navbar-toggler-icon"></span>
@@ -31,7 +31,7 @@
 					<li class="nav-item" sec:authorize="hasAnyAuthority('Admin', 'Shipper)')">
 						<a class="nav-link" th:href="@{/shipping_rates}">Shipping</a>
 					</li>
-					<li class="nav-item" sec:authorize="hasAnyAuthority('Admin','Salesperson', 'Shipper)')">
+					<li class="nav-item" sec:authorize="hasAnyAuthority('Admin','Salesperson', 'Shipper')">
 						<a class="nav-link" th:href="@{/orders}">Orders</a>
 					</li>
 					<li class="nav-item" sec:authorize="hasAnyAuthority('Admin', 'Salesperson')">

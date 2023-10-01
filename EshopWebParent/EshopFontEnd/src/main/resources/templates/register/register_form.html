@@ -20,7 +20,7 @@
 	            <form class="col-xl-6" th:action="@{/create_customer}" method="post" th:object="${customer}" onsubmit="return checkEmailUnique(this);">
 	              <div class="card-body p-md-5 text-black">
 					   <div class="mb-1 ">	
-			               <img th:src="@{/images/EshopLogo.png}" style="max-width: 125px; height: auto;">	                
+			               <img th:src="@{${S3_BASE_URI + SITE_LOGO}}" style="max-width: 125px; height: auto;">	                
 			           </div>
 	                <h3 class="mb-3 text-uppercase title" >Customer Registration</h3>
 	

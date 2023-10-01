@@ -1,4 +1,4 @@
-package com.eshop.common.entity;
+package com.eshop.common.entity.product;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -8,38 +8,39 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
-import jakarta.persistence.Transient;
 
 @Entity
-@Table(name = "product_images")
-public class ProductImage {
+@Table(name="product_details")
+public class ProductDetail {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	
-	@Column(nullable = false)
+	@Column(length = 255, nullable = false)
 	private String name;
+	@Column(length = 255, nullable = false)
+	private String value;
 	
 	@ManyToOne
-	@JoinColumn(name = "product_id")
+	@JoinColumn(name="product_id")
 	private Product product;
 	
+	public ProductDetail() {	
+	} 
 
-
-	public ProductImage() {
-	}
-
-	public ProductImage(String name, Product product) {
+	public ProductDetail(String name, String value, Product product) {
 		this.name = name;
+		this.value = value;
 		this.product = product;
 	}
-	
-	
 
-	public ProductImage(Integer id, String name, Product product) {
+	
+	
+	public ProductDetail(Integer id, String name, String value, Product product) {
 		this.id = id;
 		this.name = name;
+		this.value = value;
 		this.product = product;
 	}
 
@@ -59,6 +60,14 @@ public class ProductImage {
 		this.name = name;
 	}
 
+	public String getValue() {
+		return value;
+	}
+
+	public void setValue(String value) {
+		this.value = value;
+	}
+
 	public Product getProduct() {
 		return product;
 	}
@@ -66,12 +75,11 @@ public class ProductImage {
 	public void setProduct(Product product) {
 		this.product = product;
 	}
-	
-	@Transient
-	public String getImagePath() {
-		return "/product-images/" + product.getId() + "/extras/" + this.name;
-	}
-	
+
+	@Override
+	public String toString() {
+		return "ProductDetail [id=" + id + ", name=" + name + ", value=" + value + "]";
+	} 
 	
 	
 	

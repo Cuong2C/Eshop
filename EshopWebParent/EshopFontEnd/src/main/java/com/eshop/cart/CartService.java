@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.eshop.common.entity.CartItem;
 import com.eshop.common.entity.Customer;
-import com.eshop.common.entity.Product;
+import com.eshop.common.entity.product.Product;
 import com.eshop.product.ProductRepository;
 
 import jakarta.transaction.Transactional;
@@ -63,5 +63,9 @@ public class CartService {
 	
 	public void removeProduct(Integer productId, Customer customer) {
 		cartRepo.deleteByCustomerAndProduct(customer.getId(), productId);
+	}
+	
+	public void deleteByCustomer(Customer customer) {
+		cartRepo.deleteByCustomer(customer.getId());
 	}
 }

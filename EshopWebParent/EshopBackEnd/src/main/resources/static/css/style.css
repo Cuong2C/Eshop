@@ -14,10 +14,10 @@
 }
 
 .icon-blue{
-	color: #5f5dd5;
+	color:#007bff;
 }
 .icon-blue:hover{
-	color: #5f5dd5;
+	color: rgb(0, 128, 255);
 	opacity: 0.5;;
 }
 

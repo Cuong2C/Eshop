@@ -8,8 +8,12 @@
 		<div th:replace="~{navigation :: header_menu}" ></div>
 		<div th:replace="~{navigation :: search_nav}" ></div>
 	
-		<div th:if="${message != null}" class="alert alert-success text-center">
+		<div th:if="${message != null}" class="alert alert-danger text-center">
 			[[${message}]]
+		</div>
+		
+		<div th:if="${title != null}" class="alert alert-danger text-center">
+			[[${title}]]
 		</div>
 		
 		

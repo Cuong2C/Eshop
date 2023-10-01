@@ -21,6 +21,11 @@
 		<span th:if="${sortField == fieldName}" th:class="${sortDir == 'asc' ? 'fas fa-sort-up' : 'fas fa-sort-down'}"></span>		
 	</th>
 	
+	<th th:fragment="column_Link2(moduleURL,fieldName, columnLabel)" th:remove="tag">
+		<a class="text-white" th:href="@{${moduleURL}+'/page/'+${currentPage}+'?sortField=' + ${fieldName} + '&sortDir='+${sortField != fieldName ? sortDir : reverseSortDir } + ${keyword != null ? '&keyword=' + keyword: ''}+ ${categoryId != null ? '&categoryId=' + categoryId: ''}}">[[${columnLabel}]]</a>
+		<span th:if="${sortField == fieldName}" th:class="${sortDir == 'asc' ? 'fas fa-sort-up' : 'fas fa-sort-down'}"></span>		
+	</th>
+	
 				
 	<div th:fragment="footer" class="text-center">
 			<p>Eshop Control Panel - Copyright &copy; Eshop</p>
@@ -70,7 +75,7 @@
 	<div class="text-center" th:if="${totalTtems} > 0">
 			<span>Showing [[${entityName}]] # [[${startCount}]] to [[${endCount}]] of [[${totalTtems}]]</span>
 		</div>
-		
+
 		<div class="text-center text-danger font-weight-bold" th:unless="${totalTtems} > 0">
 			<span>No [[${entityName}]] Found</span>
 		</div>
@@ -83,16 +88,15 @@
 			        <span aria-hidden="true">&laquo;</span>
 			      </a>
 			    </li>
-			    <li th:class="${currentPage > 1 ? 'page-item' : 'page-item disabled'}"><a class="page-link" th:href="@{${moduleURL}+'/page/'+${currentPage -1}+'?sortField='+${sortField} + '&sortDir='+ ${sortDir}}">Previous</a></li>
+			    <li th:class="${currentPage > 1 ? 'page-item' : 'page-item disabled'}"><a class="page-link" th:href="@{${moduleURL}+'/page/'+${currentPage -1}+'?sortField='+${sortField} + '&sortDir='+ ${sortDir} + ${keyword != null ? '&keyword=' + keyword : ''}}">Previous</a></li>
 			    
 			    <li th:class="${currentPage != i ? 'page-item' : 'page-item active'}" th:each="i:${#numbers.sequence(1,totalPages)}">
-			    <a class="page-link" th:href="@{${moduleURL}+'/page/'+${i}+'?sortField='+${sortField} + '&sortDir='+ ${sortDir}}">[[${i}]]</a>    
+			    <a class="page-link" th:href="@{${moduleURL}+'/page/'+${i}+'?sortField='+${sortField} + '&sortDir='+ ${sortDir} + ${keyword != null ? '&keyword=' + keyword : ''}}">[[${i}]]</a>    
 			    </li>
 			   
-
-			    <li th:class="${currentPage < totalPages ? 'page-item' : 'page-item disabled'}"><a class="page-link" th:href="@{${moduleURL}+'/page/'+${currentPage +1}+'?sortField='+${sortField} + '&sortDir='+ ${sortDir}}">Next</a></li>
+			    <li th:class="${currentPage < totalPages ? 'page-item' : 'page-item disabled'}"><a class="page-link" th:href="@{${moduleURL}+'/page/'+${currentPage +1}+'?sortField='+${sortField} + '&sortDir='+ ${sortDir} + ${keyword != null ? '&keyword=' + keyword : ''}}">Next</a></li>
 			    <li th:class="${currentPage < totalPages ? 'page-item' : 'page-item disabled'}">
-			      <a class="page-link" th:href="@{${moduleURL}+'/page/'+${totalPages} + '?sortField='+${sortField} + '&sortDir='+ ${sortDir}}" title="Last">
+			      <a class="page-link" th:href="@{${moduleURL}+'/page/'+${totalPages} + '?sortField='+${sortField} + '&sortDir='+ ${sortDir} + ${keyword != null ? '&keyword=' + keyword : ''}}" title="Last">
 			        <span aria-hidden="true">&raquo;</span>
 			      </a>
 			    </li>
@@ -109,12 +113,25 @@
 				<input th:if="${categoryId != null}" type="hidden" name="categoryId" th:value="${categoryId}"/>
 			
 				Filter: &nbsp;
-				<input class="form-control" type="search" name="keyword" required="required" placeholder="Search" th:value="${keyword}"/>
+				<input class="form-control" type="search" name="keyword" required="required" placeholder="keyword" th:value="${keyword}"/>
 				 &nbsp;
 				<button type="submit" class="btn btn-primary" ><i class="fa-solid fa-magnifying-glass"></i></button>
 				<button type="button" class="btn btn-secondary" onclick="clearFilter()"><i class="fa-solid fa-eraser"></i></button>
 			</form>
 		</div>
+		
+	
+	<div th:fragment="format_currency(amount)" th:remove="tag">
+		<span th:if="${CURRENCY_SYMBOL_POSITION == 'Before price'}" th:remove="tag">[[${CURRENCY_SYMBOL}]]</span>[[${#numbers.formatDecimal(amount, 1, THOUSANDS_POINT_TYPE, DECIMAL_DIGITS, DECIMAL_POINT_TYPE)}]]<span th:if="${CURRENCY_SYMBOL_POSITION == 'After price'}" th:remove="tag">[[${CURRENCY_SYMBOL}]]</span>
+	</div>
+	
+	<div th:fragment="format_time(dateTime)" th:remove="tag">
+		<span th:text="${#dates.format(dateTime, 'yyyy-MM-dd HH:mm:ss')}"></span>
+	</div>
+	
+	<div th:fragment="currency_input(amount)" th:remove="tag">
+		<input type="text" readonly class="form-control" th:value="${(CURRENCY_SYMBOL_POSITION == 'Before price' ? CURRENCY_SYMBOL : '') + #numbers.formatDecimal(amount, 1, THOUSANDS_POINT_TYPE, DECIMAL_DIGITS, DECIMAL_POINT_TYPE) + (CURRENCY_SYMBOL_POSITION == 'After price' ? CURRENCY_SYMBOL : '')}">
+	</div>
 	
 </body>
 </html>

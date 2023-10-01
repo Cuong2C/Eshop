@@ -28,7 +28,7 @@ public class AddressController {
 	private CustomerService customerService;	
 	
 	@GetMapping("/address_book")
-	public String showAddressBook(Model model, HttpServletRequest request) {
+	public String showAddressBook(Model model, HttpServletRequest request, RedirectAttributes redirect) {
 		Customer customer = getAuthenticatedCustomer(request);
 		List<Address> listAddresses = addressService.listAddressBook(customer);
 		
@@ -43,6 +43,11 @@ public class AddressController {
 		model.addAttribute("listAddresses", listAddresses);
 		model.addAttribute("customer", customer);
 		model.addAttribute("usePrimaryAddressAsDefault", usePrimaryAddressAsDefault);
+		
+		if(customer.getAddressLine1().isEmpty() || customer.getAddressLine1() == null) {
+			redirect.addFlashAttribute("message", "Please fill out your address");
+			return "redirect:/account_details";
+		}
 		
 		return "address_book/address";
 	}
@@ -59,18 +64,19 @@ public class AddressController {
 		model.addAttribute("listCountries", listCountries);
 		model.addAttribute("address", new Address());
 		model.addAttribute("pageTitle", "Add New Address");
+
 		
 		return "address_book/address_form";
 	}
 	
 	@PostMapping("/address_book/save")
-	public String saveAddress(Address address, HttpServletRequest request, RedirectAttributes ra) {
+	public String saveAddress(Address address, HttpServletRequest request, RedirectAttributes redirect) {
 		Customer customer = getAuthenticatedCustomer(request);
 		
 		address.setCustomer(customer);
 		addressService.save(address);
 		
-		ra.addFlashAttribute("message", "The address has been saved successfully.");
+		redirect.addFlashAttribute("message", "The address has been saved successfully.");
 		
 		return "redirect:/address_book";
 	}

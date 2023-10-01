@@ -30,5 +30,6 @@ public class DatabaseLoginSuccessHandler extends SavedRequestAwareAuthentication
 		customerService.updateAuthenticationType(customer, AuthenticationType.DATABASE);
 		
 		super.onAuthenticationSuccess(request, response, authentication);
+		
 	}
 }

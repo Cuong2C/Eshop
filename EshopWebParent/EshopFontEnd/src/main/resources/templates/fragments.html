@@ -17,8 +17,7 @@
 <body>
 
 	<th th:fragment="column_Link(moduleURL,fieldName, columnLabel)">
-		<a class="text-white"
-			th:href="@{${moduleURL}+'/page/'+${currentPage}+'?sortField=' + ${fieldName} + '&sortDir='+${sortField != fieldName ? sortDir : reverseSortDir } + ${keyword != null ? '&keyword=' + keyword: ''}}">[[${columnLabel}]]</a>
+		<a class="text-white" th:href="@{${moduleURL}+'/page/'+${currentPage}+'?sortField=' + ${fieldName} + '&sortDir='+${sortField != fieldName ? sortDir : reverseSortDir } + ${keyword != null ? '&keyword=' + keyword: ''}}">[[${columnLabel}]]</a>
 		<span th:if="${sortField == fieldName}"
 			th:class="${sortDir == 'asc' ? 'fas fa-sort-up' : 'fas fa-sort-down'}"></span>
 	</th>
@@ -37,28 +36,28 @@
 				<ul class="pagination justify-content-center flex-wrap">
 					<li th:class="${currentPage > 1 ? 'page-item' : 'page-item disabled'}">
 						<a class="page-link"
-							th:href="@{${moduleURL}+'/page/1?sortField='+${sortField} + '&sortDir='+ ${sortDir}}"
+							th:href="@{${moduleURL}+'/page/1?sortField='+${sortField} + '&sortDir='+ ${sortDir} + ${keyword != null ? '&keyword=' + keyword : ''}}"
 							title="First">
 							<span aria-hidden="true">&laquo;</span>
 						</a>
 					</li>
 					<li th:class="${currentPage > 1 ? 'page-item' : 'page-item disabled'}"><a class="page-link"
-							th:href="@{${moduleURL}+'/page/'+${currentPage -1}+'?sortField='+${sortField} + '&sortDir='+ ${sortDir}}">Previous</a>
+							th:href="@{${moduleURL}+'/page/'+${currentPage -1}+'?sortField='+${sortField} + '&sortDir='+ ${sortDir}+ ${keyword != null ? '&keyword=' + keyword : ''}}">Previous</a>
 					</li>
 
 					<li th:class="${currentPage != i ? 'page-item' : 'page-item active'}"
 						th:each="i:${#numbers.sequence(1,totalPages)}">
 						<a class="page-link"
-							th:href="@{${moduleURL}+'/page/'+${i}+'?sortField='+${sortField} + '&sortDir='+ ${sortDir}}">[[${i}]]</a>
+							th:href="@{${moduleURL}+'/page/'+${i}+'?sortField='+${sortField} + '&sortDir='+ ${sortDir}+ ${keyword != null ? '&keyword=' + keyword : ''}}">[[${i}]]</a>
 					</li>
 
 
 					<li th:class="${currentPage < totalPages ? 'page-item' : 'page-item disabled'}"><a class="page-link"
-							th:href="@{${moduleURL}+'/page/'+${currentPage +1}+'?sortField='+${sortField} + '&sortDir='+ ${sortDir}}">Next</a>
+							th:href="@{${moduleURL}+'/page/'+${currentPage +1}+'?sortField='+${sortField} + '&sortDir='+ ${sortDir}+ ${keyword != null ? '&keyword=' + keyword : ''}}">Next</a>
 					</li>
 					<li th:class="${currentPage < totalPages ? 'page-item' : 'page-item disabled'}">
 						<a class="page-link"
-							th:href="@{${moduleURL}+'/page/'+${totalPages} + '?sortField='+${sortField} + '&sortDir='+ ${sortDir}}"
+							th:href="@{${moduleURL}+'/page/'+${totalPages} + '?sortField='+${sortField} + '&sortDir='+ ${sortDir}+ ${keyword != null ? '&keyword=' + keyword : ''}}"
 							title="Last">
 							<span aria-hidden="true">&raquo;</span>
 						</a>
@@ -146,6 +145,14 @@
 	    </div>
 	  </div>
 	</div>	
+	
+	<div th:fragment="format_time(dateTime)" th:remove="tag">
+		<span th:text="${#dates.format(dateTime, 'yyyy-MM-dd HH:mm:ss')}"></span>
+	</div>	
+	
+	<div th:fragment="currency_input(amount)" th:remove="tag">
+		<input type="text" readonly class="form-control" th:value="${(CURRENCY_SYMBOL_POSITION == 'Before price' ? CURRENCY_SYMBOL : '') + #numbers.formatDecimal(amount, 1, THOUSANDS_POINT_TYPE, DECIMAL_DIGITS, DECIMAL_POINT_TYPE) + (CURRENCY_SYMBOL_POSITION == 'After price' ? CURRENCY_SYMBOL : '')}">
+	</div>
 	
 	
 	<div th:fragment="footer" class="text-center">

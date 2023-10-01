@@ -7,7 +7,6 @@ $(document).ready(function(){
 			if(!checkFileSize(this)){
 				return;
 			}
-		
 				showImgThumnail(this);
 		});
 	});

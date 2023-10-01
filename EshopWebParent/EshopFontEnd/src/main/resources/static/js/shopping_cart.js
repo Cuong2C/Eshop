@@ -63,6 +63,7 @@ function updateQuantity(productId, quantity) {
 
 function updateSubtotal(updatedSubtotal, productId) {
 	$("#subtotal" + productId).text(formatCurrency(updatedSubtotal));
+	$("#sub_total" + productId).text(formatCurrency(updatedSubtotal));
 }
 
 function updateTotal() {

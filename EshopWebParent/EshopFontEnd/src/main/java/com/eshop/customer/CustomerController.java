@@ -100,6 +100,7 @@ public class CustomerController {
 		model.addAttribute("customer", customer);
 		model.addAttribute("listCountries", listCountries);
 		
+		
 		return "customer/account_form";
 	}
 	

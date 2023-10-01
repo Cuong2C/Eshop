@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" >
+<head th:replace="~{fragments :: page_head('HomePage-Eshop','none')}"/>
+
+</head>
+<body>
+	<div class="container-fluid bg-light p-0">
+		<div th:replace="~{navigation :: header_menu}" ></div>
+		<div th:replace="~{navigation :: search_nav}" ></div>
+	
+	<section >
+	  <div class="container py-3 ">
+	    <div class="row d-flex justify-content-center align-items-center">
+	      <div class="col-12 p-0 mb-2">
+	        <div class="card card-registration card-registration-2" style="border-radius: 15px;">
+	          <div class="card-body p-0">
+	            <div class="row ">
+	              <div class="col">
+	                <div class="p-4">
+	                  <div class="d-flex justify-content-between align-items-center mb-3">
+	                    <h1 class="fw-bold  title">Checkout</h1>
+	                    <h5 class="mb-0 text-muted itemCount">Item [[${cartItems.size}]]</h5>
+	                  </div>
+	                  
+	                  <hr>
+						<div class="text-center m-2" th:if="${#lists.isEmpty(cartItems)}">
+							<h3>You have not chosen any products yet.</h3>
+						</div>
+					
+					<th:block th:each="item, status : ${cartItems}" >
+					 <div th:id="'row' + ${status.count}">
+	                  <div class="row d-flex justify-content-between align-items-center" th:with="product = ${item.product}" >
+						 
+	                    <div class=" col-4 col-md-2 col-lg-2 col-xl-2 d-flex justify-content-center">
+	                      <img th:src="@{${product.mainImagePath}}" style="max-height: 60px;" class="rounded-3" alt="">
+	                    </div>
+	                    <div class=" col-8 col-md-3 col-lg-3 col-xl-3">
+	                      <a th:href="@{'/p/' + ${product.alias}}" target="_blank" th:title="${product.name}">
+							[[${product.shortNameSmallScreen}]]
+						  </a>
+						  	<br/>
+							<small>Ship: <div th:replace="fragments :: product_price_symbol(${item.shippingCost})"></div></small>
+	                    </div>
+	                    <div class="col-4 col-md-3 col-lg-3 col-xl-2">                  	
+	                     		<input type="text" th:value="${item.quantity}" th:id="'quantity' + ${product.id}" onkeydown="return false;" class="form-control text-center" style="width: 55px" />
+	                    </div>
+	                    <div class="col-6 col-md-3 col-lg-3 col-xl-3 ">
+	                      	<div th:if="${product.discountPercent <= 0}">
+								<span style="font-size:larger; color: #fe9765;">
+										<div th:replace="~{fragments :: product_price_symbol_cart(${product.price}, '', '')}" ></div>
+								</span>
+							</div>
+							<div th:if="${product.discountPercent > 0}">
+								
+								<div style="font-size:larger; color: #fe9765;">
+									
+										<div th:replace="~{fragments :: product_price_symbol_cart(${product.discountPrice}, '', '')}" ></div>
+								</div>
+						 			
+							</div>
+								<i class="fa-solid fa-equals"></i> <b style="font-size:larger;"><div th:replace="~{fragments :: product_price_symbol_cart(${item.subtotal},'subtotal' + ${product.id},'subtotal')}" ></div></b>
+							
+	                    </div>
+	                    
+	                    
+	                    <div class="col-2 col-md-1 col-lg-1 col-xl-1 text-end">
+							
+	                     
+	                    </div>
+	                  </div>
+						<hr>
+					 </div>
+					</th:block>
+					<div class="row">
+						<div class="col-md-8 col-lg-8 col-xl-8"></div>
+						<div class="col-md-4 col-lg-4 col-xl-4">
+							<div class="row mt-2">
+						<div class="col">Product Total: </div>
+						<div class="col"><div th:replace="fragments :: product_price_symbol(${checkoutInfo.productTotal})"></div></div>
+					</div>
+					
+					<div class="row mt-2">
+						<div class="col">Shipping Total: </div>
+						<div class="col"><div th:replace="fragments :: product_price_symbol(${checkoutInfo.shippingCostTotal})"></div></div>
+					</div>
+							
+					<div class="row mt-2">
+						<div class="col">Payment Total: </div>
+						<div class="col"  style="font-size:larger;"><b><div th:replace="fragments :: product_price_symbol(${checkoutInfo.paymentTotal})"></div></b></div>
+					</div>			
+							
+						</div>
+					</div>
+					
+	
+	                  <div class="pt-2">
+	                    <h6 class="mb-0"><a th:href="@{/cart}" class="text-body"><i class="fas fa-long-arrow-alt-left me-2"></i>Back to Cart</a></h6>
+	                  </div>
+	                </div>
+	              </div>
+	        
+	              
+	            </div>
+	          </div>
+	        </div>
+	      </div>
+	      
+	      <div class="col-12">
+	      <div class="row">
+		       <div class="col p-0 my-2">
+		        <div class="card card-registration card-registration-2" style="border-radius: 15px;">	
+					<div class="card-header " style="border-top-left-radius: 15px; border-top-right-radius: 15px;"> <h5>Shipping information</h5></div>
+					<div class="card-body">
+						<p>
+							<b>Ship to:</b>&nbsp; [[${shippingAddress}]]
+							<a th:href="@{/address_book}">[Ship to another address]</a>
+						</p>
+						<p>
+							<b>Days to deliver: </b>[[${checkoutInfo.deliverDays}]] day(s)
+						</p>
+						<p>
+							<b>Expected deliver date: </b>[[${#dates.format(checkoutInfo.deliverDate, 'E, dd MMM yyyy')}]]
+						</p>
+					</div>
+		 		</div>
+	  		</div>
+	  		</div>
+	  		</div>
+	  		
+	  		<div class="col-12">
+	      	<div class="row">
+	  		 <div class="col p-0 my-2">
+		        <div class="card card-registration card-registration-2" style="border-radius: 15px;">	
+					<div class="card-header " style="border-top-left-radius: 15px; border-top-right-radius: 15px;"> <h5>Payment Method</h5></div>
+					<div class="card-body">
+						<div th:if="${checkoutInfo.codSupported}">
+							<form th:action="@{/place_order}" method="post">
+								<input type="radio" id="radioCOD" value="COD" name="paymentMethod"/> Cash on Delivery (COD)
+								&nbsp;
+								<button class="btn btn-primary d-none" type="submit" id="buttonSubmit">Place Order with COD</button>
+								
+							</form>
+							<div class="my-2" id="paypal-button-container"> </div>
+							<form th:action="@{/process_paypal_order}" method="post" id="paypalForm">
+								<input type="hidden" name="orderId" id="orderId" />
+								<input type="hidden" name="paymentMethod" value="PAYPAL" />
+							</form>
+						</div>
+					</div>		
+		 		</div>
+	  		</div>
+  		  </div>
+	      </div>
+	      
+	    </div>
+	  </div>
+	</section>
+
+		<div th:replace="~{navigation :: footer_menu}" ></div>
+	</div>
+<script th:src="@{https://www.paypal.com/sdk/js(client-id=${paypalClientId},currency=${currencyCode})}"></script>
+<script type="text/javascript">
+	contextPath = "[[@{/}]]";
+	var csrfHeaderName = "[[${_csrf.headerName}]]";
+	var csrfValue = "[[${_csrf.token}]]";
+
+	$(document).ready(function() {
+		$("#radioCOD").on("click", function() {
+		$("#buttonSubmit").removeClass("d-none");
+		});
+		
+	});
+	
+	paypal.Buttons({
+		enableStandardCardFields: true,
+		createOrder: function(data, actions) {
+			return actions.order.create({
+				
+				intent: 'CAPTURE', 
+				payer: {
+					name: {
+					given_name: "[[${customer.firstName}]]",
+					surname: "[[${customer.lastName}]]"
+					},
+				
+					address: {
+						address_line_1: "[[${customer.addressLine1}]]",
+						address_line_2: "[[${customer.addressLine2}]]",
+						admin_area_1: "[[${customer.state}]]",
+						admin_area_2: "[[${customer.city}]]",
+						postal_code: "[[${customer.postalCode}]]",
+						country_code: "[[${customer.country.code}]]"
+					},
+					
+					email_address: "[[${customer.email}]]",
+					
+					phone: {
+						phone_type: "MOBILE",
+						phone_number: {
+							national_number: "[[${customer.phoneNumber}]]"
+						}
+					}
+				},
+				
+				purchase_units: [{
+					amount: {
+						value: "[[${checkoutInfo.paymentTotalForPayPal}]]",
+						currency_code: "[[${currencyCode}]]"
+					}
+				}],
+				application_context: {
+					shipping_preference: "NO_SHIPPING"
+				}
+				
+			});
+		},
+		
+		onApprove: function(data, actions) {
+			return actions.order.capture().then(function(details) {
+				orderId = details.id;
+				validateOrder(orderId);		
+			});
+		},
+		
+		onCancel: function(data) {
+			alert('Payment cancelled');
+		},
+		
+		onError: function(err) {
+			alert('Something wrong happened: ');
+		}
+	}).render("#paypal-button-container");
+	
+	function validateOrder(orderId) {
+		$("#orderId").val(orderId);
+		$("#paypalForm").submit();
+	}
+</script>
+
+</body>
+</html>

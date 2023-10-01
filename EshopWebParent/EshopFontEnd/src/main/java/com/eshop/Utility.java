@@ -1,5 +1,7 @@
 package com.eshop;
 
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.util.Properties;
 
 import org.springframework.mail.javamail.JavaMailSenderImpl;
@@ -8,6 +10,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
 
 import com.eshop.security.oauth.CustomerOAuth2User;
+import com.eshop.setting.CurrencySettingBag;
 import com.eshop.setting.EmailSettingBag;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -50,37 +53,36 @@ public class Utility {
 			OAuth2AuthenticationToken oauth2Token = (OAuth2AuthenticationToken) principal;
 			CustomerOAuth2User oauth2User = (CustomerOAuth2User) oauth2Token.getPrincipal();
 			customerEmail = oauth2User.getEmail();
-		}
-		
+		}		
 		return customerEmail;
 	}	
-//	
-//	public static String formatCurrency(float amount, CurrencySettingBag settings) {
-//		String symbol = settings.getSymbol();
-//		String symbolPosition = settings.getSymbolPosition();
-//		String decimalPointType = settings.getDecimalPointType();
-//		String thousandPointType = settings.getThousandPointType();
-//		int decimalDigits = settings.getDecimalDigits();
-//		
-//		String pattern = symbolPosition.equals("Before price") ? symbol : "";
-//		pattern += "###,###";
-//		
-//		if (decimalDigits > 0) {
-//			pattern += ".";
-//			for (int count = 1; count <= decimalDigits; count++) pattern += "#";
-//		}
-//		
-//		pattern += symbolPosition.equals("After price") ? symbol : "";
-//		
-//		char thousandSeparator = thousandPointType.equals("POINT") ? '.' : ',';
-//		char decimalSeparator = decimalPointType.equals("POINT") ? '.' : ',';
-//		
-//		DecimalFormatSymbols decimalFormatSymbols = DecimalFormatSymbols.getInstance();
-//		decimalFormatSymbols.setDecimalSeparator(decimalSeparator);
-//		decimalFormatSymbols.setGroupingSeparator(thousandSeparator);
-//		
-//		DecimalFormat formatter = new DecimalFormat(pattern, decimalFormatSymbols);
-//		
-//		return formatter.format(amount);
-//	}
+	
+	public static String formatCurrency(float amount, CurrencySettingBag settings) {
+		String symbol = settings.getSymbol();
+		String symbolPosition = settings.getSymbolPosition();
+		String decimalPointType = settings.getDecimalPointType();
+		String thousandPointType = settings.getThousandPointType();
+		int decimalDigits = settings.getDecimalDigits();
+		
+		String pattern = symbolPosition.equals("Before price") ? symbol : "";
+		pattern += "###,###";
+		
+		if (decimalDigits > 0) {
+			pattern += ".";
+			for (int count = 1; count <= decimalDigits; count++) pattern += "#";
+		}
+		
+		pattern += symbolPosition.equals("After price") ? symbol : "";
+		
+		char thousandSeparator = thousandPointType.equals("POINT") ? '.' : ',';
+		char decimalSeparator = decimalPointType.equals("POINT") ? '.' : ',';
+		
+		DecimalFormatSymbols decimalFormatSymbols = DecimalFormatSymbols.getInstance();
+		decimalFormatSymbols.setDecimalSeparator(decimalSeparator);
+		decimalFormatSymbols.setGroupingSeparator(thousandSeparator);
+		
+		DecimalFormat formatter = new DecimalFormat(pattern, decimalFormatSymbols);
+		
+		return formatter.format(amount);
+	}
 }

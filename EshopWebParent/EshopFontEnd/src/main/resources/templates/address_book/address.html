@@ -21,27 +21,27 @@
 				<div class="card" th:classappend="${usePrimaryAddressAsDefault ? 'bg-info text-white' : ''}">
 				<div class="card-header">
 					<div class="row">
-						<div class="col">
+						<div class="col-8">
 							<b>Your Primary Address</b>
 							
 							<th:block th:if="${usePrimaryAddressAsDefault}">
-							<span class="text-dark">[Default]</span>
+							<span class="text-dark">[Default](Currently Used)</span>
 							</th:block>
 							
 							<th:block th:unless="${usePrimaryAddressAsDefault}">
-							<a th:href="@{'/address_book/default/0'}">[Set as default]</a>
-							</th:block>							
+								<a th:href="@{'/address_book/default/0'}">[Set as default]</a>
+							</th:block>								
 						</div>
-						<div class="col">
+						<div class="col-4">
 							<div class="float-right">
 								<a class="fas fa-edit text-secondary fa-2x" title="Edit your primary address"
-									th:href="@{/account_details(redirect=address_book)}"></a>
+									th:href="@{/account_details}"></a>
 							</div>
 						</div>
 					</div>
 				</div>
 				<div class="card-body">
-					[[${customer.address}]]
+					[[${customer}]]
 				</div>
 			</div>
 			</div>
@@ -51,11 +51,11 @@
 					<div class="card" th:classappend="${address.defaultForShipping ? 'bg-info text-white' : ''}">
 				<div class="card-header">
 					<div class="row">
-						<div class="col">
+						<div class="col-8">
 							<b>Address #[[${status.count + 1}]]</b>
 							
 							<th:block th:if="${address.defaultForShipping}">
-							<span class="text-dark">[Default]</span>
+							<span class="text-dark">[Default](Currently Used)</span>
 							</th:block>
 							
 							<th:block th:unless="${address.defaultForShipping}">
@@ -63,7 +63,7 @@
 							</th:block>
 														
 						</div>
-						<div class="col">
+						<div class="col-4">
 							<div class="float-right">
 								<a class="fas fa-edit fa-2x text-secondary" title="Edit this address"
 									th:href="@{'/address_book/edit/' + ${address.id}}"> </a>

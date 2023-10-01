@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.eshop.admin.FileUploadUtil;
+import com.eshop.admin.AmazonS3Util;
 import com.eshop.admin.category.CategoryService;
 import com.eshop.common.entity.Brand;
 import com.eshop.common.entity.Category;
@@ -80,11 +80,12 @@ public class BrandController {
 		if(!multipartFile.isEmpty()) {
 		String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
 		brand.setLogo(fileName);
-		Brand savedBrand= brandService.save(brand);
-		String uploadDir ="../brand-logos/"+ savedBrand.getId();
 		
-		FileUploadUtil.cleanDir(uploadDir);
-		FileUploadUtil.savefile(uploadDir, fileName, multipartFile);
+		Brand savedBrand= brandService.save(brand);
+		String uploadDir ="brand-logos/"+ savedBrand.getId();
+		
+		AmazonS3Util.removeFolder(uploadDir);
+		AmazonS3Util.uploadFile(uploadDir, fileName, multipartFile.getInputStream());
 		}else {
 			brandService.save(brand);
 		}
@@ -112,8 +113,8 @@ public class BrandController {
 	public String deleteBrand(@PathVariable(name="id") Integer id, Model model, RedirectAttributes redirect ) {
 		try {
 			brandService.delete(id);
-			String brandDir = "../brand-logos/" + id;
-			FileUploadUtil.removeDir(brandDir);
+			String brandDir = "brand-logos/" + id;
+			AmazonS3Util.removeFolder(brandDir);
 			redirect.addFlashAttribute("message", "The brand id " + id + " has been deleted successfully");
 		}catch(BrandNotFoundException e) {
 			redirect.addFlashAttribute("message", e.getMessage());

@@ -3,6 +3,8 @@ package com.eshop.common.entity;
 import java.util.HashSet;
 import java.util.Set;
 
+import com.eshop.common.Constants;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -170,7 +172,7 @@ public class Category {
 	@Transient
 	public String getImgPath() {
 		if(this.id==null || this.image == null) return "/images/defaultCate.jpg";
-		return "/category-images/" + this.id+"/" + this.image;
+		return Constants.S3_BASE_URI + "/category-images/" + this.id+"/" + this.image;
 	}
 	
 	public boolean isHasChildren() {

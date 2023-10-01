@@ -5,7 +5,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
-import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
@@ -44,6 +43,7 @@ public class WebSecurityConfig {
 	@Bean
 	SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception{
 		http.authorizeHttpRequests(auth->auth
+				.requestMatchers("/states/list_by_country/**").hasAnyAuthority("Admin","Salesperson")
 				.requestMatchers("/users/**","/settings/**", "/countries/**", "/states/**").hasAuthority("Admin")
 				.requestMatchers("/categories/**","/brands/**","/articles/**","/menu/**").hasAnyAuthority("Admin", "Editor")
 				
@@ -52,9 +52,10 @@ public class WebSecurityConfig {
 				.requestMatchers("/products", "/products/", "/products/detail/**", "/products/page/**").hasAnyAuthority("Admin","Editor","Salesperson","Shipper" )
 				.requestMatchers("/products/**").hasAnyAuthority("Admin","Editor")
 				
-				.requestMatchers("/customer/**","/report/**").hasAnyAuthority("Admin","Salesperson")
+				.requestMatchers("/orders", "/orders/", "/orders/page/**", "/orders/detail/**" ).hasAnyAuthority("Admin","Salesperson","Shipper")
+				.requestMatchers("/customer/**","/report/**", "/get_shipping_cost","/orders/**").hasAnyAuthority("Admin","Salesperson")
 				.requestMatchers("/shipping_rates/**").hasAnyAuthority("Admin","Shipper")
-				.requestMatchers("/orders/**").hasAnyAuthority("Admin","Salesperson","Shipper")		
+				.requestMatchers("/orders_shipper/update/**").hasAnyAuthority("Shipper")
 				.anyRequest().authenticated());
 		http.formLogin(form ->form
 					.loginPage("/login")
@@ -67,7 +68,9 @@ public class WebSecurityConfig {
 			.rememberMe(me -> me
 		            .key("RememberMeKey")
 		            .tokenValiditySeconds(7*24*60*60));
-	
+		http.headers(head -> head
+			.frameOptions(frame->frame
+			.sameOrigin()));
 		return http.build();
 	}
 	
