@@ -1,13 +1,16 @@
 server:
   port: 8081
-  servlet:
-    context-path: /Eshop
+#  servlet:
+#    context-path: /Eshop
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     password: ${DB_PASSWORD:Cuong23111994@}
     url: jdbc:mysql://${MYSQL_HOST:localhost}:3306/eshopdb
     username: ${DB_USER:root}
+    hikari:
+      minimum-idle: 1
+      maximum-pool-size: 2
   jpa:
     hibernate:
       ddl-auto: update
