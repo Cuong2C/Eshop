@@ -58,11 +58,13 @@
 				<configuration>
 					<excludes>
 						<exclude>**/*.java</exclude>
-					</excludes>
+					</excludes>	
 				</configuration>
 			</plugin>
-			
+
 		</plugins>
+		
 	</build>
+	
 
 </project>
