@@ -175,7 +175,7 @@ public class ProductController {
 			model.addAttribute("pageTitle", "Edit product ID: " + id);
 			model.addAttribute("numberExistExtraImg", numberExistExtraImg);
 			
-			return "/products/product_form";
+			return "products/product_form";
 		} catch (ProductNotFoundException e) {
 			redirect.addFlashAttribute("message", e.getMessage());
 			

@@ -102,7 +102,7 @@ public class BrandController {
 			model.addAttribute("listCategories", listCategories);
 			model.addAttribute("brand", brand);
 			model.addAttribute("pageTitle", "Edit brand (ID: " +id +")");
-			return "/brands/brand_form";
+			return "brands/brand_form";
 		}catch(BrandNotFoundException e) {
 			redirect.addFlashAttribute("message", e.getMessage());
 			return "redirect:/brands";
