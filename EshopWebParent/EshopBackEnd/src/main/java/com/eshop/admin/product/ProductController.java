@@ -89,7 +89,7 @@ public class ProductController {
 		model.addAttribute("product", product);
 		model.addAttribute("listBrands", listBrands);
 		model.addAttribute("pageTitle", "Create a new product");
-		return "/products/product_form";
+		return "products/product_form";
 	}
 
 	@PostMapping("products/save")

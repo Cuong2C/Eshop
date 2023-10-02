@@ -71,7 +71,7 @@ public class BrandController {
 		model.addAttribute("brand", new Brand());
 		model.addAttribute("pageTitle", "Create New Brand");
 		
-		return "/brands/brand_form";
+		return "brands/brand_form";
 	}
 	
 	@PostMapping("/brands/save")
