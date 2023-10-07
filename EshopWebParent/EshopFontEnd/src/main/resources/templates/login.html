@@ -4,12 +4,12 @@
 
 </head>
 <body>
-<div class="container-fluid bg-secondary p-0">
+<div class="container-fluid  p-0 background-gray">
 	<div th:replace="~{navigation :: header_menu}" ></div>
 	
 		
-	<section class="vh-100 bg-secondary" >
-		  <div class="container  h-100">
+	<section >
+		  <div class="container  ">
 		    <div class="row d-flex justify-content-center align-items-center h-100">
 		      <div class="col col-xl-10">
 		        <div class="card" style="border-radius: 1rem;">
@@ -49,14 +49,14 @@
 		                </div>
 		                
 	                  <div class="row">
-		                  <div class="col-md-6 ">
+		                  <div class="col-md-6 mb-2">
 		                    <div class="form-outline">
 		                      <a th:href="@{/oauth2/authorization/google}" >
 		                      	<button class="form-control form-control-lg btn btn-outline-success" > <i class="fa-brands fa-google"></i> Google</button>  
 		                      </a>
 		                    </div>   
 		                  </div>
-		                  <div class="col-md-6">
+		                  <div class="col-md-6 mb-2">
 		                    <div class="form-outline">
 		                      <a th:href="@{/oauth2/authorization/facebook}" >
 		                      	<button class="form-control form-control-lg btn btn-outline-primary " > <i class="fa-brands fa-facebook"></i> Facebook</button>  

@@ -27,10 +27,6 @@ public class OrderRestController {
 	public ResponseEntity<?> handleOrderReturnRequest(@RequestBody OrderReturnRequest returnRequest,
 			HttpServletRequest servletRequest) {
 		
-		System.out.println("Order ID: " + returnRequest.getOrderId());
-		System.out.println("Reason: " + returnRequest.getReason());
-		System.out.println("Note: " + returnRequest.getNote());
-		
 		Customer customer = null;
 		
 		try {

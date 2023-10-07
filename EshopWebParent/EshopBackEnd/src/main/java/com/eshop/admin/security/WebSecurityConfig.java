@@ -50,12 +50,14 @@ public class WebSecurityConfig {
 				.requestMatchers("/products/new", "/products/delete/**" ).hasAnyAuthority("Admin","Editor")
 				.requestMatchers("/products/edit/**", "/products/save", "/products/check_unique" ).hasAnyAuthority("Admin","Editor","Salesperson")
 				.requestMatchers("/products", "/products/", "/products/detail/**", "/products/page/**").hasAnyAuthority("Admin","Editor","Salesperson","Shipper" )
+				.requestMatchers("/products/detail/**", "/customer/detail/**" ).hasAnyAuthority("Admin","Salesperson","Editor", "Assistant")
 				.requestMatchers("/products/**").hasAnyAuthority("Admin","Editor")
 				
 				.requestMatchers("/orders", "/orders/", "/orders/page/**", "/orders/detail/**" ).hasAnyAuthority("Admin","Salesperson","Shipper")
-				.requestMatchers("/customer/**","/report/**", "/get_shipping_cost","/orders/**").hasAnyAuthority("Admin","Salesperson")
+				.requestMatchers("/customer/**","/reports/**", "/get_shipping_cost","/orders/**").hasAnyAuthority("Admin","Salesperson")
 				.requestMatchers("/shipping_rates/**").hasAnyAuthority("Admin","Shipper")
 				.requestMatchers("/orders_shipper/update/**").hasAnyAuthority("Shipper")
+				.requestMatchers("/reviews/**").hasAnyAuthority("Admin","Assistant")
 				.anyRequest().authenticated());
 		http.formLogin(form ->form
 					.loginPage("/login")

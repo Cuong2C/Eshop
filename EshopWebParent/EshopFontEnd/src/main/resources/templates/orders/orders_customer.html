@@ -6,7 +6,6 @@
 <body>
 	<div class="container-fluid  p-0">
 		<div th:replace="~{navigation :: header_menu}" ></div>
-	
 		<div class="m-2 text-center">
 			<h1 class="title">My Orders</h1>
 		</div>
@@ -17,7 +16,7 @@
 				<input type="hidden" name="sortDir" th:value="${sortDir}" />
 				
 				Filter:&nbsp;
-				<input type="search" name="orderKeyword" th:value="${orderKeyword}" class="form-control" required/>
+				<input type="search" name="keyword" th:value="${keyword}" class="form-control" required placeholder="Search"/>
 				&nbsp;&nbsp;
 				<button type="submit" class="btn btn-primary" ><i class="fa-solid fa-magnifying-glass"></i></button>
 				<button type="button" class="btn btn-secondary" onclick="clearFilter()"><i class="fa-solid fa-eraser"></i></button>
@@ -114,7 +113,7 @@
 		  </div>
 		</div>	
 		
-		<div th:replace="~{fragments :: pagination('/orders', 'order')}"></div>
+		<div th:replace="~{fragments :: pagination('/orders', 'orders')}"></div>
 		
 		<div th:replace="~{orders/return_order_modal :: content}"></div>
 		
@@ -128,21 +127,13 @@
 	var csrfHeaderName = "[[${_csrf.headerName}]]";
 	var csrfValue = "[[${_csrf.token}]]";	
 
-	function clearFilter() {
-		window.location = moduleURL;
-	}
-
 	$(document).ready(function(){
-		handleDetailLink();
+		handleDetailLink(".linkDetail", "#orderDetailsModal");
 	});
 	
-	function handleDetailLink() {
-		$(".linkDetail").on("click", function(e) {
-			e.preventDefault();
-			$('#orderDetailsModal').modal('show').find('.modal-content').load($(this).attr('href'));
-		});		
-	}	
+	
 </script>
+<script th:src="@{/js/common_list.js}"></script>
 <script type="text/javascript" th:src="@{/js/return_order.js}"></script>
 </body>
 </html>

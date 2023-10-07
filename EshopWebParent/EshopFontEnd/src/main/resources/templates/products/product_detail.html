@@ -1,11 +1,15 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" >
-<head th:replace="~{fragments :: page_head('Product ' + ${pageTitle},'none')}"/>
-
+<head>
+	<head th:replace="~{fragments :: page_head('Product ' + ${pageTitle},'tag')}"/>
+	<link th:href="@{/star-rating/css/star-rating.css}" media="all" rel="stylesheet" type="text/css" />
+	<script th:src="@{/star-rating/js/star-rating.js}" type="text/javascript"></script>
+	<link th:href="@{/star-rating/themes/krajee-svg/theme.css}" media="all" rel="stylesheet" type="text/css" />
+	<script th:src="@{/star-rating/themes/krajee-svg/theme.js}"></script>
 </head>
 <body>
 	<div class="container-fluid  bg-light p-0">
-		<div th:replace="~{navigation :: header_menu}" ></div>
+	<div th:replace="~{navigation :: header_menu}" ></div>
 	<div class="my-2 container bg-white">
 		<div th:replace="~{navigation :: search_nav}" ></div>
 		<div th:replace="~{breadcrumb :: content}" ></div>
@@ -33,6 +37,16 @@
 				<div>
 					<h2>[[${product.name}]]</h2>
 				</div>
+				
+				<div class="row ml-1">
+					<div class="col-xs">
+						<input type="text" class="product-rating-star" dir="ltr" data-size="md" th:value="${product.averageRating}"/>
+					</div>
+					<div class="col-xs ml-1 mt-3">
+						<a th:href="@{${product.URI} + '#review'}">[[${product.reviewCount}]] rating(s)</a>
+					</div>
+				</div>
+				
 				<div>
 					<span>Brand: [[${product.brand.name}]]</span>
 				</div>
@@ -69,7 +83,6 @@
 				<div th:replace="~{cart/quantity_control :: quantity_control(1, ${product.id})}" ></div>
 				<div class="my-2" >
 					<input type="button" id="buttonAddToCart" value="Add To Cart" class="btn btn-outline-primary"/>
-					<input type="button" value="Buy Now" class="btn btn-primary"/>
 				</div>	
 				</th:block>		
 			</div>
@@ -92,7 +105,7 @@
 				</div>
 				<th:block th:each="detail : ${product.details}">
 					<div class="row">
-						<label class="col-2 text-secondary">
+						<label class="col-sm-2  col-4 text-secondary">
 							<b>[[${detail.name}]]</b>
 						</label>
 						<div class="col-4">
@@ -104,12 +117,13 @@
 			</div>
 		</div>
 
-		
+		<div th:replace="~{products/product_list_reviews :: content}" ></div>
+		<a class="d-flex justify-content-center" th:href="@{'/ratings/' + ${product.alias}}"><b>View all [[${product.reviewCount}]] ratings </b></a>
 		<div th:replace="~{products/images_carousel :: content}" ></div>
-		</div>
+	</div>
 		<div th:replace="~{fragments :: modal_dialog}" ></div>
 		<div th:replace="~{navigation :: footer_menu}" ></div>
-		
+
 	</div>
 	
 <script type="text/javascript">
@@ -118,6 +132,9 @@
 	var csrfHeaderName = "[[${_csrf.headerName}]]";
 	var csrfValue = "[[${_csrf.token}]]";	
 	
+	decimalSeparator = "[[${DECIMAL_POINT_TYPE == 'COMMA' ? ',' : '.'}]]";
+	thousandSeparator = "[[${THOUSANDS_POINT_TYPE == 'COMMA' ? ',' : '.'}]]";
+
 	$(document).ready(function(){
 		bigImage = $("#bigImage");
 		$(".image-thumbnail").mouseover(function(){
@@ -134,10 +151,12 @@
 			$("#carouselExampleIndicators").carousel(imageIndex);
 		})
 	});
-	
-</script>	
+</script>
+<script type="text/javascript" th:src="@{/js/jquery.number.min.js}"></script>
+<script type="text/javascript" th:src="@{/js/common_rating.js}"></script>	
 <script type="text/javascript" th:src="@{/js/quantity_control.js}"></script>
 <script type="text/javascript" th:src="@{/js/common_modal.js}"></script>
 <script type="text/javascript" th:src="@{/js/add_to_cart.js}"></script>
+<script type="text/javascript" th:src="@{/js/review_vote.js}"></script>
 </body>
 </html>

@@ -41,6 +41,9 @@ border-bottom-right-radius: 16px;
 	opacity: 0.5;
 }
 
+.background-gray{
+	background-color:  #949ea7;
+}
 
 .navtext{
 	font-size: 1.15rem;

@@ -82,7 +82,11 @@ public class ProductService {
 			product.setAlias(product.getAlias().replaceAll(" ", "-"));
 		}
 		product.setUpdatedTime(new Date());
-		return repo.save(product);
+		
+		Product updatedProduct = repo.save(product);
+		repo.updateReviewCountAndAverageRating(updatedProduct.getId());
+		
+		return updatedProduct;
 	}
 	
 	public String checkUnique(Integer id, String name) {

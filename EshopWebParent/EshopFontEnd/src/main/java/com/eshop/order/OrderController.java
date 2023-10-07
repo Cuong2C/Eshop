@@ -1,5 +1,6 @@
 package com.eshop.order;
 
+import java.util.Iterator;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,10 +10,12 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
-import com.eshop.Utility;
+import com.eshop.ControllerHelper;
 import com.eshop.common.entity.Customer;
 import com.eshop.common.entity.order.Order;
-import com.eshop.customer.CustomerService;
+import com.eshop.common.entity.order.OrderDetail;
+import com.eshop.common.entity.product.Product;
+import com.eshop.review.ReviewService;
 
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -22,7 +25,9 @@ public class OrderController {
 	@Autowired
 	private OrderService orderService;
 	@Autowired
-	private CustomerService customerService;
+	private ControllerHelper controllerHelper;
+	@Autowired
+	private ReviewService reviewService;
 	
 	@GetMapping("/orders")
 	public String listFirstPage(Model model, HttpServletRequest request) {
@@ -30,13 +35,13 @@ public class OrderController {
 	}
 	
 	@GetMapping("/orders/page/{pageNum}")
-	public String listOrdersByPage(Model model, HttpServletRequest request, @PathVariable(name = "pageNum") int pageNum,
-						String sortField, String sortDir, String orderKeyword) {
-		Customer customer = getAuthenticatedCustomer(request);
+	public String listOrdersByPage(Model model, HttpServletRequest request, @PathVariable(name = "pageNum") int pageNum,String sortField, String sortDir, String keyword) {
 		
-		Page<Order> page = orderService.listForCustomerByPage(customer, pageNum, sortField, sortDir, orderKeyword);
+		Customer customer = controllerHelper.getAuthenticatedCustomer(request);
 		
+		Page<Order> page = orderService.listForCustomerByPage(customer, pageNum, sortField, sortDir, keyword);
 		List<Order> listOrders = page.getContent();
+		
 		long startCount = (pageNum - 1) * OrderService.ORDERS_PER_PAGE + 1;
 		long endCount = startCount + OrderService.ORDERS_PER_PAGE - 1;
 		if (endCount > page.getTotalElements()) {
@@ -44,13 +49,14 @@ public class OrderController {
 		}
 		
 		model.addAttribute("totalPages", page.getTotalPages());
-		model.addAttribute("totalTtems", page.getTotalElements());
+		model.addAttribute("totalItems", page.getTotalElements());
 		model.addAttribute("currentPage", pageNum);
 		model.addAttribute("listOrders", listOrders);
 		model.addAttribute("sortField", sortField);
 		model.addAttribute("sortDir", sortDir);
-		model.addAttribute("orderKeyword", orderKeyword);
+		model.addAttribute("keyword", keyword);
 		model.addAttribute("reverseSortDir", sortDir.equals("asc") ? "desc" : "asc");
+	
 		model.addAttribute("startCount", startCount);
 		model.addAttribute("endCount", endCount);
 		
@@ -60,18 +66,34 @@ public class OrderController {
 	@GetMapping("/orders/detail/{id}")
 	public String viewOrderDetails(Model model,
 			@PathVariable(name = "id") Integer id, HttpServletRequest request) {
-		Customer customer = getAuthenticatedCustomer(request);
+		Customer customer = controllerHelper.getAuthenticatedCustomer(request);
+		Order order = orderService.getOrder(id, customer);
 		
-		Order order = orderService.getOrder(id, customer);		
+		setProductReviewableStatus(customer, order);
+		
 		model.addAttribute("order", order);
 		
 		return "orders/order_details_modal";
 	}	
 	
-	private Customer getAuthenticatedCustomer(HttpServletRequest request) {
-		String email = Utility.getEmailOfAuthenticatedCustomer(request);				
-		return customerService.getCustomerByEmail(email);
-	}	
+	private void setProductReviewableStatus(Customer customer, Order order) {
+		Iterator<OrderDetail> iterator = order.getOrderDetails().iterator();
+		
+		while(iterator.hasNext()) {
+			OrderDetail orderDetail = iterator.next();
+			Product product = orderDetail.getProduct();
+			Integer productId = product.getId();
+			
+			boolean didCustomerReviewProduct = reviewService.didCustomerReviewProduct(customer, productId);
+			product.setReviewedByCustomer(didCustomerReviewProduct);
+			
+			if (!didCustomerReviewProduct) {
+				boolean canCustomerReviewProduct = reviewService.canCustomerReviewProduct(customer, productId);
+				product.setCustomerCanReview(canCustomerReviewProduct);
+			}
+			
+		}
+	}
 	
 	
 }

@@ -4,13 +4,12 @@
 
 </head>
 <body>
-<div class="container-fluid bg-secondary p-0">
+<div class="container-fluid background-gray p-0">
 	<div th:replace="~{navigation :: header_menu}" ></div>
 	
-		
-	<section class="h-100 bg-secondary">
-	  <div class="container  h-100">
-	    <div class="row d-flex justify-content-center align-items-center h-100">
+	<section >
+	  <div class="container">
+	    <div class="row d-flex justify-content-center align-items-center ">
 	      <div class="col">
 	        <div class="card card-registration my-4" style="border-radius: 1rem;">
 	          <div class="row g-0">
@@ -25,13 +24,13 @@
 	                <h3 class="mb-3 text-uppercase title" >Customer Registration</h3>
 	
 	                <div class="row">
-	                  <div class="col-md-6 mb-4">
+	                  <div class="col-md-6 ">
 	                    <div class="form-outline">
 	                      <input type="text"  class="form-control form-control-lg" th:field="*{firstName}" required maxlength="45"/>
 	                      <label class="form-label" for="firstName">First name</label>
 	                    </div>
 	                  </div>
-	                  <div class="col-md-6 mb-4">
+	                  <div class="col-md-6 ">
 	                    <div class="form-outline">
 	                      <input type="text" class="form-control form-control-lg" th:field="*{lastName}" required maxlength="45"/>
 	                      <label class="form-label" for="lastName">Last name</label>
@@ -40,20 +39,20 @@
 	                </div>
 	
 	
-	                <div class="form-outline mb-4">
+	                <div class="form-outline ">
 	                  <input type="email"  class="form-control form-control-lg"  th:field="*{email}" required maxlength="45"/>
 	                  <label class="form-label" for="email" >Email</label>
 	                </div>
 	                
 	                 <div class="row">
-	                  <div class="col-md-6 mb-4">
+	                  <div class="col-md-6 ">
 	                    <div class="form-outline">
 	                      <input type="password"  class="form-control form-control-lg"  required 
 	                      minlength="8" maxlength="24" th:field="*{password}" oninput="checkPasswordMatch(document.getElementById('confirmPassword'))"/>
 	                      <label class="form-label" for="password">Password</label>
 	                    </div>
 	                  </div>
-	                  <div class="col-md-6 mb-4">
+	                  <div class="col-md-6 ">
 	                    <div class="form-outline">
 	                      <input type="password" class="form-control form-control-lg" required 
 	                      minlength="8" maxlength="24" id="confirmPassword" oninput="checkPasswordMatch(this)"/>
@@ -62,7 +61,7 @@
 	                  </div>
 	                </div>
 	                
-	                <div class="form-outline mb-4">
+	                <div class="form-outline 4">
 	                  <input type="text" class="form-control form-control-lg" th:field="*{phoneNumber}" required minlength="8" maxlength="15"/>
 	                  <label class="form-label" for="phoneNumber">Phone Number</label>
 	                </div>
@@ -70,18 +69,18 @@
 				
 	               
 	
-	                <div class="form-outline mb-4">
+	                <div class="form-outline ">
 	                  <input type="text"  class="form-control form-control-lg" th:field="*{addressLine1}" required maxlength="64"/>
 	                  <label class="form-label" for="addressLine1">Address Line 1</label>
 	                </div>
 	
-	                <div class="form-outline mb-4">
+	                <div class="form-outline ">
 	                  <input type="text"  class="form-control form-control-lg" th:field="*{addressLine2}" maxlength="64"/>
 	                  <label class="form-label" for="addressLine2">Address Line 2</label>
 	                </div>
 	                
 	                  <div class="row">
-	                   <div class="col-md-6 mb-4">
+	                   <div class="col-md-6 ">
 						  <div >    
 							  <div >                 
 			                    <select class="form-control form-control-lg" th:field="*{country}">	
@@ -93,7 +92,7 @@
 	                     	 <label class="form-label" for="country">Country</label>  
 	                      </div>                 
 	                  </div>
-	                   <div class="col-md-6 mb-4">
+	                   <div class="col-md-6 ">
 	                    <div class="form-outline">
 	                      <input type="text" class="form-control form-control-lg" th:field="*{state}" maxlength="45" list="listStates"/>
 	                       <datalist id="listStates"></datalist>
@@ -104,13 +103,13 @@
 	                </div>
 	                
 	                 <div class="row">                  
-	                    <div class="col-md-6 mb-4">
+	                    <div class="col-md-6 ">
 	                    <div class="form-outline">
 	                      <input type="text"  class="form-control form-control-lg" th:field="*{city}" maxlength="45"/>
 	                      <label class="form-label" for="city">City</label>
 	                    </div>
 	                  </div>
-	                  <div class="col-md-6 mb-4">
+	                  <div class="col-md-6 ">
 	                    <div class="form-outline">
 	                      <input type="text" class="form-control form-control-lg" th:field="*{postalCode}" minlength="2" maxlength="10"/>
 	                      <label class="form-label" for="postalCode">Postal Code</label>

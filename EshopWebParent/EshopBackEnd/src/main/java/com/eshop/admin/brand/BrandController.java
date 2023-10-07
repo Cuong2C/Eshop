@@ -54,7 +54,7 @@ public class BrandController {
 		model.addAttribute("currentPage", pageNum);
 		model.addAttribute("startCount", startCount);
 		model.addAttribute("endCount", endCount);
-		model.addAttribute("totalTtems", page.getTotalElements());
+		model.addAttribute("totalItems", page.getTotalElements());
 		model.addAttribute("totalPages", page.getTotalPages());
 		model.addAttribute("listBrands", listBrands);
 		model.addAttribute("sortField", "name");

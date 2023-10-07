@@ -11,14 +11,16 @@ spring:
     hikari:
       minimum-idle: 1
       maximum-pool-size: 2
+  
   jpa:
     hibernate:
       ddl-auto: update
     properties:
       hibernate:
         dialect: org.hibernate.dialect.MySQL8Dialect
-    show-sql: true
-
+        version: 6.3.1.Final
+#    show-sql: true
+  
   security:
     oauth2:
       client:

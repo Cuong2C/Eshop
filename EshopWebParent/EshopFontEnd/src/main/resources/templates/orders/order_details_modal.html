@@ -116,6 +116,14 @@
 						 = 
 						 <span class="title"><div th:replace="~{fragments :: product_price_symbol(${detail.subtotal})}" /></span>
 					</div>
+					
+					<div th:if="${!product.reviewedByCustomer && product.customerCanReview}">
+						<a th:href="@{'/write_review/product/' + ${product.id}}" class="btn btn-outline-info">Write Review</a>
+					</div>
+					
+					<div th:if="${product.reviewedByCustomer}">
+						<a target="_blank" th:href="@{'/reviews/page/1?sortField=reviewTime&sortDir=desc&keyword=' + ${#strings.substring(product.shortName, 0, 20)}}" class="btn btn-outline-success">See your Review</a>
+					</div>		
 							
 				</div>
 			</div>

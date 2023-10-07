@@ -31,8 +31,7 @@ public class OrderService {
 	@Autowired 
 	private OrderRepository repo;
 	
-	public Order createOrder(Customer customer, Address address, List<CartItem> cartItems,
-			PaymentMethod paymentMethod, CheckoutInfo checkoutInfo) {
+	public Order createOrder(Customer customer, Address address, List<CartItem> cartItems, PaymentMethod paymentMethod, CheckoutInfo checkoutInfo) {
 		Order newOrder = new Order();
 		newOrder.setOrderTime(new Date());
 		if (paymentMethod.equals(PaymentMethod.PAYPAL)) {
@@ -83,8 +82,7 @@ public class OrderService {
 		return repo.save(newOrder);
 	}
 	
-	public Page<Order> listForCustomerByPage(Customer customer, int pageNum, 
-			String sortField, String sortDir, String keyword) {
+	public Page<Order> listForCustomerByPage(Customer customer, int pageNum, String sortField, String sortDir, String keyword) {
 		Sort sort = Sort.by(sortField);
 		sort = sortDir.equals("asc") ? sort.ascending() : sort.descending();
 		
@@ -93,7 +91,6 @@ public class OrderService {
 		if (keyword != null) {
 			return repo.findAll(keyword, customer.getId(), pageable);
 		}
-		
 		return repo.findAll(customer.getId(), pageable);
 	}
 	
@@ -101,8 +98,7 @@ public class OrderService {
 		return repo.findByIdAndCustomer(id, customer);
 	}
 	
-	public void setOrderReturnRequested(OrderReturnRequest request, Customer customer) 
-			throws OrderNotFoundException {
+	public void setOrderReturnRequested(OrderReturnRequest request, Customer customer) throws OrderNotFoundException {
 		Order order = repo.findByIdAndCustomer(request.getOrderId(), customer);
 		if (order == null) {
 			throw new OrderNotFoundException("Order ID " + request.getOrderId() + " not found");

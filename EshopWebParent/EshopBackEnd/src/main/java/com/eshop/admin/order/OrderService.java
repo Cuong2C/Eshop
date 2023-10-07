@@ -20,7 +20,7 @@ import com.eshop.common.exception.OrderNotFoundException;
 
 @Service
 public class OrderService {
-	private static final int ORDERS_PER_PAGE = 10;
+	public static final int ORDERS_PER_PAGE = 10;
 	
 	@Autowired 
 	private OrderRepository repo;

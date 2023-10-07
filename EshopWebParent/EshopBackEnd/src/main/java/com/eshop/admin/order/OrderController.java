@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.eshop.admin.brand.BrandService;
 import com.eshop.admin.security.EshopUserDetails;
 import com.eshop.admin.setting.SettingService;
 import com.eshop.common.entity.Country;
@@ -55,18 +54,18 @@ public class OrderController {
 		List<Order> listOrders = page.getContent();
 		String reverseSortDir = sortDir.equals("asc") ? "desc" : "asc";
 		
-		long startCount = (pageNum-1)*BrandService.BRANDS_PER_PAGE +1;
-		long endCount = startCount + BrandService.BRANDS_PER_PAGE -1;
+		long startCount = (pageNum-1)*OrderService.ORDERS_PER_PAGE +1;
+		long endCount = startCount + OrderService.ORDERS_PER_PAGE -1;
 		if(endCount>page.getTotalElements()) endCount = page.getTotalElements();
 		loadCurrencySetting(request);
 		
 		model.addAttribute("currentPage", pageNum);
 		model.addAttribute("startCount", startCount);
 		model.addAttribute("endCount", endCount);
-		model.addAttribute("totalTtems", page.getTotalElements());
+		model.addAttribute("totalItems", page.getTotalElements());
 		model.addAttribute("totalPages", page.getTotalPages());
 		model.addAttribute("listOrders", listOrders);
-		model.addAttribute("sortField", "name");
+		model.addAttribute("sortDir", sortDir);
 		model.addAttribute("sortField", sortField);
 		model.addAttribute("reverseSortDir", reverseSortDir);
 		model.addAttribute("keyword", keyword);

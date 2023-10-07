@@ -3,8 +3,8 @@
 <body>
 	<div class="mb-2" th:fragment="menu">
 			<form th:action="@{/logout}" method="post" th:hidden="true" name="logoutForm">
-			<input type="submit" />
-		</form>
+				<input type="submit" />
+			</form>
 		<nav class="navbar navbar-expand-lg bg-dark navbar-dark">
 			<a class="navbar-brand" th:href="@{/}"> <img style="width: 125px; height: 75px;" th:src="@{/images/EshopLogo.png}" ></a>
 			<button class="navbar-toggler" type="button" data-toggle="collapse"
@@ -25,6 +25,9 @@
 					<li class="nav-item" sec:authorize="hasAnyAuthority('Admin','Salesperson', 'Editor','Shipper')">
 						<a class="nav-link" th:href="@{/products}">Products</a>
 					</li>
+					<li class="nav-item" sec:authorize="hasAnyAuthority('Admin','Assistant')">
+						<a class="nav-link" th:href="@{/reviews}">Reviews</a>
+					</li>
 					<li class="nav-item" sec:authorize="hasAnyAuthority('Admin', 'Salesperson')">
 						<a class="nav-link" th:href="@{/customers}">Customers</a>
 					</li>
@@ -35,7 +38,7 @@
 						<a class="nav-link" th:href="@{/orders}">Orders</a>
 					</li>
 					<li class="nav-item" sec:authorize="hasAnyAuthority('Admin', 'Salesperson')">
-						<a class="nav-link" th:href="@{/report}">SalesReport</a>
+						<a class="nav-link" th:href="@{/reports}">SalesReport</a>
 					</li>
 					<li class="nav-item" sec:authorize="hasAnyAuthority('Admin', 'Editor')">
 						<a class="nav-link" th:href="@{/articles}">Articles</a>
@@ -55,7 +58,7 @@
 							<a class="nav-link dropdown-toggle"  data-toggle="dropdown" sec:authentication="principal.fullName"></a>			
 							<div class="dropdown-menu"> 
 								<a class="dropdown-item" id = "userDetail" th:href="@{/account}">Account</a>
-								<a class="dropdown-item" id = "logoutLink" >Logout</a>
+								<a class="dropdown-item" href="javascript: document.logoutForm.submit()" >Logout</a>
 							</div>
 						</li>
 					</th:block>
