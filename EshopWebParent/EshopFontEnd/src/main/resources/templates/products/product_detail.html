@@ -121,6 +121,10 @@
 		<a class="d-flex justify-content-center" th:href="@{'/ratings/' + ${product.alias}}"><b>View all [[${product.reviewCount}]] ratings </b></a>
 		<div th:replace="~{products/images_carousel :: content}" ></div>
 	</div>
+		<div id="popupAddtoCart" class="popupAddtoCart">
+		    
+		</div>
+	
 		<div th:replace="~{fragments :: modal_dialog}" ></div>
 		<div th:replace="~{navigation :: footer_menu}" ></div>
 
@@ -131,6 +135,9 @@
 	productId = "[[${product.id}]]";
 	var csrfHeaderName = "[[${_csrf.headerName}]]";
 	var csrfValue = "[[${_csrf.token}]]";	
+	
+	 var popupAddtoCart = document.getElementById("popupAddtoCart");
+	 var showAddToCartButton = document.getElementById("buttonAddToCart");
 	
 	decimalSeparator = "[[${DECIMAL_POINT_TYPE == 'COMMA' ? ',' : '.'}]]";
 	thousandSeparator = "[[${THOUSANDS_POINT_TYPE == 'COMMA' ? ',' : '.'}]]";

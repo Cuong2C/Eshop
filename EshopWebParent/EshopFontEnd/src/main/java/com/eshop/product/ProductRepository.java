@@ -23,5 +23,4 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
 	@Modifying
 	public void updateReviewCountAndAverageRating(Integer productId);
 	
-	
 }

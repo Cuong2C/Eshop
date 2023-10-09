@@ -3,18 +3,83 @@
 <head th:replace="~{fragments :: page_head('HomePage-Eshop Admin','none')}"/>
 
 
-<body>
+<body style="line-height: 1.2;">
 
 	<div class="container-fluid p-0">
 		<div th:replace="navigation :: menu" ></div>
 		
-		<div class="m-2">
-			<h1>Eshop control panel</h1>
+		<div class="m-2 py-2">
+			<h1 class="title">Eshop Dashboard</h1>
 			Welcome <a th:href="@{/account}" sec:authentication="principal.fullName"></a>
 			<span sec:authentication="principal.authorities" ></span>
 		</div>
+		
+		<div class="card-deck-wrapper m-2">
+		  <div class="card-deck mx-0">
+ 
+		     <div th:replace="~{fragments :: dashboard_card('/users', 'user_dashboard.png', 'Manage Users',
+		    		'Add a new user - Edit users(role, password, personal information,...) - Delete or Disable users', 'Enable for [Admin]')}"></div>
+		    
+		    <div th:replace="~{fragments :: dashboard_card('/categories', 'category_dashboard.png', 'Manage Categories',
+		    		'Add a new category - Edit categories(name, alias, image,...) - Delete categories', 'Enable for [Admin & Editor]')}"></div>
+		    
+		    
+		    <div th:replace="~{fragments :: dashboard_card('/brands', 'brand_dashboard.png', 'Manage Brands',
+		    		'Add a new brand - Edit brands(name, categories, logo,...) - Delete brands', 'Enable for [Admin & Editor]')}"></div>
+		    
+		    
+		    <div th:replace="~{fragments :: dashboard_card('/products', 'product_dashboard.jpg', 'Manage Products',
+		    		'Add a new product - Edit products(name, image, brand,...) - Delete products', 'Enable for [Admin, Salesperson, Editor & Shipper]')}"></div>
+		      
+		     
+		    <div th:replace="~{fragments :: dashboard_card('/reviews', 'review_dashboard.png', 'Manage Reviews',
+		    		'Edit Reviews(name, image, review content,...) - Delete reviews', 'Enable for [Admin & Assistant]')}"></div>
+		    
+		      <div th:replace="~{fragments :: dashboard_card('/customers', 'customer_dashboard.jpg', 'Manage Customers',
+		    		'Edit Customers(name, email, address,...) - Delete or Disable customers', 'Enable for [Admin & Salesperson]')}"></div>
+		    
+		  </div>
+		</div>
+		
+		<div class="card-deck-wrapper mx-2 my-5">
+		  <div class="card-deck mx-0">
+ 
+		     <div th:replace="~{fragments :: dashboard_card('/shipping_rates', 'shipping_dashboard.png', 'Manage Shippings',
+		    		'Add or delete a location provides shipping support - Edit shipping(destination, rate, shipping status,...)', 'Enable for [Admin & Shipper]')}"></div>
+		    
+		    <div th:replace="~{fragments :: dashboard_card('/orders', 'order_dashboard.png', 'Manage Orders',
+		    		'Check orders - Edit order(address, payment method, status,...) - Delete orders', 'Enable for [Admin & Shipper]')}"></div>
+		    
+		    
+		    <div th:replace="~{fragments :: dashboard_card('/reports', 'salesReport_dashboard.jpg', 'Sales Report',
+		    		'Check sales status(7 days, 28 days, 1 month or custom range) or check sales by category, product', 'Enable for [Admin & Salesperson]')}"></div>
+		    
+		    
+		    <div th:replace="~{fragments :: dashboard_card('/settings', 'setting_dashboard.jpg', 'Site Settings',
+		    		'Edit sales website(logo, name, currency,...) - update mail server, mail templates, payment', 'Enable for [Admin]')}"></div>
+		      
+		     
+		    <div th:replace="~{fragments :: dashboard_card('/account', 'account_dashboard.png', 'Account Details',
+		    		'Edit your account details(name, avatar, password,...)', 'Enable for [Admin & Account owner]')}"></div>
+		    
+		    
+		     <a href="javascript: document.logoutForm.submit()" class="card card-index">
+		      <img class="card-img-top" th:src="@{/images/switch_dashboard.jpg}" height="55%" >
+		     	<div class="card-block card-bg" style="height: 100%;">
+		        <h4 class="card-title title">Account Details</h4>  
+		        <p class="card-text text-dark">Edit your account details(name, avatar, password,...)</p>
+		        
+		        
+		      </div>
+		    </a>
+		    
+		  </div>
+		</div>
+		
+		
 
-		<div th:replace="fragments :: footer" ></div>
+
+		<div th:replace="~{fragments :: footer}"></div>
 	</div>
 
 

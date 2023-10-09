@@ -5,7 +5,7 @@
 <body>
 	<div class="container-fluid p-0">
 		<div th:replace="~{navigation :: menu}" ></div>
-		<div class="text-center">
+		<div class="text-center title">
 			<h2>Account Details</h2>
 		</div>
 		<form th:action="@{/account/update}" method="post" style="max-width: 700px; margin: 0 auto" th:object="${user}" enctype="multipart/form-data" >

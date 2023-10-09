@@ -14,11 +14,11 @@
 		<div th:replace="~{navigation :: header_menu}" ></div>
 		<div th:replace="~{navigation :: search_nav}" ></div>
 	
-		<div class="m-2" th:if="${totalTtems > 0}">
+		<div class="m-2" th:if="${totalItems > 0}">
 			<h1 style="color: #fe9765;">Search result for '[[${keyword}]]'</h1>
 		</div>
 		
-		<div class="m-2 text-center" th:unless="${totalTtems > 0}">
+		<div class="m-2 text-center" th:unless="${totalItems > 0}">
 			<h2 style="color: #fe9765;">No match result for '[[${keyword}]]'</h2>
 		</div>
 		

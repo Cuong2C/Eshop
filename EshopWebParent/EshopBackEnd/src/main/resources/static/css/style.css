@@ -54,6 +54,18 @@
 	color:  #fe9765;
 }
 
+.card-bg{
+	background-color: antiquewhite !important;
+}
+
+.card-radius{
+	border-radius: 15px !important;
+}
+
+.card-index{
+	border: 2px solid  #fe9765 !important;
+	box-shadow: 4px 4px 16px  rgb(245, 174, 78);
+}
 
 @media screen and (max-width: 768px) {
 	div.full-details {display:none}

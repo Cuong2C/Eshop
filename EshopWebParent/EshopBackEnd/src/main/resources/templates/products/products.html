@@ -6,7 +6,7 @@
 	<div class="container-fluid p-0">
 		<div th:replace="navigation :: menu" ></div>
 		<div class="m-2">
-			<h2>Manage Products</h2>
+			<h2 class="title">Manage Products</h2>
 			<a sec:authorize="hasAnyAuthority('Admin', 'Editor')" th:href="@{/products/new}" class="fa-solid fa-folder-plus fa-2x" title="Add a new Product"></a>
 			&nbsp; &nbsp;
 			<a sec:authorize="hasAnyAuthority('Admin', 'Editor')" th:href="@{/products/export/csv}" class="fa-solid fa-file-csv fa-2x" title="Export to CSV"></a>

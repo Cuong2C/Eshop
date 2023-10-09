@@ -3,6 +3,7 @@
 <head th:replace="~{fragments :: page_head('Eshop-Sign in', 'none')}"/>
 <body>
 <div class="container-fluid bg-secondary p-0">
+	<div th:replace="navigation :: menu" ></div>
 		<section class="vh-100 bg-secondary" >
 		  <div class="container h-100">
 		    <div class="row d-flex justify-content-center align-items-center h-100">
@@ -51,7 +52,7 @@
 		    </div>
 		  </div>
 		</section>
-		<div th:replace="~{fragments :: footer}" ></div>
+
 	</div>
 </body>
 </html>

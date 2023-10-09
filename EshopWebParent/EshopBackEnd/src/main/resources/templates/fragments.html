@@ -27,8 +27,83 @@
 	</th>
 	
 				
-	<div th:fragment="footer" class="text-center">
-			<p>Eshop Control Panel - Copyright &copy; Eshop</p>
+	<div th:fragment="footer" >
+		<div class="container-fluid p-0 ">
+			<footer class=" text-lg-start text-white "
+				style="background-color: #616569">
+				<div class=" pb-0">
+					<section class="">
+						<div class="row mx-2">
+							<div class="col-md-5 col-lg-7 col-xl-7 mx-auto mt-3">
+								<h6 class="text-uppercase mb-4 font-weight-bold">About Us</h6>
+								<p>Welcome to Eshop, your newest destination for all your
+									shopping needs. We are a recently established online store,
+									dedicated to providing you with a wide range of high-quality
+									products at competitive prices. Our team is passionate about
+									delivering an exceptional shopping experience, with a
+									commitment to customer satisfaction.At Eshop, we aim to make
+									your online shopping journey convenient and enjoyable, offering
+									a diverse selection of products to cater to your every need.
+									Join us on this exciting adventure and discover a world of
+									convenience and affordability at Eshop!</p>
+							</div>
+
+							<hr class="w-100 clearfix d-md-none" />
+
+							<div class="col-md-4 col-lg-3 col-xl-3 mx-auto mt-3 text-center">
+								<h6 class="text-uppercase mb-4 font-weight-bold">Contact</h6>
+								<p>
+									<i class="fas fa-home mr-3"></i> Ho Chi Minh, 22-36 Nguyen Hue, Viet Nam
+								</p>
+								<p>
+									<i class="fas fa-envelope mr-3"></i> eshopteam@gmail.com
+								</p>
+								<p>
+									<i class="fas fa-phone mr-3"></i> + 01 234 567 89
+								</p>
+								<p>
+									<i class="fas fa-print mr-3"></i> + 01 234 567 89
+								</p>
+							</div>
+
+							<div class="col-md-3 col-lg-2 col-xl-2 mx-auto mt-3">
+								<h6 class="text-uppercase mb-4 font-weight-bold">Follow us</h6>
+
+								<a class="btn btn-primary btn-floating m-1"
+									style="background-color: #3b5998" href="#!" role="button"><i
+									class="fab fa-facebook-f"></i></a>
+
+								<a class="btn btn-primary btn-floating m-1"
+									style="background-color: #55acee" href="#!" role="button"><i
+									class="fab fa-twitter"></i></a>
+
+								<a class="btn btn-primary btn-floating m-1"
+									style="background-color: #dd4b39" href="#!" role="button"><i
+									class="fab fa-google"></i></a>
+
+								<a class="btn btn-primary btn-floating m-1"
+									style="background-color: #ac2bac" href="#!" role="button"><i
+									class="fab fa-instagram"></i></a>
+
+								<a class="btn btn-primary btn-floating m-1"
+									style="background-color: #0082ca" href="#!" role="button"><i
+									class="fab fa-linkedin-in"></i></a>
+									
+								<a class="btn btn-primary btn-floating m-1"
+									style="background-color: #333333" href="#!" role="button"><i
+									class="fab fa-github"></i></a>
+							</div>
+						</div>
+					</section>
+				</div>
+
+				<div class="text-center bg-dark">
+					<a class="text-white" href="">
+						<p class="m-0 p-2">Eshop Control Panel - Copyright &copy; Eshop</p>
+					</a>
+				</div>
+			</footer>
+		</div>
 	</div>	
 	
 	<div th:fragment="modal_dialog"  class="modal" tabindex="-1" id="modalDialog">
@@ -73,7 +148,7 @@
 	
 	<div th:fragment="pagination(moduleURL, entityName)" th:remove="tag">
 	<div class="text-center" th:if="${totalItems} > 0">
-			<span>Showing [[${entityName}]] # [[${startCount}]] to [[${endCount}]] of [[${totalTtems}]]</span>
+			<span>Showing [[${entityName}]] # [[${startCount}]] to [[${endCount}]] of [[${totalItems}]]</span>
 		</div>
 
 		<div class="text-center text-danger font-weight-bold" th:unless="${totalItems} > 0">
@@ -132,6 +207,19 @@
 	<div th:fragment="currency_input(amount)" th:remove="tag">
 		<input type="text" readonly class="form-control" th:value="${(CURRENCY_SYMBOL_POSITION == 'Before price' ? CURRENCY_SYMBOL : '') + #numbers.formatDecimal(amount, 1, THOUSANDS_POINT_TYPE, DECIMAL_DIGITS, DECIMAL_POINT_TYPE) + (CURRENCY_SYMBOL_POSITION == 'After price' ? CURRENCY_SYMBOL : '')}">
 	</div>
+	
+	<div th:fragment="dashboard_card(url, imageName, titleCard, contentCard, roleEnable)" th:remove="tag">
+		 <a th:href="@{${url}}" class="card card-index">
+	      <img class="card-img-top" th:src="@{'/images/' + ${imageName}}" height="55%" >
+	     	<div class="card-block card-bg" style="height: 100%;">
+	        <h4 class="card-title title">[[${titleCard}]]</h4>  
+	        <p class="card-text text-dark">[[${contentCard}]]</p>
+	        
+	        <p class="card-text"><small class="text-muted">[[${roleEnable}]]</small></p>
+	      </div>
+	    </a>
+	</div>
+	
 	
 </body>
 </html>

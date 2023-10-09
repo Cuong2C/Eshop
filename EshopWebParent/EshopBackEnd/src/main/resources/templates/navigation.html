@@ -40,19 +40,14 @@
 					<li class="nav-item" sec:authorize="hasAnyAuthority('Admin', 'Salesperson')">
 						<a class="nav-link" th:href="@{/reports}">SalesReport</a>
 					</li>
-					<li class="nav-item" sec:authorize="hasAnyAuthority('Admin', 'Editor')">
-						<a class="nav-link" th:href="@{/articles}">Articles</a>
-					</li>
-					<li class="nav-item" sec:authorize="hasAnyAuthority('Admin', 'Editor')">
-						<a class="nav-link" th:href="@{/menu}">Menu</a>
-					</li>
+					
 					<li class="nav-item"> 
 						<a class="nav-link "  sec:authorize="hasAuthority('Admin')" th:href="@{/settings}">Settings</a>
 						
 					</li>
 					<th:block sec:authorize="isAuthenticated()">
 						<li>
-						 	<span class="fa-solid fa-user fa-2x icon-sil " > </span>
+						 	<span class="fa-solid fa-user fa-2x title" > </span>
 						</li>
 						<li class="nav-item dropdown ">
 							<a class="nav-link dropdown-toggle"  data-toggle="dropdown" sec:authentication="principal.fullName"></a>			
