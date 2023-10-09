@@ -3,7 +3,7 @@
 <head th:replace="~{fragments :: page_head('Eshop - Brands', 'none')}"/>
 <body>
 	<div class="container-fluid p-0">
-		<div th:replace="navigation :: menu" ></div>
+		<div th:replace="~{navigation :: menu}" ></div>
 		<div class="m-2 title">
 			<h2>Manage Brands</h2>
 			<a th:href="@{/brands/new}" class="fa-solid fa-folder-plus fa-2x" title="Add a new Brand"></a>
@@ -84,9 +84,8 @@
 		
 		<div th:replace="~{fragments :: confirm_modal}" ></div>
 		
-		<div th:replace="~{fragments :: footer}" ></div>
 	</div>
-		
+		<div th:replace="~{fragments :: footer}" ></div>
 <script th:src="@{/js/common_list.js}"></script>
 
 <script type="text/javascript">

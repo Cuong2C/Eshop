@@ -1,3 +1,13 @@
+
+body{
+	min-height: 100vh;
+	display: flex;
+	flex-direction: column;
+}
+footer{
+  margin-top: auto;
+}
+
 .carousel-control-next-icon, .carousel-control-prev-icon {
 	height: 35px !important; 
 	width: 35px !important;

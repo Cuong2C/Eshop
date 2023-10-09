@@ -27,9 +27,8 @@
 	</th>
 	
 				
-	<div th:fragment="footer" >
-		<div class="container-fluid p-0 ">
-			<footer class=" text-lg-start text-white "
+	<div th:fragment="footer" th:remove="tag" >
+			<footer class=" container-fluid p-0 text-lg-start text-white "
 				style="background-color: #616569">
 				<div class=" pb-0">
 					<section class="">
@@ -103,7 +102,6 @@
 					</a>
 				</div>
 			</footer>
-		</div>
 	</div>	
 	
 	<div th:fragment="modal_dialog"  class="modal" tabindex="-1" id="modalDialog">

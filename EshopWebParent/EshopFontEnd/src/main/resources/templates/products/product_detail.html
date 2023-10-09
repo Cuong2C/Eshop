@@ -8,7 +8,7 @@
 	<script th:src="@{/star-rating/themes/krajee-svg/theme.js}"></script>
 </head>
 <body>
-	<div class="container-fluid  bg-light p-0">
+	<div class="container-fluid  bg-light p-0 ">
 	<div th:replace="~{navigation :: header_menu}" ></div>
 	<div class="my-2 container bg-white">
 		<div th:replace="~{navigation :: search_nav}" ></div>
@@ -121,14 +121,13 @@
 		<a class="d-flex justify-content-center" th:href="@{'/ratings/' + ${product.alias}}"><b>View all [[${product.reviewCount}]] ratings </b></a>
 		<div th:replace="~{products/images_carousel :: content}" ></div>
 	</div>
-		<div id="popupAddtoCart" class="popupAddtoCart">
-		    
+		<div id="popupAddtoCart" class="popupAddtoCart">	    
 		</div>
 	
 		<div th:replace="~{fragments :: modal_dialog}" ></div>
-		<div th:replace="~{navigation :: footer_menu}" ></div>
-
+		
 	</div>
+	<div th:replace="~{navigation :: footer_menu}" ></div>
 	
 <script type="text/javascript">
 	contextPath = "[[@{/}]]";

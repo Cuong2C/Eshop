@@ -88,9 +88,10 @@
 		</div>	
 		
 		<div th:replace="~{fragments :: pagination('/reviews', 'reviews')}"></div>
-	
-		<div th:replace="~{navigation :: footer_menu}" ></div>
+
 	</div>
+	<div th:replace="~{navigation :: footer_menu}" ></div>
+	
 <script th:src="@{/js/common_list.js}"></script>
 <script type="text/javascript">
 	moduleURL = "[[@{/reviews}]]";

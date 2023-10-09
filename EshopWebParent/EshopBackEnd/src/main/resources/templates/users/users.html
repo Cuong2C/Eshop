@@ -3,8 +3,8 @@
 <head th:replace="~{fragments :: page_head('Eshop - List of Users', 'none')}"/>
 <body>
 
-	<div class="container-fluid p-0">
-		<div th:replace="navigation :: menu" ></div>
+	<div class="container-fluid p-0 page-content">
+		<div th:replace="~{navigation :: menu}" ></div>
 		<div class="m-2">
 			<h2 class="title">Manage Users</h2>
 			<a th:href="@{/users/new}" class="fa-solid fa-user-plus fa-2x" title="Add a new User"></a>
@@ -91,9 +91,9 @@
 		<div th:replace="~{fragments :: pagination('/users','users')}" ></div>
 		
 		<div th:replace="~{fragments :: confirm_modal}" ></div>
-		
-		<div th:replace="~{fragments :: footer}" ></div>
 	</div>
+		<div th:replace="~{fragments :: footer}" ></div>
+		
 <script th:src="@{/js/common_list.js}"></script>
 <script type="text/javascript">
 	moduleURL="[[@{/users}]]";

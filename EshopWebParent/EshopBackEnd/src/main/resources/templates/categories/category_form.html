@@ -5,7 +5,7 @@
 <body>
 
 	<div class="container-fluid p-0">
-		<div th:replace="navigation :: menu" ></div>
+		<div th:replace="~{navigation :: menu}" ></div>
 		<div class="m-2 text-center title">
 			<h2>Manage Categories | [[${pageTitle}]]</h2>
 		</div>
@@ -64,9 +64,9 @@
 		
 		<div th:replace="~{fragments :: modal_dialog}" ></div>
 		<br>
-		<div th:replace="~{fragments :: footer}" ></div>
+		
 	</div>
-
+	<div th:replace="~{fragments :: footer}" ></div>
 
 <script type="text/javascript">
 	moduleURL="[[@{/categories}]]";

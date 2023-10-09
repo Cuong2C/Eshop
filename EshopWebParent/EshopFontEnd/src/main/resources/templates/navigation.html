@@ -81,9 +81,8 @@
 	</div>
 
 
-	<div th:fragment="footer_menu">
-		<div class="container-fluid p-0 ">
-			<footer class=" text-lg-start text-white "
+	<div th:fragment="footer_menu" th:remove="tag">
+			<footer class="container-fluid p-0 text-lg-start text-white "
 				style="background-color: #616569">
 				<div class=" pb-0">
 					<section class="">
@@ -157,7 +156,6 @@
 					</a>
 				</div>
 			</footer>
-		</div>
 	</div>
 </body>
 </html>

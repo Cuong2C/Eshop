@@ -4,7 +4,7 @@
 <body>
 
 	<div class="container-fluid p-0">
-		<div th:replace="navigation :: menu" ></div>
+		<div th:replace="~{navigation :: menu}" ></div>
 		<div class="m-2">
 			<h2 class="title">Manage Products</h2>
 			<a sec:authorize="hasAnyAuthority('Admin', 'Editor')" th:href="@{/products/new}" class="fa-solid fa-folder-plus fa-2x" title="Add a new Product"></a>
@@ -114,8 +114,8 @@
 		
 		<div th:replace="~{fragments :: pagination('/products','products')}" ></div>
 		
-		<div th:replace="~{fragments :: footer}" ></div>
 	</div>
+	<div th:replace="~{fragments :: footer}" ></div>
 		
 <script th:src="@{/js/common_list.js}"></script>
 
