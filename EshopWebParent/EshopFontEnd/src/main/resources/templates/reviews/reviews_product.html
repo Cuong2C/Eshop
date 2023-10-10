@@ -39,8 +39,9 @@
 	</div>
 	
 	<div th:replace="~{fragments :: modal_dialog}" ></div>
-	<div th:replace="~{navigation :: footer_menu}" ></div>
 </div>
+<div th:replace="~{navigation :: footer_menu}" ></div>
+
 <script type="text/javascript">
 	var csrfHeaderName = "[[${_csrf.headerName}]]";
 	var csrfValue = "[[${_csrf.token}]]";

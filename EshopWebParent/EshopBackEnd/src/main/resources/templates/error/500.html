@@ -4,15 +4,15 @@
 <body>
 
 	<div class="container-fluid p-0">
-		<div th:replace="navigation :: menu" ></div>
+		<div th:replace="~{navigation :: menu}" ></div>
 		
 		<div class="text-center m-5">
 			<h2>Sorry! The server has encountered an error while processing the request</h2>
 		</div>
 
-		<div th:replace="~{fragments :: footer}" ></div>
-	</div>
 
+	</div>
+	<div th:replace="~{fragments :: footer}" ></div>
 
 <script th:src="@{/js/common.js}"></script>
 </body>

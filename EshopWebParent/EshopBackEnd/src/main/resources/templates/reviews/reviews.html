@@ -4,7 +4,7 @@
 <body>
 
 	<div class="container-fluid p-0">
-		<div th:replace="navigation :: menu" ></div>
+		<div th:replace="~{navigation :: menu}" ></div>
 		<div class="m-2 title">
 			<h2>Manage Review</h2>			
 		</div>
@@ -98,9 +98,8 @@
 
 		<div th:replace="~{fragments :: pagination('/reviews','reviews')}" ></div>
 		
-		<div th:replace="~{fragments :: footer}" ></div>
 	</div>
-		
+		<div th:replace="~{fragments :: footer}" ></div>
 <script th:src="@{/js/common_list.js}"></script>
 
 <script type="text/javascript">

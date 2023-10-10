@@ -24,38 +24,28 @@
 				id="navbarNavDropdown">
 				<ul class="navbar-nav mr-2">
 					<th:block sec:authorize="!isAuthenticated()">
-						<li class="nav-item"><a class="nav-link" th:href="@{/login}">Login</a>
+						<li class="nav-item"><a class="nav-link zoomhover" th:href="@{/login}">Login</a>
 						</li>
-						<li class="nav-item"><a class="nav-link"
-							th:href="@{/register}">Register</a></li>
+						<li class="nav-item"><a class="nav-link zoomhover" th:href="@{/register}">Register</a></li>
 					</th:block>
 
 					<th:block sec:authorize="isAuthenticated()">
 
-						<li class="nav-item"><a class="nav-link"
-							th:href="@{/address_book}">Address Book</a></li>
+						<li class="nav-item"><a class="nav-link zoomhover" th:href="@{/address_book}">Address Book</a></li>
 
-						<li class="nav-item"><a class="nav-link"
-							th:href="@{/reviews}">Reviews</a></li>
+						<li class="nav-item"><a class="nav-link zoomhover" th:href="@{/reviews}">Reviews</a></li>
 
-						<li class="nav-item"><a class="nav-link" th:href="@{/orders}">Orders</a>
-						</li>
+						<li class="nav-item"><a class="nav-link zoomhover" th:href="@{/orders}">Orders</a></li>
 
-
-						<li class="nav-item"><a
-							class="nav-link fas fa-shopping-cart fa-2x"
-							style="color: #fe9765" th:href="@{/cart}"></a></li>
-
-						<li class="nav-item dropdown "><a
-							class="nav-link dropdown-toggle font-weight-bold"
+						<li class="nav-item">
+						<a class="nav-link fas fa-shopping-cart fa-2x zoomhover" style="color: #fe9765" th:href="@{/cart}"></a></li>
+						<li class="nav-item dropdown ">
+						<a class="nav-link dropdown-toggle font-weight-bold zoomhover"
 							data-toggle="dropdown" sec:authentication="principal.fullName"></a>
 							<div class="dropdown-menu">
-								<a class="dropdown-item" th:href="@{/account_details}">Account
-									Details</a> <a class="dropdown-item"
-									href="javascript: document.logoutForm.submit()">Logout</a>
+								<a class="dropdown-item zoomhover" th:href="@{/account_details}">Account Details</a>
+								 <a class="dropdown-item zoomhover" href="javascript: document.logoutForm.submit()">Logout</a>
 							</div></li>
-
-
 					</th:block>
 
 				</ul>
@@ -69,9 +59,7 @@
 		<div class="bg-white px-2">
 
 			<form class="form-inline" th:action="@{/search}" method="get">
-				<input type="search" name="keyword" class="form-control"
-					style="width: auto" placeholder="Search" th:value="${keyword}"
-					required /> &nbsp;
+				<input type="search" name="keyword" class="form-control" style="width: auto" placeholder="Search" th:value="${keyword}" required /> &nbsp;
 				<button type="submit" class="btn btn-outline-primary d-inline">
 					<i class="fa-solid fa-magnifying-glass"></i>
 				</button>
@@ -81,10 +69,8 @@
 	</div>
 
 
-	<div th:fragment="footer_menu">
-		<div class="container-fluid p-0 ">
-			<footer class=" text-lg-start text-white "
-				style="background-color: #616569">
+	<div th:fragment="footer_menu" th:remove="tag">
+			<footer class="container-fluid p-0 text-lg-start text-white " style="background-color: #616569">
 				<div class=" pb-0">
 					<section class="">
 						<div class="row mx-2">
@@ -157,7 +143,6 @@
 					</a>
 				</div>
 			</footer>
-		</div>
 	</div>
 </body>
 </html>

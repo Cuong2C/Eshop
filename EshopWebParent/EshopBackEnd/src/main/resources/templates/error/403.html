@@ -4,15 +4,14 @@
 <body>
 
 	<div class="container-fluid p-0">
-		<div th:replace="navigation :: menu" ></div>
+		<div th:replace="~{navigation :: menu}" ></div>
 		
 		<div class="text-center m-5">
 			<h2>Sorry! You don't have permission to access this page</h2>
 		</div>
 
-		<div th:replace="~{fragments :: footer}" ></div>
 	</div>
-
+	<div th:replace="~{fragments :: footer}" ></div>
 
 <script th:src="@{/js/common.js}"></script>
 </body>

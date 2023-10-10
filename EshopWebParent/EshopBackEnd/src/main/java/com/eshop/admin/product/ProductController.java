@@ -74,7 +74,8 @@ public class ProductController {
 		model.addAttribute("reverseSortDir", reverseSortDir);
 		model.addAttribute("keyword", keyword);
 		model.addAttribute("listCategories", listCategories);
-		
+
+
 		return "products/products";
 	}
 
@@ -190,7 +191,7 @@ public class ProductController {
 			
 			model.addAttribute("product", product);
 	
-			return "/products/product_detail_modal";
+			return "products/product_detail_modal";
 		} catch (ProductNotFoundException e) {
 			redirect.addFlashAttribute("message", e.getMessage());
 			

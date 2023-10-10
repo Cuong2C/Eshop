@@ -24,7 +24,7 @@
 		    <div class="col">
 		        <div id="image-slider">
 		            <th:block th:each="brand : ${listBrands}">
-		                <a class="item mx-2" th:href="@{'/search?keyword=' + ${brand.name}}">
+		                <a class="item m-2 zoomhover " th:href="@{'/search?keyword=' + ${brand.name}}">
 		                    <img th:src="@{${brand.logoPath}}" height="100" alt="Image" style="max-width: 200px;"/>
 		                </a>
 		            </th:block>
@@ -37,8 +37,8 @@
 		</div>
 		
 		<div class="row bg-white p-4 mx-0">
-			<div class="col-6 col-sm-4 col-md-2 my-2" th:each="cat:${listCategories}">
-				<div><img th:src="@{${cat.imgPath}}" height="75"  /></div>
+			<div class="col-6 col-sm-4 col-md-2 my-2 zoomhover" th:each="cat:${listCategories}">
+				<div><img th:src="@{${cat.imgPath}}" height="75" /></div>
 				<div>
 					<a th:href="@{'/c/' + ${cat.alias}}">[[${cat.name}]]</a>
 				</div>
@@ -55,8 +55,8 @@
 				
 				<div class="col-6 col-lg-3">
 				<div class="p-2" style="max-width: 250px;">
-					<a th:href="@{'/p/'+${product.alias}}">
-						<img class="m-2" th:src="@{${product.mainImagePath}}" height="150"  />
+					<a th:href="@{'/p/'+${product.alias}}" >
+						<img class="m-2 zoomhover" th:src="@{${product.mainImagePath}}" height="150"  />
 						<div >
 						<b>[[${product.shortName}]]</b>
 						</div>
@@ -93,9 +93,8 @@
 			</th:block>
 		</div>
 
-		
-		<div th:replace="~{navigation :: footer_menu}" ></div>
 	</div>
+	<div th:replace="~{navigation :: footer_menu}" ></div>
 	
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
 <script src="script.js"></script>
