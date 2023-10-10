@@ -10,7 +10,6 @@ import org.springframework.stereotype.Component;
 import com.eshop.common.entity.AuthenticationType;
 import com.eshop.common.entity.Customer;
 import com.eshop.customer.CustomerOAuth2Service;
-import com.eshop.customer.CustomerService;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
