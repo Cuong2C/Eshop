@@ -206,13 +206,23 @@
 		<input type="text" readonly class="form-control" th:value="${(CURRENCY_SYMBOL_POSITION == 'Before price' ? CURRENCY_SYMBOL : '') + #numbers.formatDecimal(amount, 1, THOUSANDS_POINT_TYPE, DECIMAL_DIGITS, DECIMAL_POINT_TYPE) + (CURRENCY_SYMBOL_POSITION == 'After price' ? CURRENCY_SYMBOL : '')}">
 	</div>
 	
-	<div th:fragment="dashboard_card(url, imageName, titleCard, contentCard, roleEnable)" th:remove="tag">
-		 <a th:href="@{${url}}" class="card card-index">
+	<div th:fragment="dashboard_card(url, imageName, titleCard, contentCard, roleEnable )" th:remove="tag">
+		 <a th:href="@{'/' + ${url}}" class="card card-index" style="text-decoration: none;">
 	      <img class="card-img-top" th:src="@{'/images/' + ${imageName}}" height="55%" >
 	     	<div class="card-block card-bg" style="height: 100%;">
-	        <h4 class="card-title title">[[${titleCard}]]</h4>  
+	        <h4 class="card-title title">[[${titleCard}]]</h4>    
+	        <p class="card-text text-dark">[[${contentCard}]]</p>     
+	        <p class="card-text"><small class="text-muted">[[${roleEnable}]]</small></p>   
+	      </div>  
+	    </a> 
+	</div>
+	
+	<div th:fragment="dashboard_card_disable(url, imageName, titleCard, contentCard, roleEnable)" th:remove="tag">
+		 <a th:href="@{'/' + ${url}}" class="card card-index-disabled" title="You don't have permission to access this page" style="text-decoration: none;">
+	      <img class="card-img-top img-disabled" th:src="@{'/images/' + ${imageName}}" height="55%" >
+	     	<div class="card-block card-bg-disabled" style="height: 100%;">
+	        <h4 class="card-title text-dark">[[${titleCard}]]</h4>    
 	        <p class="card-text text-dark">[[${contentCard}]]</p>
-	        
 	        <p class="card-text"><small class="text-muted">[[${roleEnable}]]</small></p>
 	      </div>
 	    </a>

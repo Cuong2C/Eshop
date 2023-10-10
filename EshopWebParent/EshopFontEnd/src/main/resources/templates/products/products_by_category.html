@@ -16,8 +16,8 @@
 		<div class="row mb-4 shadow rounded text-center bg-white mx-0">
 			<th:block th:each="cat : ${category.children}">
 				<div class="col" th:if="${cat.enabled == true}">
-					<a th:href="@{'/c/'+${cat.alias}}">
-						<img th:src="@{${cat.imgPath}}" height="100"/>
+					<a th:href="@{'/c/'+${cat.alias}}" >
+						<img th:src="@{${cat.imgPath}}" height="100" class="zoomhover" />
 						<br/>
 						<b>[[${cat.name}]]</b>
 					</a>

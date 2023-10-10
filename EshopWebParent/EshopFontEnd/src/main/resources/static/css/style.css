@@ -59,6 +59,11 @@ border-bottom-right-radius: 16px;
 	font-size: 1.15rem;
 }
 
+.zoomhover:hover{
+	transform: scale(1.2); 
+    transition: transform 0.3s ease; 
+	cursor: pointer;
+}
 
        
 .popupAddtoCart {

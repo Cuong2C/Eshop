@@ -64,17 +64,41 @@ footer{
 	color:  #fe9765;
 }
 
+.navText:hover{
+	transform: scale(1.2); 
+    transition: transform 0.3s ease; 
+	cursor: pointer;
+}
+.card-index:hover  {
+    transform: scale(1.1); 
+    transition: transform 0.3s ease; 
+}
+
 .card-bg{
 	background-color: antiquewhite !important;
 }
+
+.card-bg-disabled{
+	background-color: rgb(221, 221, 221) !important;
+}
+
 
 .card-radius{
 	border-radius: 15px !important;
 }
 
+.card-index-disabled{
+	border: 2px solid  rgb(111, 111, 111) !important;
+	box-shadow: 4px 4px 16px  rgb(188, 188, 188);
+}
+
 .card-index{
 	border: 2px solid  #fe9765 !important;
 	box-shadow: 4px 4px 16px  rgb(245, 174, 78);
+}
+
+.img-disabled{
+	filter: grayscale(100%) !important;
 }
 
 @media screen and (max-width: 768px) {
