@@ -1,7 +1,7 @@
 # Eshop Project Readme
 Introduction
-This readme provides an overview of the Eshop project, a comprehensive e-commerce platform developed using Java SE 17, Spring framework development with Spring Boot and managed with Maven. 
-The project consists of two main components: a frontend web application for customers to shop online and a backend system for managing the e-commerce website's operations.
+- This readme provides an overview of the Eshop project, a comprehensive e-commerce platform developed using Java SE 17, Javascript, Spring framework development with Spring Boot and managed with Maven. 
+- The project consists of two main components: a frontend web application for customers to shop online and a backend system for managing the e-commerce website's operations.
 
 Frontend
 The frontend of the Eshop project is a full-fledged e-commerce website that offers various functionalities, including:
